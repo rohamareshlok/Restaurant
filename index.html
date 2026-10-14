@@ -268,6 +268,8 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.qpay .paylater{min-height:40px;border:1.5px dashed var(--warn);color:var(--warn);background:var(--surface);font-weight:800}
+.pill.credit{background:var(--warn-soft);color:var(--warn)}
 body{font-size:16px}.note{font-size:13.5px}.li .meta,.meta{font-size:13.5px}.label{font-size:12px}.chip{font-size:14px}.pill{font-size:12px}.form label{font-size:14px}nav.tabs button{font-size:12px}.btn{font-size:15px}
 :root[data-lang="mr"] body,:root[data-lang="hi"] body{font-size:17.5px;line-height:1.55}
 :root[data-lang="mr"] .note,:root[data-lang="hi"] .note,:root[data-lang="mr"] .meta,:root[data-lang="hi"] .meta,:root[data-lang="mr"] .form label,:root[data-lang="hi"] .form label{font-size:15px}
@@ -710,6 +712,12 @@ const T={
  salLocked:['Salary settings locked','पगार सेटिंग लॉक झाली','वेतन सेटिंग लॉक हुई'],salUnlocked:['Unlocked: salary settings can be changed','अनलॉक: पगार सेटिंग बदलता येईल','अनलॉक: वेतन सेटिंग बदल सकते हैं'],salUnlockQ:['Unlock salary settings for {n}?','{n} ची पगार सेटिंग अनलॉक करायची?','{n} की वेतन सेटिंग अनलॉक करें?'],
  hoursCol:['Hrs','तास','घंटे'],keyFull:['full','पूर्ण','पूरा'],keyPart:['part','काही तास','कुछ घंटे'],keyOt:['extra hrs','जास्त तास','अतिरिक्त घंटे'],keyAbs:['absent','गैरहजर','गैरहाज़िर'],keyNone:['not marked','नोंद नाही','दर्ज नहीं'],
  attGridNote:['Tap any day to open it and mark attendance.','हजेरी नोंदवण्यासाठी कोणताही दिवस दाबा.','हाज़िरी दर्ज करने के लिए कोई भी दिन दबाएं।'],
+ payLater:['Pay later','नंतर देणार','बाद में देंगे'],payLaterBtn:['Pay later (credit)','नंतर देणार (उधारी)','बाद में (उधार)'],payLaterSave:['Save bill on credit','उधारीवर बिल सेव्ह करा','उधार पर बिल सेव करें'],custName:['Customer name','ग्राहकाचे नाव','ग्राहक का नाम'],
+ payLaterHow:['The food is counted in sales, but no cash or UPI is added. The amount goes to Credit and is counted as money in when the customer pays.','जेवण विक्रीत धरले जाते, पण रोख/UPI जोडले जात नाही. रक्कम उधारीत जाते व ग्राहक पैसे देतो तेव्हा जमा होते.','खाना बिक्री में गिना जाता है, पर नकद/UPI नहीं जुड़ता। रकम उधार में जाती है और ग्राहक के भुगतान पर जमा होती है।'],
+ payLaterDone:['{a} on credit for {n}','{n} साठी {a} उधारी','{n} के लिए {a} उधार'],billNoteCr:['Bill {b} · {t}','बिल {b} · {t}','बिल {b} · {t}'],
+ payLaterNote:['Pay-later bills are part of sales but not in the cash drawer. They show under Credit until paid.','नंतर देणार बिले विक्रीत आहेत पण गल्ल्यात नाहीत. पैसे मिळेपर्यंत उधारीत दिसतात.','बाद में देने वाले बिल बिक्री में हैं पर गल्ले में नहीं। भुगतान तक उधार में दिखते हैं।'],
+ crKindCash:['Money given (cash/UPI went out)','पैसे दिले (रोख/UPI गेले)','पैसे दिए (नकद/UPI गया)'],crKindFood:['Food or goods on credit (no money given)','जेवण/माल उधारीवर (पैसे दिले नाहीत)','खाना/सामान उधार पर (पैसे नहीं दिए)'],
+ crKindFoodNote:['Nothing is taken from the cash drawer. For a table bill, use "Pay later" on the bill screen so the sale is recorded too.','गल्ल्यातून काही जात नाही. टेबल बिलासाठी बिल स्क्रीनवरील "नंतर देणार" वापरा म्हणजे विक्रीही नोंदवली जाईल.','गल्ले से कुछ नहीं जाता। टेबल बिल के लिए बिल स्क्रीन पर "बाद में" इस्तेमाल करें ताकि बिक्री भी दर्ज हो।'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -855,10 +863,10 @@ const itemCount=o=>(o.items||[]).reduce((s,i)=>s+i.qty,0);
 const orderName=o=>o.table==='TA'?(o.label||t('takeaway')):o.table==='M'?(o.label||t('manualSale')):t('table',{n:o.table});
 const PAYS=['cash','paytm','phonepe'];
 const isUpi=p=>!!p&&p!=='cash';
-const payLbl=p=>p==='cash'?t('cash'):p==='paytm'?'Paytm':p==='phonepe'?'PhonePe':p==='split'?t('split'):'UPI';
+const payLbl=p=>p==='credit'?t('payLater'):p==='cash'?t('cash'):p==='paytm'?'Paytm':p==='phonepe'?'PhonePe':p==='split'?t('split'):'UPI';
 /* how one bill's money divides between cash, Paytm and PhonePe (older "online" bills count as other UPI) */
-const payParts=o=>{if(o.pay==='split'&&o.split)return {cash:+o.split.cash||0,paytm:+o.split.paytm||0,phonepe:+o.split.phonepe||0,other:0};
-  const v=+o.total||0;return {cash:o.pay==='cash'?v:0,paytm:o.pay==='paytm'?v:0,phonepe:o.pay==='phonepe'?v:0,other:o.pay&&!['cash','paytm','phonepe'].includes(o.pay)?v:0}};
+const payParts=o=>{if(o.pay==='split'&&o.split)return {cash:+o.split.cash||0,paytm:+o.split.paytm||0,phonepe:+o.split.phonepe||0,other:0,credit:0};
+  const v=+o.total||0;return {cash:o.pay==='cash'?v:0,paytm:o.pay==='paytm'?v:0,phonepe:o.pay==='phonepe'?v:0,credit:o.pay==='credit'?v:0,other:o.pay&&!['cash','paytm','phonepe','credit'].includes(o.pay)?v:0}};
 const splitText=o=>{const p=payParts(o);return PAYS.filter(k=>p[k]).map(k=>payLbl(k)+' '+inr(p[k])).join(' + ')};
 const payButtons=(act,cur,withSplit)=>`<div class="paysel" role="group">${(withSplit?[...PAYS,'split']:PAYS).map(k=>`<button class="${k} ${cur===k?'on':''}" data-act="${act}" data-k="${k}" aria-pressed="${cur===k}">${payLbl(k)}</button>`).join('')}</div>`;
 const PAYK=['cash','paytm','phonepe'];
@@ -954,7 +962,8 @@ function moneyFor(src,inR){
   const add=(b,pay,v,x)=>{if(pay==='split'&&x&&x.split){for(const k in x.split)add1(b,k,x.split[k])}else add1(b,pay,v)};
   const paid=src.orders.filter(o=>o.status==='paid'&&inR(o.date)),cs=src.csales.filter(x=>inR(x.date));
   const sales=z();
-  paid.forEach(o=>{const p=payParts(o);sales.cash+=p.cash;sales.paytm+=p.paytm;sales.phonepe+=p.phonepe;sales.upi+=p.paytm+p.phonepe+p.other});
+  sales.credit=0;
+  paid.forEach(o=>{const p=payParts(o);sales.cash+=p.cash;sales.paytm+=p.paytm;sales.phonepe+=p.phonepe;sales.upi+=p.paytm+p.phonepe+p.other;sales.credit+=p.credit||0});
   cs.forEach(x=>add(sales,x.pay,x.total));
   /* a bill's discount is spread over its dishes so the kitchen figures add up to what was collected */
   let veg=0,non=0,ctr=sum(cs,x=>x.total),ctrCost=sum(cs,x=>x.cost!=null?x.cost:pcCost(x.pid)*x.qty);const ctrBy={};
@@ -962,13 +971,13 @@ function moneyFor(src,inR){
   cs.forEach(x=>cb(x.pid,x.name,x.qty,+x.total||0,x.cost!=null?x.cost:pcCost(x.pid)*x.qty));
   paid.forEach(o=>{const g=orderTotal(o),f=g?(+o.total||0)/g:1;(o.items||[]).forEach(i=>{const v=i.price*i.qty*f;if(i.pid){ctr+=v;const c=(i.cost!=null?i.cost:pcCost(i.pid))*i.qty;ctrCost+=c;cb(i.pid,i.name,i.qty,v,c)}else if(i.k==='nonveg')non+=v;else veg+=v})});
   const exps=src.expenses.filter(e=>inR(e.date)),sals=src.salaries.filter(x=>inR(x.date));
-  const advs=src.credits.filter(c=>c.kind==='staff'&&inR(c.date)),given=src.credits.filter(c=>c.kind!=='staff'&&inR(c.date)),back=src.creditPays.filter(c=>inR(c.date));
+  const advs=src.credits.filter(c=>c.kind==='staff'&&inR(c.date)),given=src.credits.filter(c=>c.kind!=='staff'&&c.source!=='bill'&&c.source!=='food'&&inR(c.date)),back=src.creditPays.filter(c=>inR(c.date));
   const drw=(src.drawer||[]).filter(x=>inR(x.date)),oin=z(),oout=z();
   drw.forEach(x=>{if(x.kind==='in')oin.cash+=+x.amount||0;if(x.kind==='out')oout.cash+=+x.amount||0});
   const exp=z(),sal=z(),adv=z(),giv=z(),bk=z();
   exps.forEach(e=>add(exp,e.pay,e.amount,e));sals.forEach(x=>add(sal,x.pay,x.paid,x));advs.forEach(c=>add(adv,c.pay,c.amount,c));
   given.forEach(c=>add(giv,c.pay,c.amount,c));back.forEach(c=>add(bk,c.pay,c.amount,c));
-  const tot=b=>b.cash+b.upi;
+  const tot=b=>b.cash+b.upi+(b.credit||0);
   const net={cash:sales.cash+bk.cash-exp.cash-sal.cash-adv.cash-giv.cash+oin.cash-oout.cash,upi:sales.upi+bk.upi-exp.upi-sal.upi-adv.upi-giv.upi};
   const refT=sum(paid,o=>sum(o.refunds||[],r=>r.amount));
   return {ctrCost,ctrBy,ctrMargin:ctr-ctrCost,drw,oin,oout,refT,paid,cs,exps,sals,advs,given,back,sales,exp,sal,adv,giv,bk,net,veg,non,ctr,discT:sum(paid,o=>o.discount),tot,
@@ -1131,7 +1140,7 @@ function barRows(rows,total){
 }
 function sumView(M,multi){
   const tot=M.tot(M.sales),sl=M.sales,oth=Math.max(0,sl.upi-sl.paytm-sl.phonepe);
-  let h=`<section class="panel"><div class="label">${t('payH')}</div>${barRows([[t('cash'),sl.cash,'var(--cash)'],['Paytm',sl.paytm,'var(--paytm)'],['PhonePe',sl.phonepe,'var(--phonepe)'],...(oth?[[t('otherUpi'),oth,'var(--online)']]:[])],tot)}</section>`;
+  let h=`<section class="panel"><div class="label">${t('payH')}</div>${barRows([[t('cash'),sl.cash,'var(--cash)'],['Paytm',sl.paytm,'var(--paytm)'],['PhonePe',sl.phonepe,'var(--phonepe)'],...(oth?[[t('otherUpi'),oth,'var(--online)']]:[]),...(sl.credit?[[t('payLater'),sl.credit,'var(--warn)']]:[])],tot)}${sl.credit?`<div class="note" style="margin-top:6px">${t('payLaterNote')}</div>`:''}</section>`;
   h+=`<section class="panel"><div class="label">${t('kitchensH')}</div>${barRows([[`${vm('veg')} ${t('kVeg')}`,M.veg,'var(--cash)'],[`${vm('nonveg')} ${t('kNon')}`,M.non,'var(--warn)'],[t('counterSales'),M.ctr,'var(--online)']],tot)}
     ${M.discT||M.refT?`<div class="ledger" style="margin-top:8px;font-size:13px">${M.discT?`<span class="muted">${t('discGiven')}</span><span class="muted">${inr(M.discT)}</span>`:''}${M.refT?`<span class="muted">${t('refundsShort')}</span><span class="muted">${inr(M.refT)}</span>`:''}</div>`:''}</section>`;
   if(M.ctr>0){const rows=Object.values(M.ctrBy).sort((a,b)=>b.sales-a.sales),mg=M.ctrMargin;
@@ -1349,7 +1358,7 @@ function daySummaryText(M){
   const cats={};M.exps.forEach(e=>{const k=expCat(e);cats[k]=(cats[k]||0)+(+e.amount||0)});
   const L=[`*${S.config.name||t('myRest')}*`,`${t('daySummaryH')} · ${new Date(S.day+'T12:00:00').toLocaleDateString(LOC[LANG],{weekday:'short',day:'numeric',month:'short',year:'numeric'})}`,'',
     `${t('billsH')}: ${M.paid.length}`,`${t('rowSales')}: ${inr(M.tot(M.sales))}`,`  ${t('cash')} ${inr(M.sales.cash)} · UPI ${inr(M.sales.upi)} (Paytm ${inr(M.sales.paytm)}, PhonePe ${inr(M.sales.phonepe)})`,
-    `  ${t('kVeg')} ${inr(M.veg)} · ${t('kNon')} ${inr(M.non)} · ${t('counterK')} ${inr(M.ctr)}`];
+    ...(sl0=>sl0?[`  ${t('payLater')} ${inr(sl0)}`]:[])(M.sales.credit),`  ${t('kVeg')} ${inr(M.veg)} · ${t('kNon')} ${inr(M.non)} · ${t('counterK')} ${inr(M.ctr)}`];
   if(M.discT)L.push(`  ${t('discGiven')}: ${inr(M.discT)}`);
   if(M.refT)L.push(`  ${t('refundsShort')}: ${inr(M.refT)}`);
   L.push('',`${t('rowExp')}: ${inr(M.tot(M.exp))}`);Object.entries(cats).forEach(([k,v])=>L.push(`  ${k}: ${inr(v)}`));
@@ -1659,7 +1668,8 @@ function vPeople(){
     <input type="text" id="crName" placeholder="${esc(t('name'))}" list="crNames"><datalist id="crNames">${[...new Set(S.creditsRecent.concat(S.creditsOpen).filter(c=>c.kind!=='staff').map(c=>c.name))].map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
     <input type="tel" id="crPhone" placeholder="${esc(t('phone'))}" inputmode="tel">
     <input type="number" id="crAmt" placeholder="${esc(t('amount'))}" min="0" inputmode="decimal">
-    ${paySelect('crPay','givenCash')}
+    <select id="crKind" class="full" data-crk="1"><option value="cash" ${S.crKind!=='food'?'selected':''}>${t('crKindCash')}</option><option value="food" ${S.crKind==='food'?'selected':''}>${t('crKindFood')}</option></select>
+    ${S.crKind==='food'?`<div class="note full">${t('crKindFoodNote')}</div>`:paySelect('crPay','givenCash')}
     <label for="crDays">${t('dueDays')}</label><input type="number" id="crDays" min="1" max="365" ${canSetDays?'':'disabled'} value="${days}" ${canSetDays?'':'data-live'}>
     <input type="text" id="crNote" class="full" placeholder="${esc(t('noteOpt'))}">
     ${canSetDays?'':`<div class="note full">${t('lockedNote',{n:days})}</div>`}
@@ -1966,7 +1976,7 @@ function renderSheet(){
       <div class="row"><button class="btn" data-act="printOpen">🖨 ${t('printBill')}</button><button class="btn ghost" data-act="copyBill">${t('copyBill')}</button><button class="btn ghost danger" data-act="${d.paidEdit?'paidEditCancel':'voidOrder'}">${t(d.paidEdit?'cancelBill':'cancelOrder')}</button></div>`;
     $('#shFoot').innerHTML=d.paidEdit?`<span class="tot"><span id="fTot">${inr(net)}</span> <span class="muted" id="fDiff" style="font-family:var(--f-body);font-size:13px;font-weight:700"></span></span><button class="btn primary" id="shSettle" data-act="settle">${t('saveBillChanges')}</button>`
       :d.pay==='split'?`<span class="tot" id="fTot">${inr(net)}</span><button class="btn primary" id="shSettle" data-act="settle">${t('markPaid',{m:payLbl(d.pay)})}</button>`
-      :`<div class="qpay"><div class="qh"><span class="label">${t('paidByQ')}</span><span class="tot" id="fTot">${inr(net)}</span></div><div class="qb">${PAYS.map(k=>`<button class="btn ${k}" data-act="quickPay" data-k="${k}">${payLbl(k)}</button>`).join('')}</div></div>`;
+      :`<div class="qpay"><div class="qh"><span class="label">${t('paidByQ')}</span><span class="tot" id="fTot">${inr(net)}</span></div><div class="qb">${PAYS.map(k=>`<button class="btn ${k}" data-act="quickPay" data-k="${k}">${payLbl(k)}</button>`).join('')}</div><button class="btn paylater" data-act="payLaterOpen">🕒 ${t('payLaterBtn')}</button></div>`;
     updateBillNumbers();
     return;
   }
@@ -2076,6 +2086,11 @@ function renderModal(){
   else if(m.kind==='print'){h=printModalHTML(m)}
   else if(m.kind==='prod'){h=prodModalHTML(m)}
   else if(m.kind==='purchase'){h=purchaseModalHTML(m)}
+  else if(m.kind==='paylater'){const d=S.draft;const names=[...new Set(S.creditsRecent.concat(S.creditsOpen).filter(c=>c.kind!=='staff').map(c=>c.name))];const days=+S.config.creditDays||7;
+    h=`<h3>🕒 ${t('payLaterBtn')}</h3><div class="muted">${esc(orderName(d))} · ${inr(billTotal(d))}</div><div class="note">${t('payLaterHow')}</div>
+     <div class="form"><input type="text" id="plName" class="full" placeholder="${esc(t('custName'))}" list="plNames" value="${esc(m.name||'')}"><datalist id="plNames">${names.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+      <input type="tel" id="plPhone" class="full" placeholder="${esc(t('phone'))}" inputmode="tel" value="${esc(m.phone||'')}"><label for="plDays">${t('dueDays')}</label><input type="number" id="plDays" min="1" max="365" value="${days}" ${S.config.creditLocked&&!S.canEdit?'disabled':''}></div>
+     <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="payLaterDo">${t('payLaterSave')}</button></div>`}
   else if(m.kind==='suppay'){const sp=(S.supOpen||[]).find(x=>x.id===m.sid);if(!sp){S.modal=null;el.hidden=true;return}
     h=`<h3>${esc(t('paySupTitle',{n:sp.name}))}</h3><div class="muted">${esc(expCat(sp))} · ${t('leftOf',{a:inr(supRemaining(sp)),t:inr(sp.amount)})}</div>
      <label class="label" for="sppAmt">${t('howMuch')}</label><input type="number" id="sppAmt" min="1" inputmode="decimal" value="${supRemaining(sp)}">
@@ -2199,6 +2214,9 @@ const A={
   async saveOrder(){const had=S.draft.items.length;if(await persistDraft()){if(had)toast(t('orderSaved'));S.draft=null;render()}},
   toBill(){S.draft.mode='bill';renderSheet()},
   backEdit(){S.draft.mode='edit';renderSheet()},
+  payLaterOpen(){S.modal={kind:'paylater'};renderModal();setTimeout(()=>{const e=$('#plName');e&&e.focus()},50)},
+  payLaterDo(b){const name=val('plName');if(!name){toast(t('needName'));return}const days=Math.max(1,Math.round(S.config.creditLocked&&!S.canEdit?(+S.config.creditDays||7):(+val('plDays')||+S.config.creditDays||7)));
+    S.draft.credit={name,phone:val('plPhone'),days};S.draft.pay='credit';S.modal=null;renderModal();A.settle(b)},
   quickPay(b){S.draft.pay=b.dataset.k;A.settle(b)},
   pay(b){const d=S.draft;d.pay=b.dataset.k;if(d.pay==='split'&&!d.split)d.split={cash:'',paytm:'',phonepe:''};renderSheet()},
   discType(b){const d=S.draft;d.disc={type:b.dataset.k,v:(d.disc&&d.disc.v)||''};d.dirty=true;renderSheet()},
@@ -2214,9 +2232,11 @@ const A={
       data.billNo=await nextBillNo();
       if(d.id)await db.doc('orders/'+d.id).update(data);else{const ref=db.collection('orders').doc();await ref.set({...data,createdAt:d.createdAt});data._id=ref.id}
       for(const i of d.items)if(i.pid)await adjustStock(i.pid,-i.qty);
+      if(d.pay==='credit'&&d.credit)await db.collection('credits').add({kind:'person',source:'bill',name:d.credit.name,phone:d.credit.phone||'',amount:data.total,received:0,pay:'credit',orderId:d.id||data._id||null,billNo:data.billNo,note:t('billNoteCr',{b:fmtBill(data.billNo),t:orderName(d)}),date:today(),at:Date.now(),due:shift(today(),d.credit.days),status:'open'});
     },null);
     if(ok)popAdd(d.items);
-    if(ok)toast(fmtBill(data.billNo)+' · '+t('paidT',{a:inr(data.total),m:d.pay==='split'?splitText(data):payLbl(d.pay)}));
+    if(ok)toast(fmtBill(data.billNo)+' · '+(d.pay==='credit'?t('payLaterDone',{a:inr(data.total),n:d.credit.name}):t('paidT',{a:inr(data.total),m:d.pay==='split'?splitText(data):payLbl(d.pay)})));
+    if(!ok&&d.pay==='credit'){d.pay='cash';delete d.credit}
     if(ok){S.draft=null;render();if(S.config.autoPrint){const id=d.id||data._id;delete data._id;setTimeout(()=>{S.modal={kind:'print',src:{kind:'order',id,snap:{...data,id}}};renderModal()},250)}}else b.disabled=false;
   },
   voidOrder(){const d=S.draft;confirmBox(t('confirmCancel',{t:orderName(d)}),t('cancelOrder'),async()=>{
@@ -2258,7 +2278,7 @@ const A={
     save(()=>db.collection('inventory').add({name,qty:+val('stQty')||0,unit:val('stUnit')||'pcs',low:+val('stLow')||0,updatedAt:Date.now()}),t('added')).then(ok=>ok&&clear('stName','stQty','stUnit','stLow'))},
   delStk(b){const s=S.stock.find(x=>x.id===b.dataset.id);confirmBox(t('removeQ',{n:s?s.name:''}),t('remove'),()=>save(()=>db.doc('inventory/'+b.dataset.id).delete(),t('removed')))},
   /* credit */
-  addCredit(){const name=val('crName'),amt=+val('crAmt');if(!name||!(amt>0)){toast(t('needCredit'));return}const pp=payOf('crPay',amt);if(!pp)return;
+  addCredit(){const name=val('crName'),amt=+val('crAmt');if(!name||!(amt>0)){toast(t('needCredit'));return}const food=val('crKind')==='food';const pp=food?{pay:'credit',source:'food'}:payOf('crPay',amt);if(!pp)return;
     const locked=!!S.config.creditLocked&&!S.canEdit,days=Math.max(1,Math.round(locked?(+S.config.creditDays||7):(+val('crDays')||+S.config.creditDays||7)));
     save(()=>db.collection('credits').add({kind:'person',name,phone:val('crPhone'),amount:amt,received:0,...pp,note:val('crNote'),date:today(),at:Date.now(),due:shift(today(),days),status:'open'}),t('creditAdded')).then(ok=>ok&&(clear('crName','crPhone','crAmt','crNote'),resetPay('crPay')))},
   recvOpen(b){S.modal={kind:'recv',cid:b.dataset.id,pay:'cash'};renderModal()},
@@ -2391,6 +2411,7 @@ document.addEventListener('input',e=>{const pl=e.target.dataset&&e.target.datase
   if(e.target.dataset.ed&&S.modal&&S.modal.kind==='edit'){S.modal.f[e.target.dataset.ed]=e.target.value}
   if(e.target.dataset.split&&S.draft&&S.draft.split){S.draft.split[e.target.dataset.split]=e.target.value;updateSplitInfo()}});
 document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
+  if(d.crk){S.crKind=x.value;render();return}
   if(d.pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=d.pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=x.value;if(f==='name'||f==='brand')puFill(+i);else puRefresh()}return}
   if(d.sp){const bx=document.getElementById(x.id+'S_box');if(bx){bx.hidden=x.value!=='split';if(x.value==='split'){const f=document.getElementById(x.id+'S_cash');f&&f.focus()}}return}
   if(x.id==='exCat'||x.id==='spCat'){S.catSel=S.catSel||{};S.catSel[x.id]=x.value;const o=$('#'+x.id+'Other');if(o){o.hidden=x.value!=='other';if(x.value==='other')setTimeout(()=>o.focus(),0)}return}
