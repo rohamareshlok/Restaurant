@@ -729,7 +729,7 @@ const T={
  countsLn:['P {p} · Short {s} · A {a} · Not marked {u}','हजर {p} · कमी तास {s} · गैरहजर {a} · नोंद नाही {u}','हाज़िर {p} · कम घंटे {s} · गैरहाज़िर {a} · दर्ज नहीं {u}'],
  soFar:['So far','आतापर्यंत','अब तक'],earnedSoFar:['Earned so far','आतापर्यंत कमावले','अब तक कमाया'],payOnS:['pay on {d}','पगार {d}','वेतन {d}'],paidOnS:['paid {d}','{d} ला दिला','{d} को दिया'],
  paidRecent:['Paid recently','अलीकडे दिलेले पगार','हाल में दिया वेतन'],thisCycle:['Normal period','नेहमीचा काळ','सामान्य अवधि'],tillToday:['Till today','आजपर्यंत','आज तक'],
- salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], joinLbl:['Joined on (optional)','कामावर रुजू तारीख (ऐच्छिक)','काम शुरू की तारीख (वैकल्पिक)'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1727,7 +1727,8 @@ const hrsTxt=h=>t('hShort',{h:Math.round(h*100)/100});
 const timeToH=v=>{const [a,b]=String(v||'').split(':').map(Number);return isNaN(a)?null:a+(b||0)/60};
 function spanHours(from,to,full=24){const a=timeToH(from),b=timeToH(to);if(a==null||b==null)return null;let d=b-a;if(d<0)d+=24;return Math.min(full,Math.round(d*4)/4)}
 /* salary for the pay date that falls in month `mo`: covers the previous pay date up to the day before this one */
-const joinDate=s=>s.addedAt?new Date(s.addedAt).toLocaleDateString('en-CA'):null;
+/* joining date only when it is entered in Team (the day someone was added to the app is not their joining day) */
+const joinDate=s=>s.joinDate||null;
 /* ---- salary: one calculation for monthly, weekly and daily pay ----
    monthly: cycle runs from the salary day of one month to the day before it next month (5 Oct → 4 Nov), paid on 5 Nov
    weekly : cycle runs from the salary weekday for 7 days, paid on the same weekday next week
@@ -1744,12 +1745,15 @@ function cycleOf(s,ref){
 }
 const lastPaidTo=s=>(S.salaries||[]).filter(x=>x.staffId===s.id&&x.periodTo).map(x=>x.periodTo).sort().pop()||null;
 /* the dates the next payment should cover */
+const firstMark=s=>S.attMonth.filter(a=>a.marks&&a.marks[s.id]!=null).map(a=>a.date).sort()[0]||null;
 function nextRange(s){
   const k=ptype(s),j=joinDate(s),last=lastPaidTo(s),td=today();
-  if(k==='day'){let from=last?shift(last,1):(j&&j>td.slice(0,8)+'01'?j:td.slice(0,8)+'01');if(from>td)from=td;return {from,to:td}}
+  if(k==='day'){let from=last?shift(last,1):(j||firstMark(s)||td);if(from>td)from=td;return {from,to:td}}
   if(last){const from=shift(last,1);return {from,to:cycleOf(s,from).end}}
-  const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1));
-  const c=j&&j>prev.end?cur:prev;return {from:j&&j>c.start?j:c.start,to:c.end};
+  /* never paid in the app: use the last finished cycle only if they joined before it ended and attendance was marked in it */
+  const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1)),fm=firstMark(s);
+  const usePrev=!(j&&j>prev.end)&&fm&&fm<=prev.end;
+  const c=usePrev?prev:cur;return {from:j&&j>c.start?j:c.start,to:c.end};
 }
 function perDayRate(s,from){const k=ptype(s),amt=payAmount(s);return k==='day'?amt:k==='week'?amt/7:(s.divisor==='actual'?amt/daysInMonth((from||today()).slice(0,7)):amt/30)}
 function calcRange(s,from,to){
@@ -1859,6 +1863,7 @@ function vTeam(){
     <input type="text" id="sfName" placeholder="${esc(t('name'))}"><input type="text" id="sfRole" placeholder="${esc(t('role'))}">
     <label for="sfType">${t('payTypeLbl')}</label>${typeSel('sfType','month')}
     <input type="number" id="sfSal" placeholder="${esc(t('amount'))}" min="0"><input type="number" id="sfDay" placeholder="${esc(t('payDayLbl'))}" min="1" max="31">
+    <label for="sfJoin">${t('joinLbl')}</label><input type="date" id="sfJoin" max="${today()}">
     <label for="sfFrom">${t('shiftFromLbl')}</label><input type="time" id="sfFrom" value="11:00">
     <label for="sfTo">${t('shiftToLbl')}</label><input type="time" id="sfTo" value="23:00">
     <button class="btn primary full" data-act="addStaff">${t('addStaff')}</button></div></section>`;
@@ -1878,6 +1883,7 @@ function vTeam(){
      ${ptype(s)==='month'?`<label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">`
        :ptype(s)==='week'?`<label for="se_w_${s.id}">${t('payWdLbl')}</label>${wdSel('se_w_'+s.id,s.payWd||0,`data-live data-sedit="payWd" data-sid="${s.id}"`)}`:''}
      <div class="full note">${cycleHint(s)}</div>
+     <label for="se_j_${s.id}">${t('joinLbl')}</label><input type="date" id="se_j_${s.id}" data-live data-sedit="joinDate" data-sid="${s.id}" value="${esc(s.joinDate||'')}" max="${today()}">
      </div><div class="row" style="margin-top:10px"><span class="pill ${s.active===false?'warn':'cash'}">${s.active===false?t('notWorking'):t('working')}</span><span style="flex:1"></span>
      <button class="btn primary sm rowsave" data-act="rowSave" data-row="s:${s.id}" disabled>${t('save')}</button><button class="btn sm" data-act="toggleStaff" data-id="${s.id}">${s.active===false?t('setActive'):t('setInactive')}</button><button class="btn sm danger" data-act="delStaff" data-id="${s.id}">${t('remove')}</button></div></section>`}).join('');
   h+=`<div class="note">${t('teamHint')}</div>`;
@@ -2354,7 +2360,7 @@ const A={
   addStaff(){const name=val('sfName');if(!name){toast(t('needName'));return}
     const day=Math.min(31,Math.max(1,Math.round(+val('sfDay')||1))),tv=val('sfType'),type=tv==='day'||tv==='week'?tv:'month',amt=Math.round(+val('sfSal')||0);
     const from=val('sfFrom')||SHIFT_FROM,to=val('sfTo')||'23:00',sh=spanHours(from,to)||SHIFT_H;
-    save(()=>db.collection('staff').add({name,role:val('sfRole'),payType:type,salary:type!=='day'?amt:0,rate:type==='day'?amt:0,divisor:'30',payDay:day,payWd:wdOf(today()),shiftFrom:from,shiftTo:to,shiftH:sh,active:true,addedAt:Date.now()}),t('added')).then(ok=>ok&&clear('sfName','sfRole','sfSal','sfDay'))},
+    save(()=>db.collection('staff').add({name,role:val('sfRole'),payType:type,salary:type!=='day'?amt:0,rate:type==='day'?amt:0,divisor:'30',payDay:day,payWd:wdOf(today()),joinDate:val('sfJoin')||null,shiftFrom:from,shiftTo:to,shiftH:sh,active:true,addedAt:Date.now()}),t('added')).then(ok=>ok&&clear('sfName','sfRole','sfSal','sfDay','sfJoin'))},
   toggleStaff(b){const s=S.staffAll.find(x=>x.id===b.dataset.id);if(!s)return;save(()=>db.doc('staff/'+s.id).update({active:s.active===false}),t('updated'))},
   delStaff(b){const s=S.staffAll.find(x=>x.id===b.dataset.id);if(!s)return;confirmBox(t('removeStaffQ2',{n:s.name}),t('remove'),()=>save(()=>db.doc('staff/'+s.id).delete(),t('removed')))},
   mark(b){const id=b.dataset.id,k=markOf(id)===b.dataset.k?null:b.dataset.k;setMark(id,k)},
@@ -2520,6 +2526,7 @@ function saveStaffEdits(sid,ch){const st=S.staffAll.find(z=>z.id===sid);if(!st)r
   if('rate' in ch)upd.rate=Math.max(0,Math.round(+ch.rate||0));
   if('payDay' in ch)upd.payDay=Math.min(31,Math.max(1,Math.round(+ch.payDay||1)));
   if('divisor' in ch)upd.divisor=ch.divisor;
+  if('joinDate' in ch)upd.joinDate=ch.joinDate||null;
   if('payWd' in ch)upd.payWd=Math.min(6,Math.max(0,+ch.payWd||0));
   if('shiftFrom' in ch||'shiftTo' in ch){const f=ch.shiftFrom||startOf(st),e=ch.shiftTo||endOf(st),hh=spanHours(f,e);if(!(hh>0)){toast(t('needHours'));return}upd.shiftFrom=f;upd.shiftTo=e;upd.shiftH=hh}
   save(()=>db.doc('staff/'+sid).update(upd),t('savedName',{n:upd.name||st.name}))}
