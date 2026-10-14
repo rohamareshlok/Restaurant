@@ -268,6 +268,10 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.marginbox{display:grid;gap:2px;border-radius:12px;padding:10px 12px;background:var(--sunk);border:1px solid var(--line)}
+.marginbox .mv{font-family:var(--f-display);font-size:24px;font-weight:800}.marginbox .mv small{font-size:13px;font-weight:600;color:var(--muted)}
+.marginbox.pos{background:var(--cash-soft);border-color:transparent}.marginbox.pos .mv{color:var(--cash)}
+.marginbox.neg{background:var(--warn-soft);border-color:transparent}.marginbox.neg .mv{color:var(--warn)}
 .prstat{display:flex;gap:10px;align-items:center;background:var(--sunk);border-radius:10px;padding:10px 12px}
 .prstat .dot{width:12px;height:12px;border-radius:99px;background:var(--muted);flex:none;box-shadow:0 0 0 3px var(--surface)}
 .prstat.on .dot{background:var(--cash)}.prstat.on{background:var(--cash-soft)}
@@ -649,6 +653,9 @@ const T={
  btNotPrinter:['This device does not accept printing. Pick the printer from the list.','हे उपकरण छपाई घेत नाही. यादीतून प्रिंटर निवडा.','यह डिवाइस छपाई नहीं लेता। सूची से प्रिंटर चुनें।'],btNoSupport:['Bluetooth is not available here','इथे ब्लूटूथ उपलब्ध नाही','यहाँ ब्लूटूथ उपलब्ध नहीं'],
  btNotConn:['Printer not connected. Connect it in Menu → Printer.','प्रिंटर जोडलेला नाही. मेनू → प्रिंटर मध्ये जोडा.','प्रिंटर नहीं जुड़ा। मेनू → प्रिंटर में जोड़ें।'],btPrinted:['Sent to printer','प्रिंटरला पाठवले','प्रिंटर को भेजा'],btPrintNow:['Print on {n}','{n} वर छापा','{n} पर छापें'],
  printerHelp:['Bluetooth printers must support Bluetooth Low Energy (BLE). If yours is not found in the list, use Print with the RawBT app, or Save PDF.','ब्लूटूथ प्रिंटरला BLE सपोर्ट हवा. यादीत न दिसल्यास RawBT सह Print किंवा Save PDF वापरा.','ब्लूटूथ प्रिंटर में BLE सपोर्ट चाहिए। सूची में न दिखे तो RawBT के साथ Print या Save PDF इस्तेमाल करें।'],
+ marginH:['Your margin','तुमचा नफा','आपका मार्जिन'],marginNeed:['Enter MRP and buying cost to see the margin','नफा पाहण्यासाठी MRP व खरेदी किंमत लिहा','मार्जिन देखने के लिए MRP और खरीद कीमत लिखें'],perPcShort:['per piece','प्रति नग','प्रति पीस'],
+ marginCalc:['MRP {mrp} − cost {c}','MRP {mrp} − खरेदी {c}','MRP {mrp} − खरीद {c}'],ofMrp:['of MRP','MRP च्या','MRP का'],marginBox:['{m} per box of {n}','{n} च्या बॉक्सवर {m}','{n} के बॉक्स पर {m}'],
+ marginNeg:['Buying cost is more than MRP: you lose money on each piece','खरेदी किंमत MRP पेक्षा जास्त: प्रत्येक नगावर तोटा','खरीद कीमत MRP से ज़्यादा: हर पीस पर घाटा'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -1875,16 +1882,20 @@ function prodModalHTML(m){
    <div class="full"><div class="label" style="margin:4px 0 6px">${t('buyPriceLbl')}</div><div class="seg" role="group"><button class="${box?'':'on dk'}" data-act="pfBuy" data-k="piece">${t('perPiece')}</button><button class="${box?'on dk':''}" data-act="pfBuy" data-k="box">${t('perBoxT')}</button></div></div>
    ${box?`<label for="pfBoxCost">${t('boxCostLbl')}</label><input type="number" id="pfBoxCost" min="0" step="any" inputmode="decimal" value="${p.boxCost||''}" placeholder="0" data-pf>
      <label for="pfPerBox">${t('perBoxLbl')}</label><input type="number" id="pfPerBox" min="1" inputmode="numeric" value="${p.perBox||''}" placeholder="0" data-pf>
-     <div class="note full" id="pfPer"></div>`
-    :`<label for="pfCost">${t('costPcLbl')}</label><input type="number" id="pfCost" min="0" step="any" inputmode="decimal" value="${p.cost||''}" placeholder="0" data-pf><div class="note full" id="pfPer"></div>`}
+     <div class="marginbox full" id="pfPer"></div>`
+    :`<label for="pfCost">${t('costPcLbl')}</label><input type="number" id="pfCost" min="0" step="any" inputmode="decimal" value="${p.cost||''}" placeholder="0" data-pf><div class="marginbox full" id="pfPer"></div>`}
    ${m.id?'':`<label for="pfQty">${t('howManyNow')}</label><input type="number" id="pfQty" min="0" inputmode="numeric" placeholder="0">`}
    <label for="pfLow">${t('lowAt')}</label><input type="number" id="pfLow" min="0" inputmode="numeric" value="${p.low??''}" placeholder="0">
   </div>
   <div class="row">${m.id?`<button class="btn ghost danger" data-act="prodDel" data-id="${m.id}">${t('remove')}</button>`:''}<span style="flex:1"></span><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="prodSave">${t('save')}</button></div>`;
 }
-function updatePfPer(){const el=$('#pfPer');if(!el)return;const mrp=+val('pfMrp')||0;let pc=null;
-  if($('#pfBoxCost')){const bc=+val('pfBoxCost'),n=+val('pfPerBox');if(bc>0&&n>0)pc=bc/n}else if(val('pfCost')!=='')pc=+val('pfCost');
-  el.textContent=pc!=null?t('perPcCalc',{c:inr(r2(pc))})+(mrp?' · '+t('marginT',{m:inr(r2(mrp-pc)),p:Math.round((mrp-pc)/mrp*100)}):''):''}
+function updatePfPer(){const el=$('#pfPer');if(!el)return;const mrp=val('pfMrp')===''?null:+val('pfMrp');let pc=null,box=null;
+  if($('#pfBoxCost')){const bc=+val('pfBoxCost'),n=+val('pfPerBox');if(bc>0&&n>0){pc=bc/n;box={bc,n}}}else if(val('pfCost')!=='')pc=+val('pfCost');
+  if(mrp==null||pc==null){el.className='marginbox full';el.innerHTML=`<span class="label">${t('marginH')}</span><span class="mv muted">—</span><span class="note">${t('marginNeed')}</span>`;return}
+  const m=r2(mrp-pc),pct=mrp?Math.round(m/mrp*100):0,neg=m<0;
+  el.className='marginbox full '+(neg?'neg':'pos');
+  el.innerHTML=`<span class="label">${t('marginH')}</span><span class="mv">${neg?'− ':''}${inr(Math.abs(m))} <small>${t('perPcShort')}</small></span>
+    <span class="note">${t('marginCalc',{mrp:inr(mrp),c:inr(r2(pc))})} · ${pct}% ${t('ofMrp')}${box?` · ${t('marginBox',{n:box.n,m:inr(r2(m*box.n))})}`:''}</span>${neg?`<span class="note" style="color:var(--warn);font-weight:700">${t('marginNeg')}</span>`:''}`}
 function renderModal(){
   const el=$('#modal'),m=S.modal;
   if(!m){el.hidden=true;el.innerHTML='';return}
