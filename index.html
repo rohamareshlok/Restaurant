@@ -718,6 +718,7 @@ const T={
  payLaterNote:['Pay-later bills are part of sales but not in the cash drawer. They show under Credit until paid.','नंतर देणार बिले विक्रीत आहेत पण गल्ल्यात नाहीत. पैसे मिळेपर्यंत उधारीत दिसतात.','बाद में देने वाले बिल बिक्री में हैं पर गल्ले में नहीं। भुगतान तक उधार में दिखते हैं।'],
  crKindCash:['Money given (cash/UPI went out)','पैसे दिले (रोख/UPI गेले)','पैसे दिए (नकद/UPI गया)'],crKindFood:['Food or goods on credit (no money given)','जेवण/माल उधारीवर (पैसे दिले नाहीत)','खाना/सामान उधार पर (पैसे नहीं दिए)'],
  crKindFoodNote:['Nothing is taken from the cash drawer. For a table bill, use "Pay later" on the bill screen so the sale is recorded too.','गल्ल्यातून काही जात नाही. टेबल बिलासाठी बिल स्क्रीनवरील "नंतर देणार" वापरा म्हणजे विक्रीही नोंदवली जाईल.','गल्ले से कुछ नहीं जाता। टेबल बिल के लिए बिल स्क्रीन पर "बाद में" इस्तेमाल करें ताकि बिक्री भी दर्ज हो।'],
+ vegNonLbl:['Veg / Non-veg','शाकाहारी / मांसाहारी','शाकाहारी / मांसाहारी'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -939,7 +940,7 @@ function vCounter(){
     h+=`<div class="list">`;
     list.forEach(p=>{
       const q=+p.qty||0,isLow=q<=(+p.low||0),sold=cd.soldBy[p.id]||0,tb=cd.tableBy[p.id]||0;
-      h+=`<div class="prod"><div style="min-width:0"><div class="name">${p.brand?`<span class="brandtag">${esc(p.brand)}</span> `:''}${esc(p.name)}</div><div class="meta"><span class="pill ${p.type}">${t('t_'+p.type)}</span> ${t('mrpT')} ${inr(p.price)}${perPc(p)?` · ${t('costT')} ${inr(r2(perPc(p)))}`:''}${+p.perBox>0?` · ${t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)})}`:''}</div><div class="meta">${t('soldDay',{n:sold})}${tb?' ('+t('atTables',{n:tb})+')':''}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div>${q<0?`<div class="meta" style="color:var(--warn);font-weight:600">${t('mismatch')}</div>`:isLow?`<div style="margin-top:3px"><span class="pill warn">${t('low')}</span></div>`:''}</div>
+      h+=`<div class="prod"><div style="min-width:0"><div class="name">${vm(prodVk(p))} ${p.brand?`<span class="brandtag">${esc(p.brand)}</span> `:''}${esc(p.name)}</div><div class="meta"><span class="pill ${p.type}">${t('t_'+p.type)}</span> ${t('mrpT')} ${inr(p.price)}${perPc(p)?` · ${t('costT')} ${inr(r2(perPc(p)))}`:''}${+p.perBox>0?` · ${t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)})}`:''}</div><div class="meta">${t('soldDay',{n:sold})}${tb?' ('+t('atTables',{n:tb})+')':''}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div>${q<0?`<div class="meta" style="color:var(--warn);font-weight:600">${t('mismatch')}</div>`:isLow?`<div style="margin-top:3px"><span class="pill warn">${t('low')}</span></div>`:''}</div>
        <div class="stk"><span class="label">${t('inStock')}</span><input type="number" id="ps_${p.id}" data-live data-pid="${p.id}" class="${q<0?'neg':''}" value="${q}" aria-label="${esc(t('stockOf',{n:p.name}))}" step="1"><button class="btn primary sm rowsave" data-act="rowSave" data-row="k:${p.id}" disabled>${t('save')}</button></div>
        <div class="acts"><button class="btn primary sm" data-act="sellOpen" data-id="${p.id}">${t('sell')}</button><button class="btn sm" data-act="restockOpen" data-id="${p.id}">${t('addStockBtn')}</button><button class="btn sm ghost" data-act="prodOpen" data-id="${p.id}">✎ ${t('editBtn')}</button></div></div>`;
     });
@@ -1577,8 +1578,9 @@ function printerPanel(){
 /* ---------- stock purchases from a supplier bill ---------- */
 const pcCost=pid=>{const p=S.products.find(x=>x.id===pid);return p?perPc(p):0};
 const brands=()=>[...new Set(S.products.map(p=>(p.brand||'').trim()).filter(Boolean))].sort();
+const prodVk=p=>p&&p.veg==='nonveg'?'nonveg':'veg';
 const prodLabel=p=>(p.brand?p.brand+' · ':'')+p.name;
-const newLine=()=>({saved:false,name:'',brand:'',type:'icecream',perBox:'',boxes:'',boxPrice:'',amount:'',mrp:'',pid:null,amtTouched:false});
+const newLine=()=>({saved:false,veg:'veg',name:'',brand:'',type:'icecream',perBox:'',boxes:'',boxPrice:'',amount:'',mrp:'',pid:null,amtTouched:false});
 const lineAmt=l=>l.amtTouched&&l.amount!==''?+l.amount:Math.round((+l.boxes||0)*(+l.boxPrice||0)*100)/100;
 const lineCost=l=>(+l.perBox>0&&+l.boxPrice>0)?(+l.boxPrice)/(+l.perBox):(+l.perBox>0&&+l.boxes>0&&lineAmt(l)>0?lineAmt(l)/((+l.boxes)*(+l.perBox)):0);
 function lineCalcText(l){const pcs=(+l.boxes||0)*(+l.perBox||0),c=lineCost(l),mrp=+l.mrp||0;
@@ -1590,7 +1592,7 @@ function purchaseModalHTML(m){
   <div class="form"><input type="text" id="puSup" placeholder="${esc(t('supName'))}" list="puSupL" value="${esc(m.sup||'')}" data-pu="sup"><datalist id="puSupL">${sups.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
    <input type="text" id="puNo" placeholder="${esc(t('billNoOpt'))}" value="${esc(m.no||'')}" data-pu="no"></div>
   <datalist id="puItems">${S.products.map(p=>`<option value="${esc(p.name)}">${esc(p.brand||'')}</option>`).join('')}</datalist><datalist id="puBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
-  ${m.lines.map((l,i)=>l.saved?`<div class="pline saved"><div class="spread" style="align-items:flex-start;flex-wrap:nowrap"><div style="min-width:0"><div class="name">${l.brand?`<span class="brandtag">${esc(l.brand)}</span> `:''}<b>${esc(l.name)}</b> <span class="muted">· ${t('t_'+l.type)}</span></div>
+  ${m.lines.map((l,i)=>l.saved?`<div class="pline saved"><div class="spread" style="align-items:flex-start;flex-wrap:nowrap"><div style="min-width:0"><div class="name">${vm(l.veg==='nonveg'?'nonveg':'veg')} ${l.brand?`<span class="brandtag">${esc(l.brand)}</span> `:''}<b>${esc(l.name)}</b> <span class="muted">· ${t('t_'+l.type)}</span></div>
       <div class="meta">${t('plSummary',{b:+l.boxes,n:+l.perBox,p:(+l.boxes)*(+l.perBox),pr:inr(+l.boxPrice||0)})}</div><div class="pcalc">${lineCalcText(l)}</div></div>
       <div style="text-align:right;flex:none"><b>${inr(lineAmt(l))}</b><div class="row" style="justify-content:flex-end;margin-top:6px;flex-wrap:nowrap"><button class="btn sm" data-act="puEdit" data-i="${i}">✎ ${t('editBtn')}</button><button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button></div></div></div></div>`:`<div class="pline">
     <div class="spread"><b>${t('itemN',{n:i+1})}</b>${m.lines.length>1||l.name?`<button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button>`:''}</div>
@@ -1598,6 +1600,7 @@ function purchaseModalHTML(m){
      <input type="text" class="full" placeholder="${esc(t('prodName'))}" list="puItems" value="${esc(l.name)}" data-pl="${i}:name">
      <input type="text" placeholder="${esc(t('brandPh'))}" list="puBrands" value="${esc(l.brand)}" data-pl="${i}:brand">
      <select data-pl="${i}:type">${TYPES.map(k=>`<option value="${k}" ${l.type===k?'selected':''}>${t('t_'+k)}</option>`).join('')}</select>
+     <select class="full" data-pl="${i}:veg"><option value="veg" ${l.veg!=='nonveg'?'selected':''}>🟢 ${t('kVegS')}</option><option value="nonveg" ${l.veg==='nonveg'?'selected':''}>🔺 ${t('kNonS')}</option></select>
      <label>${t('perBoxLbl')}</label><input type="number" min="1" inputmode="numeric" value="${esc(l.perBox)}" data-pl="${i}:perBox" placeholder="0">
      <label>${t('boxesBought')}</label><input type="number" min="0" inputmode="decimal" value="${esc(l.boxes)}" data-pl="${i}:boxes" placeholder="0">
      <label>${t('boxPriceLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" value="${esc(l.boxPrice)}" data-pl="${i}:boxPrice" placeholder="0">
@@ -1617,7 +1620,7 @@ function puRefresh(){const m=S.modal;if(!m||m.kind!=='purchase')return;
 function puFill(i){const m=S.modal,l=m.lines[i],nm=l.name.trim().toLowerCase();if(!nm)return;
   const p=S.products.find(x=>x.name.trim().toLowerCase()===nm&&(!l.brand||(x.brand||'').toLowerCase()===l.brand.trim().toLowerCase()))||S.products.find(x=>x.name.trim().toLowerCase()===nm);
   if(!p){l.pid=null;return}
-  l.pid=p.id;if(!l.brand)l.brand=p.brand||'';l.type=p.type||l.type;if(!l.perBox&&+p.perBox)l.perBox=p.perBox;if(!l.boxPrice&&+p.boxCost)l.boxPrice=p.boxCost;if(!l.mrp&&+p.price)l.mrp=p.price;
+  l.pid=p.id;if(!l.brand)l.brand=p.brand||'';l.veg=prodVk(p);l.type=p.type||l.type;if(!l.perBox&&+p.perBox)l.perBox=p.perBox;if(!l.boxPrice&&+p.boxCost)l.boxPrice=p.boxCost;if(!l.mrp&&+p.price)l.mrp=p.price;
   setTimeout(()=>{const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.pl:null;renderModal();if(f){const e=document.querySelector(`[data-pl="${f}"]`);if(e)e.focus()}},0)}
 async function puSave(b){
   const m=S.modal,lines=m.lines.filter(l=>l.name.trim());
@@ -1628,9 +1631,9 @@ async function puSave(b){
   else if(!sup){toast(t('puNeedSup'));return}
   b.disabled=true;
   const ok=await save(async()=>{
-    const pr=await db.collection('purchases').add({supplier:sup,billNo:m.no||'',date:d,at:Date.now(),total,mode:m.mode||'paid',...(pp||{}),lines:lines.map(l=>({name:l.name.trim(),brand:l.brand.trim(),type:l.type,perBox:+l.perBox,boxes:+l.boxes,boxPrice:+l.boxPrice||0,amount:lineAmt(l),mrp:+l.mrp||0}))});
+    const pr=await db.collection('purchases').add({supplier:sup,billNo:m.no||'',date:d,at:Date.now(),total,mode:m.mode||'paid',...(pp||{}),lines:lines.map(l=>({name:l.name.trim(),veg:l.veg||'veg',brand:l.brand.trim(),type:l.type,perBox:+l.perBox,boxes:+l.boxes,boxPrice:+l.boxPrice||0,amount:lineAmt(l),mrp:+l.mrp||0}))});
     for(const l of lines){
-      const pcs=Math.round((+l.boxes)*(+l.perBox)),cost=r2(lineCost(l)),upd={brand:l.brand.trim(),type:l.type,perBox:+l.perBox,boxCost:+l.boxPrice||r2(cost*(+l.perBox)),cost,updatedAt:Date.now()};
+      const pcs=Math.round((+l.boxes)*(+l.perBox)),cost=r2(lineCost(l)),upd={brand:l.brand.trim(),veg:l.veg==='nonveg'?'nonveg':'veg',type:l.type,perBox:+l.perBox,boxCost:+l.boxPrice||r2(cost*(+l.perBox)),cost,updatedAt:Date.now()};
       if(+l.mrp>0)upd.price=+l.mrp;
       let pid=l.pid&&S.products.find(x=>x.id===l.pid)?l.pid:null;
       if(pid){await db.doc('products/'+pid).update(upd);await adjustStock(pid,pcs)}
@@ -1647,7 +1650,7 @@ async function puSave(b){
 function counterMenuHTML(){
   if(!S.products.length)return `<div class="empty"><b>${t('noProdT')}</b>${t('counterMenuEmpty')}</div>`;
   const groups={};S.products.forEach(p=>{const g=t('t_'+p.type)+(p.brand?' · '+p.brand:'');(groups[g]=groups[g]||[]).push(p)});
-  return `<div class="note">${t('counterMenuAuto')}</div>`+Object.entries(groups).map(([g,list])=>`<section><div class="label" style="margin-bottom:8px">${esc(g)} · ${list.length}</div><div class="list">`+list.map(p=>`<div class="li"><span class="vsp"></span><div class="grow"><div class="name">${esc(p.name)}</div><div class="meta">${t('inStock')}: ${+p.qty||0}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div></div><span class="amt">${inr(p.price)}</span>${S.canEdit?`<button class="btn sm ghost" data-act="prodOpen" data-id="${p.id}">✎</button>`:''}</div>`).join('')+`</div></section>`).join('');
+  return `<div class="note">${t('counterMenuAuto')}</div>`+Object.entries(groups).map(([g,list])=>`<section><div class="label" style="margin-bottom:8px">${esc(g)} · ${list.length}</div><div class="list">`+list.map(p=>`<div class="li">${vm(prodVk(p))}<div class="grow"><div class="name">${esc(prodLabel(p))}</div><div class="meta">${t('inStock')}: ${+p.qty||0}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div></div><span class="amt">${inr(p.price)}</span>${S.canEdit?`<button class="btn sm ghost" data-act="prodOpen" data-id="${p.id}">✎</button>`:''}</div>`).join('')+`</div></section>`).join('');
 }
 
 /* ---------- credit ---------- */
@@ -1888,7 +1891,7 @@ function vSetup(){
 const ikey=i=>i.pid?'p:'+i.pid:'m:'+i.mid;
 function catalog(){
   return [...S.menu.map(m=>({key:'m:'+m.id,mid:m.id,name:m.name,price:+m.price,cat:m.cat||t('other'),k:m.k||'veg'})),
-          ...S.products.map(p=>({key:'p:'+p.id,pid:p.id,name:prodLabel(p),price:+p.price,cat:t('t_'+p.type)+(p.brand?' · '+p.brand:''),k:'counter',stock:+p.qty||0}))];
+          ...S.products.map(p=>({key:'p:'+p.id,pid:p.id,vk:prodVk(p),name:prodLabel(p),price:+p.price,cat:t('t_'+p.type)+(p.brand?' · '+p.brand:''),k:'counter',stock:+p.qty||0}))];
 }
 function openDraft(o,table,label){
   const base={dirty:false,mode:'edit',pay:'cash',cat:'*',kf:'*',q:''};
@@ -1896,7 +1899,7 @@ function openDraft(o,table,label){
           :{...base,id:null,table,label,items:[],createdAt:Date.now()};
   renderSheet();
 }
-const itemMark=i=>i.pid?'<span class="vsp"></span>':vm(i.k);
+const itemMark=i=>vm(i.pid?(i.vk||prodVk(S.products.find(p=>p.id===i.pid))):i.k);
 const stepper=(key,n)=>`<div class="stepper"><button class="icon-btn" data-act="decItem" data-key="${key}" aria-label="${esc(t('less'))}">−</button><span>${n}</span><button class="icon-btn" data-act="addItem" data-key="${key}" aria-label="${esc(t('more'))}">+</button></div>`;
 const popGet=()=>{try{return JSON.parse(localStorage.getItem('pop')||'{}')}catch(e){return {}}};
 function popAdd(items){try{const p=popGet();items.forEach(i=>{const k=ikey(i);p[k]=(p[k]||0)+i.qty});localStorage.setItem('pop',JSON.stringify(p))}catch(e){}}
@@ -1912,7 +1915,7 @@ function sheetMenuHTML(d){
   groups.forEach((list,g)=>{
     h+=(g?`<div class="label grp">${esc(g)}</div>`:'')+`<div class="list">`+list.map(x=>{
       const inD=d.items.find(i=>ikey(i)===x.key),n=inD?inD.qty:0;
-      return `<div class="mrow ${n?'in':''}">${x.pid?'<span class="vsp"></span>':vm(x.k)}<div class="grow" data-act="addItem" data-key="${x.key}" role="button" tabindex="0"><div class="name">${esc(x.name)}</div><div class="meta">${inr(x.price)}${x.pid?' · '+t('inStock')+': '+x.stock:''}</div></div>${n?stepper(x.key,n):`<button class="btn sm addbtn" data-act="addItem" data-key="${x.key}">${t('add')}</button>`}</div>`}).join('')+`</div>`;
+      return `<div class="mrow ${n?'in':''}">${vm(x.pid?x.vk:x.k)}<div class="grow" data-act="addItem" data-key="${x.key}" role="button" tabindex="0"><div class="name">${esc(x.name)}</div><div class="meta">${inr(x.price)}${x.pid?' · '+t('inStock')+': '+x.stock:''}</div></div>${n?stepper(x.key,n):`<button class="btn sm addbtn" data-act="addItem" data-key="${x.key}">${t('add')}</button>`}</div>`}).join('')+`</div>`;
   });
   return h;
 }
@@ -2056,6 +2059,7 @@ function prodModalHTML(m){
   return `<h3>${m.id?t('editProdT'):t('addProduct')}</h3><div class="form">
    <label for="pfName" class="full">${t('name')}</label><input type="text" id="pfName" class="full" value="${esc(p.name||'')}" placeholder="${esc(t('prodName'))}">
    <label for="pfBrand">${t('brandLbl')}</label><input type="text" id="pfBrand" list="pfBrands" value="${esc(p.brand||'')}" placeholder="${esc(t('brandPh'))}"><datalist id="pfBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
+   <label for="pfVeg">${t('vegNonLbl')}</label><select id="pfVeg"><option value="veg" ${prodVk(p)==='veg'?'selected':''}>🟢 ${t('kVegS')}</option><option value="nonveg" ${prodVk(p)==='nonveg'?'selected':''}>🔺 ${t('kNonS')}</option></select>
    <label for="pfType">${t('categoryLbl')}</label><select id="pfType">${TYPES.map(k=>`<option value="${k}" ${(p.type||'icecream')===k?'selected':''}>${t('t_'+k)}</option>`).join('')}</select>
    <label for="pfMrp">${t('mrpLbl')}</label><input type="number" id="pfMrp" min="0" step="any" inputmode="decimal" value="${p.price??''}" placeholder="0">
    ${m.id?`<div class="full note">${perPc(p)?t('lastBought',{c:inr(r2(perPc(p))),b:+p.perBox?t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)}):''}):t('noBuyYet')}</div><div class="marginbox full" id="pfPer"></div>`:`<div class="full"><div class="label" style="margin:4px 0 6px">${t('buyPriceLbl')}</div><div class="seg" role="group"><button class="${box?'':'on dk'}" data-act="pfBuy" data-k="piece">${t('perPiece')}</button><button class="${box?'on dk':''}" data-act="pfBuy" data-k="box">${t('perBoxT')}</button></div></div>
@@ -2125,13 +2129,13 @@ function renderModal(){
     const p=S.products.find(x=>x.id===m.pid);if(!p){S.modal=null;el.hidden=true;return}
     if(m.kind==='sell'){
       const over=m.qty>(+p.qty||0);
-      h=`<h3>${esc(t('sellTitle',{n:p.name}))}</h3><div class="spread"><span class="pill ${p.type}">${t('t_'+p.type)}</span><span class="muted">${t('each',{p:inr(p.price)})} · ${t('inStock')}: ${+p.qty||0}</span></div>
+      h=`<h3>${esc(t('sellTitle',{n:prodLabel(p)}))}</h3><div class="spread"><span class="pill ${p.type}">${t('t_'+p.type)}</span><span class="muted">${t('each',{p:inr(p.price)})} · ${t('inStock')}: ${+p.qty||0}</span></div>
        <div class="bigstep"><button class="icon-btn" data-act="mq" data-k="-1" aria-label="${t('less')}" ${m.qty<=1?'disabled':''}>−</button><span aria-live="polite">${m.qty}</span><button class="icon-btn" data-act="mq" data-k="1" aria-label="${t('more')}">+</button></div>
        ${over?`<div class="banner">${t('overStock',{n:+p.qty||0})}</div>`:''}
        ${payBtns(m.pay)}
        <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="sellDo">${t('confirmSale',{a:inr(m.qty*p.price)})}</button></div>`;
     }else{
-      h=`<h3>${esc(t('addStockTitle',{n:p.name}))}</h3><div class="muted">${t('inStock')}: ${+p.qty||0} ${t('pcs')}</div>
+      h=`<h3>${esc(t('addStockTitle',{n:prodLabel(p)}))}</h3><div class="muted">${t('inStock')}: ${+p.qty||0} ${t('pcs')}</div>
        ${+p.perBox>0?`<div class="seg" role="group"><button class="${m.unit==='box'?'on dk':''}" data-act="rsUnit" data-k="box">${t('boxesT')} (${p.perBox} ${t('pcs')})</button><button class="${m.unit!=='box'?'on dk':''}" data-act="rsUnit" data-k="pc">${t('piecesT')}</button></div>`:''}
        <label class="label" for="rsQty">${m.unit==='box'?t('howManyBoxes'):t('howMany')}</label><input type="number" id="rsQty" min="1" inputmode="numeric" placeholder="0">
        <label class="label" for="rsCost">${t('paidForDelivery')}</label><input type="number" id="rsCost" min="0" inputmode="decimal" placeholder="${esc(m.unit==='box'&&+p.boxCost?t('autoBoxCost',{c:inr(p.boxCost)}):perPc(p)?t('autoCost',{c:inr(r2(perPc(p)))}):t('optional'))}">
@@ -2204,7 +2208,7 @@ const A={
     if(d&&d.dirty&&(d.items.length||d.id)){if(!(await persistDraft()))return;if(d.items.length)toast(t('orderSaved'))}S.draft=null;render()},
   clearTable(){const d=S.draft;confirmBox(t('clearTableQ',{t:orderName(d)}),t('clearTable'),async()=>{if(await persistDraft()){S.draft=null;render()}})},
   addItem(b){const x=catalog().find(c=>c.key===b.dataset.key);if(!x)return;const d=S.draft,ex=d.items.find(i=>ikey(i)===x.key);
-    if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1,cost:r2(pcCost(x.pid))}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
+    if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1,vk:x.vk,cost:r2(pcCost(x.pid))}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
     if(d.q&&!b.closest('.stepper')){d.q='';const i=$('#mq');if(i){i.value='';i.blur()}}
     renderSheet()},
   decItem(b){const d=S.draft,ix=d.items.findIndex(i=>ikey(i)===b.dataset.key);if(ix<0)return;d.items[ix].qty--;if(d.items[ix].qty<=0)d.items.splice(ix,1);d.dirty=true;if(!d.items.length&&d.mode==='bill')d.mode='edit';renderSheet()},
@@ -2336,9 +2340,9 @@ const A={
   billPdf(b){b.disabled=true;billPdf(S.modal).finally(()=>{b.disabled=false})},
   salesView(b){S.salesView=b.dataset.k;render()},logF(b){S.logF=b.dataset.k;render()},
   prodOpen(b){const id=b.dataset.id||null,p=id?S.products.find(x=>x.id===id):null;S.modal={kind:'prod',id,buy:p&&+p.perBox>0?'box':'piece'};renderModal()},
-  pfBuy(b){const keep={};['pfName','pfBrand','pfType','pfMrp','pfQty','pfLow'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.buy=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}updatePfPer()},
+  pfBuy(b){const keep={};['pfName','pfBrand','pfVeg','pfType','pfMrp','pfQty','pfLow'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.buy=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}updatePfPer()},
   async prodSave(b){const m=S.modal,name=val('pfName'),mrp=val('pfMrp');if(!name||mrp===''||!(+mrp>=0)){toast(t('needDish'));return}
-    const d={name,brand:val('pfBrand'),type:val('pfType')||'other',price:+mrp,low:Math.round(+val('pfLow')||0),updatedAt:Date.now()};
+    const d={name,veg:val('pfVeg')==='nonveg'?'nonveg':'veg',brand:val('pfBrand'),type:val('pfType')||'other',price:+mrp,low:Math.round(+val('pfLow')||0),updatedAt:Date.now()};
     if(!$('#pfBoxCost')&&!$('#pfCost')){}else if(m.buy==='box'){const bc=+val('pfBoxCost')||0,n=Math.round(+val('pfPerBox')||0);if(bc>0&&!(n>0)){toast(t('needPerBox'));return}d.boxCost=bc;d.perBox=n;d.cost=n>0?r2(bc/n):0}
     else{d.cost=+val('pfCost')||0;d.boxCost=0;d.perBox=0}
     b.disabled=true;
