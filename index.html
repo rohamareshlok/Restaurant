@@ -720,7 +720,7 @@ const T={
  crKindCash:['Money given (cash/UPI went out)','पैसे दिले (रोख/UPI गेले)','पैसे दिए (नकद/UPI गया)'],crKindFood:['Food or goods on credit (no money given)','जेवण/माल उधारीवर (पैसे दिले नाहीत)','खाना/सामान उधार पर (पैसे नहीं दिए)'],
  crKindFoodNote:['Nothing is taken from the cash drawer. For a table bill, use "Pay later" on the bill screen so the sale is recorded too.','गल्ल्यातून काही जात नाही. टेबल बिलासाठी बिल स्क्रीनवरील "नंतर देणार" वापरा म्हणजे विक्रीही नोंदवली जाईल.','गल्ले से कुछ नहीं जाता। टेबल बिल के लिए बिल स्क्रीन पर "बाद में" इस्तेमाल करें ताकि बिक्री भी दर्ज हो।'],
  vegNonLbl:['Veg / Non-veg','शाकाहारी / मांसाहारी','शाकाहारी / मांसाहारी'],
- showMore:['Show more','आणखी दाखवा','और दिखाएँ'], absentLn:['Absent · {n} day(s)','गैरहजर · {n} दिवस','गैरहाज़िर · {n} दिन'],shortLn:['Short hours · {h}h on {n} day(s)','कमी तास · {n} दिवसांत {h} तास','कम घंटे · {n} दिन में {h} घंटे'],runningH:['Running now ({a} – today) · goes in salary of {d}','चालू काळ ({a} – आज) · {d} च्या पगारात','चालू अवधि ({a} – आज) · {d} के वेतन में'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ showMore:['Show more','आणखी दाखवा','और दिखाएँ'], absentLn:['Absent · {n} day(s)','गैरहजर · {n} दिवस','गैरहाज़िर · {n} दिन'],shortLn:['Short hours · {h}h on {n} day(s)','कमी तास · {n} दिवसांत {h} तास','कम घंटे · {n} दिन में {h} घंटे'],runningH:['Running now ({a} – today) · goes in salary of {d}','चालू काळ ({a} – आज) · {d} च्या पगारात','चालू अवधि ({a} – आज) · {d} के वेतन में'], workPeriodLbl:['Work period','कामाचा काळ','काम की अवधि'],periodDays:['{n} days','{n} दिवस','{n} दिन'],customPeriod:['Changed period','बदललेला काळ','बदली अवधि'],normalPeriod:['Use normal period','नेहमीचा काळ','सामान्य अवधि'],salaryForDays:['Salary for {n} days','{n} दिवसांचा पगार','{n} दिनों का वेतन'],finalPay:['Final salary to give ₹ (change if needed)','द्यायचा अंतिम पगार ₹ (गरज असल्यास बदला)','देने का अंतिम वेतन ₹ (ज़रूरत हो तो बदलें)'],changeWhy:['Reason for change (bonus, leaving early…)','बदलाचे कारण (बोनस, लवकर सोडले…)','बदलाव का कारण (बोनस, जल्दी छोड़ा…)'],payMore:['{a} more than calculated {b}','मोजलेल्या {b} पेक्षा {a} जास्त','गणना {b} से {a} ज़्यादा'],payLess:['{a} less than calculated {b}','मोजलेल्या {b} पेक्षा {a} कमी','गणना {b} से {a} कम'],needWhy:['Write a reason for changing the salary','पगार बदलण्याचे कारण लिहा','वेतन बदलने का कारण लिखें'],badPeriod:['Start date must be before end date','सुरुवात तारीख शेवटच्या आधी हवी','शुरू की तारीख अंत से पहले हो'], fromDay:['from {d}','{d} पासून','{d} से'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1722,9 +1722,15 @@ function spanHours(from,to,full=24){const a=timeToH(from),b=timeToH(to);if(a==nu
 const joinDate=s=>s.addedAt?new Date(s.addedAt).toLocaleDateString('en-CA'):null;
 /* the salary a person is owed next: this month's pay date, unless it is already paid or came before they joined */
 function baseMonth(s){const cur=today().slice(0,7),j=joinDate(s);return (j&&payDateFor(cur,s.payDay)<=j)||paidFor(s.id,cur).length?mShift(cur,1):cur}
-function salaryCalc(s,mo){
-  const pd=payDateFor(mo,s.payDay),pstart=payDateFor(mShift(mo,-1),s.payDay),end=shift(pd,-1),j=joinDate(s);
-  const start=j&&j>pstart?j:pstart,F=shiftOf(s),perDay=s.payType==='day';
+function salaryCalc(s,mo,rng){
+  const pd=payDateFor(mo,s.payDay),pstart=payDateFor(mShift(mo,-1),s.payDay),j=joinDate(s);
+  let dStart=j&&j>pstart?j:pstart;const dEnd=shift(pd,-1);
+  /* if the last salary was paid up to a later date (a changed period), carry on from the day after */
+  const lastTo=(S.salaries||[]).filter(x=>x.staffId===s.id&&x.month<mo&&x.periodTo).map(x=>x.periodTo).sort().pop();
+  if(lastTo&&shift(lastTo,1)>dStart)dStart=shift(lastTo,1);
+  /* rng = a work period picked by hand when paying (e.g. someone leaving mid-month) */
+  const start=rng&&rng.from?rng.from:dStart,end=rng&&rng.to?rng.to:dEnd,custom=start!==dStart||end!==dEnd;
+  const F=shiftOf(s),perDay=s.payType==='day';
   const days=daysBetween(pstart,pd),sal=+s.salary||0;
   /* monthly: per day = salary ÷ 30 (default, same every month) or ÷ the actual days in the period. per day: the agreed daily rate */
   const daily=perDay?+s.rate||0:(s.divisor==='actual'?(days?sal/days:0):sal/30),hourly=daily/F;
@@ -1741,8 +1747,9 @@ function salaryCalc(s,mo){
   }
   const workDays=Math.max(0,daysBetween(start,pd));
   /* per-day staff earn for the days that have passed; monthly staff get the full salary (or the share from their joining date) */
-  const base=perDay?Math.round(daily*counted):start>pstart?Math.min(sal,Math.round(daily*workDays)):sal;
-  return {F,perDay,pd,start,end,days,counted,sal:payAmount(s),base,joined:start>pstart,daily,hourly,ded:Math.min(base,Math.round(ded)),absDed:Math.round(absDed),shortDed:Math.round(shortDed),shortH,ot:Math.round(ot),otH,abs,part,full,unmarked,future};
+  const nDays=Math.max(0,daysBetween(start,end)+1);
+  const base=perDay?Math.round(daily*counted):custom?Math.round(daily*nDays):start>pstart?Math.min(sal,Math.round(daily*workDays)):sal;
+  return {F,perDay,pd,start,end,custom,nDays,dStart,dEnd,days,counted,sal:payAmount(s),base,joined:!!(j&&j>pstart&&start===j),carried:!!(lastTo&&start===shift(lastTo,1)&&start>pstart),daily,hourly,ded:Math.min(base,Math.round(ded)),absDed:Math.round(absDed),shortDed:Math.round(shortDed),shortH,ot:Math.round(ot),otH,abs,part,full,unmarked,future};
 }
 const advFor=sid=>S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===sid);
 const paidFor=(sid,mo)=>S.salaries.filter(x=>x.staffId===sid&&x.month===mo);
@@ -1803,6 +1810,7 @@ function runLine(s,mo,c){
    <div class="ln"><span>${t('shortLn',{h:Math.round(r.shortH*100)/100,n:r.part})}</span><span>${r.shortDed?'− '+inr(r.shortDed):'—'}</span></div>
    ${r.ot?`<div class="ln" style="color:var(--cash)"><span>${t('overtime')}</span><span>+ ${inr(r.ot)}</span></div>`:''}</div>`;
 }
+const diffTxt=(d,due)=>t(d>0?'payMore':'payLess',{a:inr(Math.abs(d)),b:inr(due)});
 function vSalary(){
   let h=`<div class="spread">${salNav()}</div>`;
   const moOf=s=>mShift(baseMonth(s),S.salOff);
@@ -1814,7 +1822,7 @@ function vSalary(){
     const status=paid.length?`<div style="display:grid;gap:6px;justify-items:end"><span class="pill cash">${t('salaryPaidOn',{a:inr(sum(paid,x=>x.paid)),d:fmtDate(paid[0].date)+(paid[0].at?', '+hm(paid[0].at):'')})}</span>${paid.map(x=>`<button class="btn sm" data-act="editOpen" data-type="sal" data-id="${x.id}">✎ ${t('editSalPaid')}${paid.length>1?' '+inr(x.paid):''}</button>`).join('')}</div>`
       :c.sal?`<div style="display:grid;gap:6px;justify-items:end"><span class="pill ${dl<0?'warn':'open'}">${dl<0?t('overdueS',{n:-dl}):dl===0?t('dueTodayS'):t('dueInS',{n:dl})}</span><button class="btn primary sm" data-act="payOpen" data-id="${s.id}" data-mo="${mo}">${t('markSalaryPaid')}</button></div>`:'';
     return `<div class="sal"><div style="min-width:0"><div class="name" style="font-weight:700">${esc(s.name)}</div><div class="meta">${t('payDateOn',{d:fmtDate(c.pd)})}</div><div class="meta">${t('period',{a:fmtDate(c.start),b:fmtDate(c.end)})}</div></div><div>${status}</div>
-     ${c.sal?`<div class="ln"><span>${c.perDay?t('daysPay',{n:c.counted}):t('salary')}${!c.perDay&&c.joined?` <span class="muted">(${t('fromJoin',{d:fmtDate(c.start)})})</span>`:''}</span><span>${inr(c.base)}</span></div>
+     ${c.sal?`<div class="ln"><span>${c.perDay?t('daysPay',{n:c.counted}):t('salary')}${!c.perDay&&(c.joined||c.carried)?` <span class="muted">(${t(c.joined?'fromJoin':'fromDay',{d:fmtDate(c.start)})})</span>`:''}</span><span>${inr(c.base)}</span></div>
      <div class="ln" style="font-size:12.5px"><span>${c.perDay?t('dailyWage'):t('monthly')} · ${t('perDay',{d:inr(c.daily),h:inr(c.hourly)})} · ${t('shiftOfS',{h:c.F})}</span><span></span></div>
      <div class="ln"><span>${t('absentLn',{n:c.abs})}</span><span>${c.absDed?'− '+inr(c.absDed):'—'}</span></div>
      <div class="ln"><span>${t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part})}</span><span>${c.shortDed?'− '+inr(c.shortDed):'—'}</span></div>
@@ -2119,10 +2127,16 @@ function renderModal(){
      <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="recvDo">${t('save')}</button></div>`;
   }else if(m.kind==='pay'){
     const s=S.staffAll.find(x=>x.id===m.sid);if(!s){S.modal=null;el.hidden=true;return}
-    const c=salaryCalc(s,m.mo),advT=sum(advFor(s.id),a=>a.amount),due=Math.max(0,c.base-c.ded+c.ot-advT);
-    h=`<h3>${esc(t('paySalaryTitle',{n:s.name}))}</h3><div class="muted">${t('period',{a:fmtDate(c.start),b:fmtDate(c.end)})}</div>
-     <div class="ledger"><span>${t('salary')}</span><span>${inr(c.base)}</span><span>${t('deduction')}</span><span>− ${inr(c.ded)}</span>${c.ot?`<span>${t('overtime')}</span><span>+ ${inr(c.ot)}</span>`:''}<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span></div>
-     <label class="label" for="spAmt">${t('amountPaid')}</label><input type="number" id="spAmt" min="0" inputmode="decimal" value="${due}">
+    const c=salaryCalc(s,m.mo,{from:m.from,to:m.to}),advT=sum(advFor(s.id),a=>a.amount),due=Math.max(0,c.base-c.ded+c.ot-advT);m.due=due;
+    const amt=m.amt!=null?m.amt:due,chg=+amt!==due,minD=mShift(today().slice(0,7),-2)+'-01';
+    h=`<h3>${esc(t('paySalaryTitle',{n:s.name}))}</h3>
+     <div class="label">${t('workPeriodLbl')}</div>
+     <div class="form"><label for="spFrom">${t('fromT')}</label><input type="date" id="spFrom" data-spd="from" min="${minD}" value="${c.start}"><label for="spTo">${t('toT')}</label><input type="date" id="spTo" data-spd="to" min="${minD}" value="${c.end}"></div>
+     <div class="row" style="font-size:13.5px"><span class="muted">${t('periodDays',{n:c.nDays})}</span><span style="flex:1"></span>${c.custom?`<span class="pill open">${t('customPeriod')}</span><button class="btn sm" data-act="spReset">${t('normalPeriod')}</button>`:''}</div>
+     <div class="ledger"><span>${c.perDay?t('daysPay',{n:c.counted}):c.custom?t('salaryForDays',{n:c.nDays}):t('salary')}</span><span>${inr(c.base)}</span><span>${t('absentLn',{n:c.abs})}</span><span>${c.absDed?'− '+inr(c.absDed):'—'}</span><span>${t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part})}</span><span>${c.shortDed?'− '+inr(c.shortDed):'—'}</span>${c.ot?`<span>${t('overtime')}</span><span>+ ${inr(c.ot)}</span>`:''}<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span></div>
+     ${c.unmarked?`<div class="note">${t('unmarkedNote',{n:c.unmarked})}</div>`:''}
+     <label class="label" for="spAmt">${t('finalPay')}</label><input type="number" id="spAmt" min="0" inputmode="decimal" value="${amt}">
+     <div id="spChg" ${chg?'':'hidden'} style="display:grid;gap:6px"><div class="note" id="spDiff" style="color:var(--accent);font-weight:700">${chg?diffTxt(+amt-due,due):''}</div><input type="text" id="spWhy" placeholder="${esc(t('changeWhy'))}" value="${esc(m.why||'')}"></div>
      ${advT?`<div class="note">${t('advCut',{a:inr(advT)})}</div>`:''}
      ${payBtnsS(m.pay)}
      <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="payDo">${t('save')}</button></div>`;
@@ -2324,10 +2338,13 @@ const A={
   hrSave(){const m=S.modal,F=shiftOf(S.staffAll.find(x=>x.id===m.sid)),h=spanHours(m.from,m.to,24);if(h==null){toast(t('needHours'));return}S.modal=null;renderModal();setMark(m.sid,h===F&&m.from===startOf(S.staffAll.find(x=>x.id===m.sid))?'P':h<=0?'A':{h,from:m.from,to:m.to,at:Date.now()})},
   payOpen(b){S.modal={kind:'pay',sid:b.dataset.id,mo:b.dataset.mo,pay:'cash'};renderModal()},
   salOff(b){S.salOff=Math.min(0,S.salOff+ +b.dataset.k);if(db)subMonth();render()},
-  async payDo(b){const m=S.modal,s=S.staffAll.find(x=>x.id===m.sid),amt=+val('spAmt');if(!s)return;if(!(amt>=0)||val('spAmt')===''){toast(t('needCredit'));return}const pp=amt>0?mPayOf(amt):{pay:m.pay};if(!pp)return;b.disabled=true;
+  spReset(){const m=S.modal;m.from=m.to=null;if(m.amt!=null&&+m.amt===m.due)m.amt=null;renderModal()},
+  async payDo(b){const m=S.modal,s=S.staffAll.find(x=>x.id===m.sid),amt=+val('spAmt');if(!s)return;if(!(amt>=0)||val('spAmt')===''){toast(t('needCredit'));return}
+    if(m.from&&m.to&&m.from>m.to){toast(t('badPeriod'));return}
+    const why=val('spWhy').trim();if(amt!==m.due&&!why){toast(t('needWhy'));const w=$('#spWhy');if(w)w.focus();return}const pp=amt>0?mPayOf(amt):{pay:m.pay};if(!pp)return;b.disabled=true;
     const adv=S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===s.id);
     const ok=await save(async()=>{
-      const c=salaryCalc(s,m.mo);await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.mo,salary:c.base,payType:s.payType||'month',deduction:c.ded,overtime:c.ot,overtimeHours:c.otH,periodFrom:c.start,periodTo:c.end,advances:sum(adv,a=>a.amount),advIds:adv.map(a=>a.id),paid:amt,...pp,date:today(),at:Date.now()});
+      const c=salaryCalc(s,m.mo,{from:m.from,to:m.to});await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.mo,salary:c.base,payType:s.payType||'month',deduction:c.ded,overtime:c.ot,overtimeHours:c.otH,periodFrom:c.start,periodTo:c.end,advances:sum(adv,a=>a.amount),advIds:adv.map(a=>a.id),calculated:m.due,customPeriod:c.custom||null,...(amt!==m.due?{adjust:amt-m.due,note:why}:{}),paid:amt,...pp,date:today(),at:Date.now()});
       for(const a of adv)await db.doc('credits/'+a.id).update({status:'deducted',salaryMonth:m.mo});
     },t('salaryPaidT'));
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
@@ -2417,12 +2434,15 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
   if(isStaffRole()&&['purchaseOpen','puSave','prodOpen','prodSave','prodDel','restockOpen','restockDo','delRestock','delSale','rowSave','pendSave','editOpen','paidBillOpen','edItems','edCancelBill','edDelete','edSave'].includes(a)){toast(t('ownerOnly'));return}
   if(!S.canEdit&&['exportXlsx','salesMode','addMenu','delMenu','saveCfg','resetBills','archive','arSave','checkStorage','rebuild'].includes(a)){toast(t('ownerOnly'));return}
   const f=A[a];if(f)f(b,e)});
-document.addEventListener('input',e=>{const pl=e.target.dataset&&e.target.dataset.pl;if(pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=e.target.value;if(f==='amount')l.amtTouched=e.target.value!=='';puRefresh()}}
+document.addEventListener('input',e=>{if(e.target.id==='spAmt'&&S.modal&&S.modal.kind==='pay'){const m=S.modal,v=e.target.value,ch=v!==''&&+v!==m.due,box=$('#spChg'),df=$('#spDiff');if(box)box.hidden=!ch;if(df)df.textContent=ch?diffTxt(+v-m.due,m.due):''}
+  if(e.target.id==='spWhy'&&S.modal&&S.modal.kind==='pay')S.modal.why=e.target.value;
+  const pl=e.target.dataset&&e.target.dataset.pl;if(pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=e.target.value;if(f==='amount')l.amtTouched=e.target.value!=='';puRefresh()}}
   if(e.target.dataset&&e.target.dataset.pu&&S.modal&&S.modal.kind==='purchase')S.modal[e.target.dataset.pu]=e.target.value;if(/^pf/.test(e.target.id||''))updatePfPer();if(isPendField(e.target)&&e.target.dataset.sedit!=='payType'&&e.target.tagName!=='SELECT')markPend(e.target);if(e.target.id==='mq'&&S.draft){S.draft.q=e.target.value;renderSheet()}if(e.target.dataset.hr&&S.modal&&S.modal.kind==='hours'){S.modal[e.target.dataset.hr]=e.target.value;const F=shiftOf(S.staffAll.find(x=>x.id===S.modal.sid)),hh=spanHours(S.modal.from,S.modal.to,24),o=$('#hrOut');if(o)o.textContent=hh==null?'':hrOutText(hh,F)}
   if('discv' in e.target.dataset&&S.draft){const d=S.draft;d.disc={type:(d.disc&&d.disc.type)||'amt',v:e.target.value};d.dirty=true;updateBillNumbers()}
   if(e.target.dataset.ed&&S.modal&&S.modal.kind==='edit'){S.modal.f[e.target.dataset.ed]=e.target.value}
   if(e.target.dataset.split&&S.draft&&S.draft.split){S.draft.split[e.target.dataset.split]=e.target.value;updateSplitInfo()}});
 document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
+  if(d.spd&&S.modal&&S.modal.kind==='pay'){const m=S.modal,a=$('#spAmt');if(a&&+a.value!==m.due)m.amt=a.value;else m.amt=null;const w=$('#spWhy');if(w)m.why=w.value;m[d.spd]=x.value||null;renderModal();return}
   if(d.crk){S.crKind=x.value;const f=x.value==='food',a=$('#crFoodNote'),b=$('#crPayWrap');if(a)a.hidden=!f;if(b)b.hidden=f;return}
   if(d.pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=d.pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=x.value;if(f==='name'||f==='brand')puFill(+i);else puRefresh()}return}
   if(d.sp){const bx=document.getElementById(x.id+'S_box');if(bx){bx.hidden=x.value!=='split';if(x.value==='split'){const f=document.getElementById(x.id+'S_cash');f&&f.focus()}}return}
