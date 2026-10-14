@@ -268,6 +268,7 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.pline.saved{background:var(--surface);border-left:4px solid var(--cash)}.pline.saved .pcalc{font-size:12.5px;font-weight:600;color:var(--brand-text)}
 .modal .box{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
 .pline{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;background:var(--sunk)}
 .pline .pcalc{font-weight:600;color:var(--brand-text)}
@@ -470,7 +471,7 @@ const T={
  soldDay:['{n} sold','{n} विकले','{n} बिके'],atTables:['{n} at tables','{n} टेबलवर','{n} टेबल पर'],
  mismatch:['Count is below zero. Recount.','साठा शून्याखाली. पुन्हा मोजा.','स्टॉक शून्य से नीचे। फिर गिनें।'],
  noProdT:['No ice cream or drinks added','अजून आईस्क्रीम/पेये जोडलेली नाहीत','अभी आइसक्रीम/ड्रिंक नहीं जोड़े'],
- noProdB:['Add each flavour, water bottle and cold drink below with its price and how many you have now.','प्रत्येक आईस्क्रीम, पाण्याची बाटली व शीतपेय किंमत आणि सध्याच्या नगांसह खाली जोडा.','हर आइसक्रीम, पानी की बोतल और कोल्ड ड्रिंक को कीमत और अभी के स्टॉक के साथ नीचे जोड़ें।'],
+ noProdB0:['Add each flavour, water bottle and cold drink below with its price and how many you have now.','प्रत्येक आईस्क्रीम, पाण्याची बाटली व शीतपेय किंमत आणि सध्याच्या नगांसह खाली जोडा.','हर आइसक्रीम, पानी की बोतल और कोल्ड ड्रिंक को कीमत और अभी के स्टॉक के साथ नीचे जोड़ें।'],
  addProduct:['Add ice cream or drink','आईस्क्रीम किंवा पेय जोडा','आइसक्रीम या ड्रिंक जोड़ें'],prodName:['Name, e.g. Kulfi, Bisleri 1L','नाव, उदा. कुल्फी, बिसलेरी 1L','नाम, जैसे कुल्फी, बिसलेरी 1L'],
  howManyNow:['How many now','सध्या किती नग','अभी कितने'],lowAt:['Warn below (pcs)','इतक्या खाली सूचना','इतने से कम पर सूचना'],
  counterLog:['Counter entries','काउंटर नोंदी','काउंटर एंट्री'],fromTable:['Table bill','टेबल बिल','टेबल बिल'],
@@ -674,6 +675,10 @@ const T={
  ctrMarginH:['Ice cream & drinks margin','आईस्क्रीम व पेये नफा','आइसक्रीम व ड्रिंक मार्जिन'],ctrSold:['Sold','विक्री','बिक्री'],ctrCostL:['Buying cost of what was sold','विकलेल्या मालाची खरेदी किंमत','बिके माल की खरीद कीमत'],ctrMarginL:['Margin','नफा','मार्जिन'],
  ctrMarginNote:['Margin = selling price − buying cost, for each piece sold. Profit above still counts stock purchases as expenses on the day you buy.','नफा = विक्री किंमत − खरेदी किंमत, प्रत्येक विकलेल्या नगावर. वरील एकूण नफ्यात खरेदी त्या दिवशीच्या खर्चात धरली जाते.','मार्जिन = बिक्री कीमत − खरीद कीमत, हर बिके पीस पर। ऊपर के मुनाफ़े में खरीद उसी दिन के खर्च में गिनी जाती है।'],
  undoPurchaseQ:['This came from a purchase bill. Undo the whole bill ({n} items)? Stock and the expense will be reversed.','हे खरेदी बिलातून आले. संपूर्ण बिल ({n} वस्तू) रद्द करायचे? साठा व खर्च परत होईल.','यह खरीद बिल से आया। पूरा बिल ({n} आइटम) रद्द करें? स्टॉक और खर्च वापस होंगे।'],
+ noProdB:['Tap "Add purchase bill" above and enter the supplier bill. Items, stock and margin are set up from it.','वरील "खरेदी बिल जोडा" दाबा व पुरवठादाराचे बिल भरा. वस्तू, साठा व नफा त्यातून तयार होतात.','ऊपर "खरीद बिल जोड़ें" दबाएं और सप्लायर बिल भरें। आइटम, स्टॉक और मार्जिन उसी से बनते हैं।'],
+ saveItem:['Save item','वस्तू सेव्ह करा','आइटम सेव करें'],plSummary:['{b} boxes × {n} = {p} pieces · {pr} per box','{b} बॉक्स × {n} = {p} नग · प्रति बॉक्स {pr}','{b} बॉक्स × {n} = {p} पीस · प्रति बॉक्स {pr}'],
+ puNeedPrice:['Enter price per box or amount for {n}','{n} साठी प्रति बॉक्स किंमत किंवा रक्कम लिहा','{n} के लिए प्रति बॉक्स कीमत या रकम लिखें'],puNeedMrp:['Enter MRP per piece for {n}','{n} साठी प्रति नग MRP लिहा','{n} के लिए प्रति पीस MRP लिखें'],
+ lastBought:['Last bought at {c} per piece {b}. Buying cost updates from purchase bills.','शेवटची खरेदी प्रति नग {c} {b}. खरेदी किंमत खरेदी बिलांतून अद्ययावत होते.','आख़िरी खरीद प्रति पीस {c} {b}। खरीद कीमत खरीद बिलों से अपडेट होती है।'],noBuyYet:['No purchase bill yet. Buying cost comes from purchase bills.','अजून खरेदी बिल नाही. खरेदी किंमत खरेदी बिलांतून येते.','अभी कोई खरीद बिल नहीं। खरीद कीमत खरीद बिलों से आती है।'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -908,7 +913,6 @@ function vCounter(){
      :`<div class="li"><div class="grow"><div class="name">${esc(e.name)} <span class="amt" style="color:var(--cash)">+${e.qty}</span></div><div class="meta">${t('restockLbl')} · ${hm(e.at)}</div></div><button class="icon-btn" data-act="delRestock" data-id="${e.id}" aria-label="${t('del')}">×</button></div>`).join('')
      +(tableUnits?`<div class="li"><div class="grow"><div class="name">${t('fromTable')}</div><div class="meta">${S.products.filter(p=>cd.tableBy[p.id]).map(p=>esc(p.name)+' × '+cd.tableBy[p.id]).join(', ')}</div></div></div>`:'')+`</div>`
      :`<div class="empty">${t('noCounter')}</div>`)+`</section>`;
-  h+=`<button class="btn primary" data-act="prodOpen" style="width:100%">+ ${t('addProduct')}</button>`;
   return h;
 }
 
@@ -1534,7 +1538,7 @@ function printerPanel(){
 const pcCost=pid=>{const p=S.products.find(x=>x.id===pid);return p?perPc(p):0};
 const brands=()=>[...new Set(S.products.map(p=>(p.brand||'').trim()).filter(Boolean))].sort();
 const prodLabel=p=>(p.brand?p.brand+' · ':'')+p.name;
-const newLine=()=>({name:'',brand:'',type:'icecream',perBox:'',boxes:'',boxPrice:'',amount:'',mrp:'',pid:null,amtTouched:false});
+const newLine=()=>({saved:false,name:'',brand:'',type:'icecream',perBox:'',boxes:'',boxPrice:'',amount:'',mrp:'',pid:null,amtTouched:false});
 const lineAmt=l=>l.amtTouched&&l.amount!==''?+l.amount:Math.round((+l.boxes||0)*(+l.boxPrice||0)*100)/100;
 const lineCost=l=>(+l.perBox>0&&+l.boxPrice>0)?(+l.boxPrice)/(+l.perBox):(+l.perBox>0&&+l.boxes>0&&lineAmt(l)>0?lineAmt(l)/((+l.boxes)*(+l.perBox)):0);
 function lineCalcText(l){const pcs=(+l.boxes||0)*(+l.perBox||0),c=lineCost(l),mrp=+l.mrp||0;
@@ -1546,8 +1550,10 @@ function purchaseModalHTML(m){
   <div class="form"><input type="text" id="puSup" placeholder="${esc(t('supName'))}" list="puSupL" value="${esc(m.sup||'')}" data-pu="sup"><datalist id="puSupL">${sups.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
    <input type="text" id="puNo" placeholder="${esc(t('billNoOpt'))}" value="${esc(m.no||'')}" data-pu="no"></div>
   <datalist id="puItems">${S.products.map(p=>`<option value="${esc(p.name)}">${esc(p.brand||'')}</option>`).join('')}</datalist><datalist id="puBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
-  ${m.lines.map((l,i)=>`<div class="pline">
-    <div class="spread"><b>${t('itemN',{n:i+1})}</b>${m.lines.length>1?`<button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button>`:''}</div>
+  ${m.lines.map((l,i)=>l.saved?`<div class="pline saved"><div class="spread" style="align-items:flex-start;flex-wrap:nowrap"><div style="min-width:0"><div class="name">${l.brand?`<span class="brandtag">${esc(l.brand)}</span> `:''}<b>${esc(l.name)}</b> <span class="muted">· ${t('t_'+l.type)}</span></div>
+      <div class="meta">${t('plSummary',{b:+l.boxes,n:+l.perBox,p:(+l.boxes)*(+l.perBox),pr:inr(+l.boxPrice||0)})}</div><div class="pcalc">${lineCalcText(l)}</div></div>
+      <div style="text-align:right;flex:none"><b>${inr(lineAmt(l))}</b><div class="row" style="justify-content:flex-end;margin-top:6px;flex-wrap:nowrap"><button class="btn sm" data-act="puEdit" data-i="${i}">✎ ${t('editBtn')}</button><button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button></div></div></div></div>`:`<div class="pline">
+    <div class="spread"><b>${t('itemN',{n:i+1})}</b>${m.lines.length>1||l.name?`<button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button>`:''}</div>
     <div class="form">
      <input type="text" class="full" placeholder="${esc(t('prodName'))}" list="puItems" value="${esc(l.name)}" data-pl="${i}:name">
      <input type="text" placeholder="${esc(t('brandPh'))}" list="puBrands" value="${esc(l.brand)}" data-pl="${i}:brand">
@@ -1557,13 +1563,14 @@ function purchaseModalHTML(m){
      <label>${t('boxPriceLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" value="${esc(l.boxPrice)}" data-pl="${i}:boxPrice" placeholder="0">
      <label>${t('amountLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" id="plAmt_${i}" value="${l.amtTouched?esc(l.amount):(lineAmt(l)||'')}" data-pl="${i}:amount" placeholder="0">
      <label>${t('mrpPcLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" value="${esc(l.mrp)}" data-pl="${i}:mrp" placeholder="0">
-    </div><div class="note pcalc" id="plCalc_${i}">${lineCalcText(l)}</div></div>`).join('')}
+    </div><div class="note pcalc" id="plCalc_${i}">${lineCalcText(l)}</div><button class="btn primary" data-act="puLineSave" data-i="${i}">✓ ${t('saveItem')}</button></div>`).join('')}
   <button class="btn" data-act="puAdd">+ ${t('addLine')}</button>
   <div class="ptotal"><span>${t('billTotal')}</span><b id="puTot">${inr(total)}</b></div>
   <div class="seg" role="group"><button class="${m.mode!=='credit'?'on dk':''}" data-act="puMode" data-k="paid">${t('paidNow')}</button><button class="${m.mode==='credit'?'on dk':''}" data-act="puMode" data-k="credit">${t('onCreditSup')}</button></div>
   ${m.mode==='credit'?`<div class="note">${t('creditSupNote')}</div>`:payButtons('mpay',m.pay,true)+(m.pay==='split'?splitInputs('mpS',false):'')}
   <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="puSave">${t('savePurchase')}</button></div>`;
 }
+function lineOk(l){if(!l.name.trim()){toast(t('puNeedItem'));return false}if(!(+l.perBox>0)||!(+l.boxes>0)){toast(t('puNeedQty',{n:l.name}));return false}if(!(lineAmt(l)>0)){toast(t('puNeedPrice',{n:l.name}));return false}if(!(+l.mrp>0)){toast(t('puNeedMrp',{n:l.name}));return false}return true}
 function puRefresh(){const m=S.modal;if(!m||m.kind!=='purchase')return;
   m.lines.forEach((l,i)=>{const c=$('#plCalc_'+i);if(c)c.textContent=lineCalcText(l);const a=$('#plAmt_'+i);if(a&&!l.amtTouched&&document.activeElement!==a)a.value=lineAmt(l)||''});
   const tt=$('#puTot');if(tt)tt.textContent=inr(sum(m.lines,lineAmt))}
@@ -1575,7 +1582,7 @@ function puFill(i){const m=S.modal,l=m.lines[i],nm=l.name.trim().toLowerCase();i
 async function puSave(b){
   const m=S.modal,lines=m.lines.filter(l=>l.name.trim());
   if(!lines.length){toast(t('puNeedItem'));return}
-  for(const l of lines){if(!(+l.perBox>0)||!(+l.boxes>0)){toast(t('puNeedQty',{n:l.name}));return}}
+  for(const l of lines){if(!lineOk(l))return;l.saved=true}
   const total=Math.round(sum(lines,lineAmt)*100)/100,sup=(m.sup||'').trim(),d=S.day;
   let pp=null;if(m.mode!=='credit'){pp=total>0?mPayOf(total):{pay:m.pay||'cash'};if(!pp)return}
   else if(!sup){toast(t('puNeedSup'));return}
@@ -1981,18 +1988,18 @@ function prodModalHTML(m){
    <label for="pfBrand">${t('brandLbl')}</label><input type="text" id="pfBrand" list="pfBrands" value="${esc(p.brand||'')}" placeholder="${esc(t('brandPh'))}"><datalist id="pfBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
    <label for="pfType">${t('categoryLbl')}</label><select id="pfType">${TYPES.map(k=>`<option value="${k}" ${(p.type||'icecream')===k?'selected':''}>${t('t_'+k)}</option>`).join('')}</select>
    <label for="pfMrp">${t('mrpLbl')}</label><input type="number" id="pfMrp" min="0" step="any" inputmode="decimal" value="${p.price??''}" placeholder="0">
-   <div class="full"><div class="label" style="margin:4px 0 6px">${t('buyPriceLbl')}</div><div class="seg" role="group"><button class="${box?'':'on dk'}" data-act="pfBuy" data-k="piece">${t('perPiece')}</button><button class="${box?'on dk':''}" data-act="pfBuy" data-k="box">${t('perBoxT')}</button></div></div>
+   ${m.id?`<div class="full note">${perPc(p)?t('lastBought',{c:inr(r2(perPc(p))),b:+p.perBox?t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)}):''}):t('noBuyYet')}</div><div class="marginbox full" id="pfPer"></div>`:`<div class="full"><div class="label" style="margin:4px 0 6px">${t('buyPriceLbl')}</div><div class="seg" role="group"><button class="${box?'':'on dk'}" data-act="pfBuy" data-k="piece">${t('perPiece')}</button><button class="${box?'on dk':''}" data-act="pfBuy" data-k="box">${t('perBoxT')}</button></div></div>
    ${box?`<label for="pfBoxCost">${t('boxCostLbl')}</label><input type="number" id="pfBoxCost" min="0" step="any" inputmode="decimal" value="${p.boxCost||''}" placeholder="0" data-pf>
      <label for="pfPerBox">${t('perBoxLbl')}</label><input type="number" id="pfPerBox" min="1" inputmode="numeric" value="${p.perBox||''}" placeholder="0" data-pf>
      <div class="marginbox full" id="pfPer"></div>`
-    :`<label for="pfCost">${t('costPcLbl')}</label><input type="number" id="pfCost" min="0" step="any" inputmode="decimal" value="${p.cost||''}" placeholder="0" data-pf><div class="marginbox full" id="pfPer"></div>`}
+    :`<label for="pfCost">${t('costPcLbl')}</label><input type="number" id="pfCost" min="0" step="any" inputmode="decimal" value="${p.cost||''}" placeholder="0" data-pf><div class="marginbox full" id="pfPer"></div>`}`}
    ${m.id?'':`<label for="pfQty">${t('howManyNow')}</label><input type="number" id="pfQty" min="0" inputmode="numeric" placeholder="0">`}
    <label for="pfLow">${t('lowAt')}</label><input type="number" id="pfLow" min="0" inputmode="numeric" value="${p.low??''}" placeholder="0">
   </div>
   <div class="row">${m.id?`<button class="btn ghost danger" data-act="prodDel" data-id="${m.id}">${t('remove')}</button>`:''}<span style="flex:1"></span><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="prodSave">${t('save')}</button></div>`;
 }
 function updatePfPer(){const el=$('#pfPer');if(!el)return;const mrp=val('pfMrp')===''?null:+val('pfMrp');let pc=null,box=null;
-  if($('#pfBoxCost')){const bc=+val('pfBoxCost'),n=+val('pfPerBox');if(bc>0&&n>0){pc=bc/n;box={bc,n}}}else if(val('pfCost')!=='')pc=+val('pfCost');
+  if($('#pfBoxCost')){const bc=+val('pfBoxCost'),n=+val('pfPerBox');if(bc>0&&n>0){pc=bc/n;box={bc,n}}}else if($('#pfCost')){if(val('pfCost')!=='')pc=+val('pfCost')}else if(S.modal&&S.modal.id){const pr=S.products.find(x=>x.id===S.modal.id);if(pr&&perPc(pr))pc=perPc(pr)}
   if(mrp==null||pc==null){el.className='marginbox full';el.innerHTML=`<span class="label">${t('marginH')}</span><span class="mv muted">—</span><span class="note">${t('marginNeed')}</span>`;return}
   const m=r2(mrp-pc),pct=mrp?Math.round(m/mrp*100):0,neg=m<0;
   el.className='marginbox full '+(neg?'neg':'pos');
@@ -2252,7 +2259,7 @@ const A={
   pfBuy(b){const keep={};['pfName','pfBrand','pfType','pfMrp','pfQty','pfLow'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.buy=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}updatePfPer()},
   async prodSave(b){const m=S.modal,name=val('pfName'),mrp=val('pfMrp');if(!name||mrp===''||!(+mrp>=0)){toast(t('needDish'));return}
     const d={name,brand:val('pfBrand'),type:val('pfType')||'other',price:+mrp,low:Math.round(+val('pfLow')||0),updatedAt:Date.now()};
-    if(m.buy==='box'){const bc=+val('pfBoxCost')||0,n=Math.round(+val('pfPerBox')||0);if(bc>0&&!(n>0)){toast(t('needPerBox'));return}d.boxCost=bc;d.perBox=n;d.cost=n>0?r2(bc/n):0}
+    if(!$('#pfBoxCost')&&!$('#pfCost')){}else if(m.buy==='box'){const bc=+val('pfBoxCost')||0,n=Math.round(+val('pfPerBox')||0);if(bc>0&&!(n>0)){toast(t('needPerBox'));return}d.boxCost=bc;d.perBox=n;d.cost=n>0?r2(bc/n):0}
     else{d.cost=+val('pfCost')||0;d.boxCost=0;d.perBox=0}
     b.disabled=true;
     const ok=await save(()=>m.id?db.doc('products/'+m.id).update(d):db.collection('products').add({...d,qty:Math.round(+val('pfQty')||0),active:true}),m.id?t('saved'):t('added'));
@@ -2278,8 +2285,10 @@ const A={
   paperSet(b){setPaper(b.dataset.k);render()},
   printTestSys(){S.modal={kind:'print',src:{kind:'order',id:'__test',snap:{table:'TA',label:t('btTestT'),items:[{name:t('btTestLine'),qty:1,price:0}],subtotal:0,total:0,pay:'cash',status:'paid',paidAt:Date.now(),date:today()}}};renderModal()},
   purchaseOpen(){S.modal={kind:'purchase',lines:[newLine()],mode:'paid',pay:'cash',sup:'',no:''};renderModal()},
-  puAdd(){S.modal.lines.push(newLine());renderModal()},
-  puDel(b){S.modal.lines.splice(+b.dataset.i,1);renderModal()},
+  puAdd(){const ls=S.modal.lines,last=ls[ls.length-1];if(last&&!last.saved){if(!last.name.trim()&&ls.length>0)return;if(!lineOk(last))return;last.saved=true}ls.push(newLine());renderModal()},
+  puLineSave(b){const l=S.modal.lines[+b.dataset.i];if(!l||!lineOk(l))return;l.saved=true;renderModal()},
+  puEdit(b){S.modal.lines.forEach((l,i)=>{if(i!==+b.dataset.i&&!l.saved&&l.name.trim()&&lineOk(l))l.saved=true});const l=S.modal.lines[+b.dataset.i];if(l)l.saved=false;renderModal()},
+  puDel(b){S.modal.lines.splice(+b.dataset.i,1);if(!S.modal.lines.length)S.modal.lines.push(newLine());renderModal()},
   puMode(b){S.modal.mode=b.dataset.k;renderModal()},
   puSave(b){puSave(b)},
   cbrand(b){S.cbrand=b.dataset.k;render()},
