@@ -268,6 +268,31 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+body{font-size:16px}.note{font-size:13.5px}.li .meta,.meta{font-size:13.5px}.label{font-size:12px}.chip{font-size:14px}.pill{font-size:12px}.form label{font-size:14px}nav.tabs button{font-size:12px}.btn{font-size:15px}
+:root[data-lang="mr"] body,:root[data-lang="hi"] body{font-size:17.5px;line-height:1.55}
+:root[data-lang="mr"] .note,:root[data-lang="hi"] .note,:root[data-lang="mr"] .meta,:root[data-lang="hi"] .meta,:root[data-lang="mr"] .form label,:root[data-lang="hi"] .form label{font-size:15px}
+:root[data-lang="mr"] .label,:root[data-lang="hi"] .label{font-size:14px;letter-spacing:0;text-transform:none}
+:root[data-lang="mr"] .chip,:root[data-lang="hi"] .chip,:root[data-lang="mr"] .segtabs button,:root[data-lang="hi"] .segtabs button{font-size:15.5px}
+:root[data-lang="mr"] .btn,:root[data-lang="hi"] .btn{font-size:16.5px}
+:root[data-lang="mr"] nav.tabs button,:root[data-lang="hi"] nav.tabs button{font-size:13.5px}
+:root[data-lang="mr"] .pill,:root[data-lang="hi"] .pill{font-size:13px}
+:root[data-lang="mr"] .kpi .s,:root[data-lang="hi"] .kpi .s,:root[data-lang="mr"] .brow,:root[data-lang="hi"] .brow{font-size:14px}
+.kpi .s{font-size:12.5px}
+:root[data-lang="mr"] .li .name,:root[data-lang="hi"] .li .name{font-size:17px}
+.salper{font-size:13.5px;font-weight:700;color:var(--brand-text);background:var(--brand-soft);border-radius:8px;padding:6px 10px}
+.attwrap{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+.attgrid{border-collapse:collapse;font-size:13px;min-width:100%}
+.attgrid th,.attgrid td{border-bottom:1px solid var(--line);text-align:center;padding:0;min-width:34px;height:40px}
+.attgrid thead th{font-weight:700;font-size:12px;color:var(--muted);padding:4px 2px;background:var(--sunk)}.attgrid thead th span{display:block;font-size:10px}
+.attgrid thead th.td{background:var(--accent-soft);color:var(--accent-ink)}
+.attgrid .nmcol{position:sticky;left:0;z-index:1;background:var(--surface);text-align:left;padding:4px 10px;min-width:110px;font-weight:700;font-size:13.5px;border-right:1px solid var(--line)}
+.attgrid thead .nmcol{background:var(--sunk)}.attgrid .nmcol small{display:block;font-weight:500;color:var(--muted);font-size:11px}
+.attgrid td button{all:unset;cursor:pointer;display:block;width:100%;height:100%;line-height:40px;font-weight:800}
+.attgrid .pr{color:var(--cash)}.attgrid td.pr{background:var(--cash-soft)}.attgrid td.ab{background:var(--warn-soft);color:var(--warn)}.attgrid td.pt{background:var(--accent-soft);color:var(--accent-ink);font-size:11.5px}
+.attgrid td.ot{background:var(--online-soft);color:var(--online);font-size:11.5px}.attgrid td.nm{color:var(--muted)}.attgrid td.fu{background:var(--bg)}
+.attgrid .tc{min-width:44px;font-weight:800;background:var(--sunk)}.attgrid .tc small{display:block;font-size:10px;font-weight:600}
+.attkey{font-size:12.5px;gap:6px;color:var(--muted)}.attkey .k{display:inline-grid;place-items:center;min-width:24px;height:20px;border-radius:5px;font-weight:800;font-size:11px;margin-left:6px}
+.attkey .k.pr{background:var(--cash-soft);color:var(--cash)}.attkey .k.pt{background:var(--accent-soft);color:var(--accent-ink)}.attkey .k.ot{background:var(--online-soft);color:var(--online)}.attkey .k.ab{background:var(--warn-soft);color:var(--warn)}.attkey .k.nm{background:var(--sunk)}
 .pline.saved{background:var(--surface);border-left:4px solid var(--cash)}.pline.saved .pcalc{font-size:12.5px;font-weight:600;color:var(--brand-text)}
 .modal .box{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
 .pline{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;background:var(--sunk)}
@@ -517,7 +542,7 @@ const T={
  subTeam:['Team','टीम','टीम'],teamH:['Your team','तुमची टीम','आपकी टीम'],hoursBtn:['Hours','तास','घंटे'],hoursTitle:['Hours worked: {n}','कामाचे तास: {n}','काम के घंटे: {n}'],fromT:['From','पासून','से'],toT:['To','पर्यंत','तक'],
  hoursOut:['{h} hours of {f}','{f} पैकी {h} तास','{f} में से {h} घंटे'],hShort:['{h}h','{h} ता','{h} घं'],saveHours:['Save hours','तास सेव्ह करा','घंटे सेव करें'],needHours:['Pick a start and end time.','सुरुवात व शेवटची वेळ निवडा.','शुरू और खत्म का समय चुनें।'],
  shiftNote:['Full shift is 11 AM to 11 PM (12 hours).','पूर्ण शिफ्ट सकाळी 11 ते रात्री 11 (12 तास).','पूरी शिफ्ट सुबह 11 से रात 11 (12 घंटे)।'],
- partN:['{n} part time','{n} काही तास','{n} कुछ घंटे'],payDayLbl:['Salary date (1–31)','पगाराची तारीख (1–31)','वेतन की तारीख (1–31)'],
+ partN:['{n} part time','{n} काही तास','{n} कुछ घंटे'],payDayLbl0:['Salary date (1–31)','पगाराची तारीख (1–31)','वेतन की तारीख (1–31)'],
  payDateOn:['Salary date: {d}','पगार तारीख: {d}','वेतन तारीख: {d}'],period:['Work period {a} – {b}','कामाचा काळ {a} – {b}','काम की अवधि {a} – {b}'],
  perDay:['Per day {d} · per hour {h}','प्रतिदिन {d} · प्रतितास {h}','प्रतिदिन {d} · प्रति घंटा {h}'],deduction:['Absence & short hours','गैरहजेरी व कमी तास','गैरहाज़िरी व कम घंटे'],
  dedDetail:['{a} absent, {p} part days','{a} गैरहजर, {p} दिवस काही तास','{a} गैरहाज़िर, {p} दिन कुछ घंटे'],
@@ -679,6 +704,12 @@ const T={
  saveItem:['Save item','वस्तू सेव्ह करा','आइटम सेव करें'],plSummary:['{b} boxes × {n} = {p} pieces · {pr} per box','{b} बॉक्स × {n} = {p} नग · प्रति बॉक्स {pr}','{b} बॉक्स × {n} = {p} पीस · प्रति बॉक्स {pr}'],
  puNeedPrice:['Enter price per box or amount for {n}','{n} साठी प्रति बॉक्स किंमत किंवा रक्कम लिहा','{n} के लिए प्रति बॉक्स कीमत या रकम लिखें'],puNeedMrp:['Enter MRP per piece for {n}','{n} साठी प्रति नग MRP लिहा','{n} के लिए प्रति पीस MRP लिखें'],
  lastBought:['Last bought at {c} per piece {b}. Buying cost updates from purchase bills.','शेवटची खरेदी प्रति नग {c} {b}. खरेदी किंमत खरेदी बिलांतून अद्ययावत होते.','आख़िरी खरीद प्रति पीस {c} {b}। खरीद कीमत खरीद बिलों से अपडेट होती है।'],noBuyYet:['No purchase bill yet. Buying cost comes from purchase bills.','अजून खरेदी बिल नाही. खरेदी किंमत खरेदी बिलांतून येते.','अभी कोई खरीद बिल नहीं। खरीद कीमत खरीद बिलों से आती है।'],
+ payDayLbl:['Salary period starts on (day 1–31)','पगार कालावधी सुरू दिवस (1–31)','वेतन अवधि शुरू होने का दिन (1–31)'],salPeriodTxt:['Salary period: {a} to {b} of next month · paid on the {a}','पगार कालावधी: {a} ते पुढील महिन्याचा {b} · पगार {a} तारखेला','वेतन अवधि: {a} से अगले महीने की {b} तक · वेतन {a} तारीख को'],lastDayOfMonth:['last day','शेवटचा दिवस','आख़िरी दिन'],
+ salPeriod1:['Salary period: 1st to the last day of the month · paid on the 1st of next month','पगार कालावधी: 1 ते महिन्याचा शेवटचा दिवस · पगार पुढील महिन्याच्या 1 तारखेला','वेतन अवधि: 1 से महीने के आख़िरी दिन तक · वेतन अगले महीने की 1 तारीख को'],
+ lockBtn:['Lock salary','पगार लॉक करा','वेतन लॉक करें'],unlockBtn:['Unlock','अनलॉक','अनलॉक'],salLockedTag:['Salary settings locked','पगार सेटिंग लॉक','वेतन सेटिंग लॉक'],salLockHint:['Lock so pay and salary date are not changed by mistake','चुकून बदल होऊ नये म्हणून लॉक करा','गलती से बदलाव न हो, इसलिए लॉक करें'],
+ salLocked:['Salary settings locked','पगार सेटिंग लॉक झाली','वेतन सेटिंग लॉक हुई'],salUnlocked:['Unlocked: salary settings can be changed','अनलॉक: पगार सेटिंग बदलता येईल','अनलॉक: वेतन सेटिंग बदल सकते हैं'],salUnlockQ:['Unlock salary settings for {n}?','{n} ची पगार सेटिंग अनलॉक करायची?','{n} की वेतन सेटिंग अनलॉक करें?'],
+ hoursCol:['Hrs','तास','घंटे'],keyFull:['full','पूर्ण','पूरा'],keyPart:['part','काही तास','कुछ घंटे'],keyOt:['extra hrs','जास्त तास','अतिरिक्त घंटे'],keyAbs:['absent','गैरहजर','गैरहाज़िर'],keyNone:['not marked','नोंद नाही','दर्ज नहीं'],
+ attGridNote:['Tap any day to open it and mark attendance.','हजेरी नोंदवण्यासाठी कोणताही दिवस दाबा.','हाज़िरी दर्ज करने के लिए कोई भी दिन दबाएं।'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -1711,7 +1742,32 @@ function salNav(){
 function vStaff(){
   return segTabs('staffSub',S.staffSub,[['att',t('subAtt')],['salary',t('subSalary')],...(S.canEdit?[['team',t('subTeam')]]:[])])+(S.staffSub==='salary'?vSalary():S.staffSub==='team'&&S.canEdit?vTeam():vAttendance());
 }
+/* ---------- attendance for a week or a month ---------- */
+let unsubAttR=null;
+function attRange(){const v=S.attView;if(v==='week'){const a=weekStart(S.day);return [a,shift(a,6)]}const m=S.day.slice(0,7);return [m+'-01',mEnd(m)]}
+function subAttRange(){if(!db)return;const [a,b]=attRange(),key=a+'|'+b;if(S.attRKey===key)return;S.attRKey=key;if(unsubAttR)unsubAttR();S.attR={};
+  unsubAttR=db.collection('attendance').where('date','>=',a).where('date','<=',b).onSnapshot(s=>{const m={};docs(s).forEach(d=>m[d.date]=d.marks||{});S.attR=m;render()})}
+function vAttGrid(){
+  subAttRange();const [a,b]=attRange(),days=[];for(let d=a;d<=b;d=shift(d,1))days.push(d);
+  const lbl=S.attView==='week'?`${fmtDate(a)} – ${fmtDate(b)}`:fmtMonth(a.slice(0,7)),atEnd=b>=today();
+  let h=`<div class="daynav"><button class="icon-btn" data-act="attGo" data-k="-1" aria-label="${t('prevDay')}">‹</button><span class="d">${lbl}</span><button class="icon-btn" data-act="attGo" data-k="1" ${atEnd?'disabled':''} aria-label="${t('nextDay')}">›</button></div>`;
+  if(!S.staff.length)return h+`<div class="empty"><b>${t('noStaffT')}</b>${t('noStaffB')}</div>`;
+  const cell=(s,d)=>{if(d>today())return `<td class="fu"></td>`;const F=shiftOf(s),mk=(S.attR[d]||{})[s.id],hh=markHours(mk,F);
+    const c=hh==null?['nm','·']:hh<=0?['ab','A']:hh>=F?(hh>F?['ot','+'+(Math.round((hh-F)*10)/10)]:['pr','P']):['pt',(Math.round(hh*10)/10)+'h'];
+    return `<td class="${c[0]}"><button data-act="attDay" data-k="${d}" aria-label="${esc(s.name)} ${fmtDate(d)}">${c[1]}</button></td>`};
+  const tot=s=>{let P=0,A=0,pt=0,nm=0,hrs=0;const F=shiftOf(s);days.forEach(d=>{if(d>today())return;const hh=markHours((S.attR[d]||{})[s.id],F);if(hh==null){nm++;return}hrs+=hh;if(hh<=0)A++;else if(hh>=F)P++;else pt++});return {P,A,pt,nm,hrs:Math.round(hrs*10)/10}};
+  h+=`<div class="attwrap"><table class="attgrid"><thead><tr><th class="nmcol">${t('name')}</th>${days.map(d=>{const dt=new Date(d+'T12:00:00');return `<th class="${d===today()?'td':''}"><span>${dt.toLocaleDateString(LOC[LANG],{weekday:'narrow'})}</span>${dt.getDate()}</th>`}).join('')}<th class="tc">${t('bP')}</th><th class="tc">${t('bA')}</th><th class="tc">${t('hoursCol')}</th></tr></thead><tbody>`
+    +S.staff.map(s=>{const x=tot(s);return `<tr><th class="nmcol">${esc(s.name)}<small>${t('shiftOfS',{h:shiftOf(s)})}</small></th>${days.map(d=>cell(s,d)).join('')}<td class="tc pr">${x.P}${x.pt?`<small>+${x.pt}½</small>`:''}</td><td class="tc ab">${x.A}</td><td class="tc">${x.hrs}</td></tr>`}).join('')+`</tbody></table></div>`;
+  h+=`<div class="row attkey"><span class="k pr">P</span>${t('keyFull')}<span class="k pt">6h</span>${t('keyPart')}<span class="k ot">+2</span>${t('keyOt')}<span class="k ab">A</span>${t('keyAbs')}<span class="k nm">·</span>${t('keyNone')}</div><div class="note">${t('attGridNote')}</div>`;
+  return h;
+}
+
 function vAttendance(){
+  const vw=segTabs('attView',S.attView||'day',[['day',t('tDay')],['week',t('tWeek')],['month',t('tMonth')]]);
+  if(S.attView==='week'||S.attView==='month')return vw+vAttGrid();
+  return vw+vAttDay();
+}
+function vAttDay(){
   const m=S.att,hs=S.staff.map(s=>[markHours(m[s.id],shiftOf(s)),shiftOf(s)]);
   const full=hs.filter(([h,f])=>h===f).length,part=hs.filter(([h,f])=>h!=null&&h>0&&h<f).length,ab=hs.filter(([h])=>h===0).length,none=hs.filter(([h])=>h==null).length;
   let h=`<div class="spread">${dayNav()}</div>`;
@@ -1745,6 +1801,8 @@ function vSalary(){
      :`<div class="ln"><span style="color:var(--warn)">${t('noSalary')}</span></div>`}</div>`}).join('')+`</div><div class="note">${t('salaryNote')}</div>`;
   return h;
 }
+const ordN=n=>LANG==='en'?n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th'):String(n);
+function salPeriodTxt(d){return d===1?t('salPeriod1'):t('salPeriodTxt',{a:ordN(d),b:ordN(d-1)})}
 function vTeam(){
   const typeSel=(id,cur,attrs='')=>`<select id="${id}" ${attrs}><option value="month" ${cur!=='day'?'selected':''}>${t('monthly')}</option><option value="day" ${cur==='day'?'selected':''}>${t('perDayT')}</option></select>`;
   let h=`<section style="display:grid;gap:8px"><div class="label">${t('addStaff')}</div><div class="form">
@@ -1760,14 +1818,16 @@ function vTeam(){
   h+=list.map(s=>{const day=s.payType==='day';return `<section class="panel tcard ${s.active===false?'off':''}"><div class="form">
      <input type="text" id="se_n_${s.id}" class="full nm" data-live data-sedit="name" data-sid="${s.id}" value="${esc(s.name)}" aria-label="${esc(t('name'))}">
      <input type="text" id="se_r_${s.id}" class="full" data-live data-sedit="role" data-sid="${s.id}" value="${esc(s.role||'')}" placeholder="${esc(t('role'))}" aria-label="${esc(t('role'))}">
-     <label for="se_t_${s.id}">${t('payTypeLbl')}</label>${typeSel('se_t_'+s.id,s.payType,`data-live data-sedit="payType" data-sid="${s.id}"`)}
-     ${day?`<label for="se_rt_${s.id}">${t('dailyRate')}</label><input type="number" id="se_rt_${s.id}" data-live data-sedit="rate" data-sid="${s.id}" min="0" value="${+s.rate||''}" placeholder="0">`
-       :`<label for="se_s_${s.id}">${t('salaryInp')}</label><input type="number" id="se_s_${s.id}" data-live data-sedit="salary" data-sid="${s.id}" min="0" value="${+s.salary||''}" placeholder="0">
-         <label for="se_v_${s.id}" class="full">${t('divisorLbl')}</label><select id="se_v_${s.id}" class="full" data-live data-sedit="divisor" data-sid="${s.id}"><option value="30" ${s.divisor!=='actual'?'selected':''}>${t('div30')}</option><option value="actual" ${s.divisor==='actual'?'selected':''}>${t('divActual')}</option></select>`}
+     <label for="se_t_${s.id}">${t('payTypeLbl')}</label>${typeSel('se_t_'+s.id,s.payType,`data-live data-sedit="payType" data-sid="${s.id}" ${s.salLock?'disabled':''}`)}
+     ${day?`<label for="se_rt_${s.id}">${t('dailyRate')}</label><input type="number" id="se_rt_${s.id}" data-live data-sedit="rate" data-sid="${s.id}" min="0" value="${+s.rate||''}" placeholder="0" ${s.salLock?'disabled':''}>`
+       :`<label for="se_s_${s.id}">${t('salaryInp')}</label><input type="number" id="se_s_${s.id}" data-live data-sedit="salary" data-sid="${s.id}" min="0" value="${+s.salary||''}" placeholder="0" ${s.salLock?'disabled':''}>
+         <label for="se_v_${s.id}" class="full">${t('divisorLbl')}</label><select id="se_v_${s.id}" class="full" data-live data-sedit="divisor" data-sid="${s.id}" ${s.salLock?'disabled':''}><option value="30" ${s.divisor!=='actual'?'selected':''}>${t('div30')}</option><option value="actual" ${s.divisor==='actual'?'selected':''}>${t('divActual')}</option></select>`}
      <label for="se_f_${s.id}">${t('shiftFromLbl')}</label><input type="time" id="se_f_${s.id}" data-live data-sedit="shiftFrom" data-sid="${s.id}" value="${esc(startOf(s))}">
      <label for="se_e_${s.id}">${t('shiftToLbl')}</label><input type="time" id="se_e_${s.id}" data-live data-sedit="shiftTo" data-sid="${s.id}" value="${esc(endOf(s))}">
      <div class="full note" style="text-align:right;font-weight:700;color:var(--ink)">${t('shiftTotal',{h:shiftOf(s)})}</div>
-     <label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">
+     <label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}" ${s.salLock?'disabled':''}>
+     <div class="full salper">${salPeriodTxt(+s.payDay||1)}</div>
+     <div class="full row">${s.salLock?`<span class="pill warn">🔒 ${t('salLockedTag')}</span><span style="flex:1"></span>${S.canEdit?`<button class="btn sm" data-act="salUnlock" data-id="${s.id}">🔓 ${t('unlockBtn')}</button>`:''}`:`<span class="note">${t('salLockHint')}</span><span style="flex:1"></span><button class="btn sm" data-act="salLock" data-id="${s.id}">🔒 ${t('lockBtn')}</button>`}</div>
      </div><div class="row" style="margin-top:10px"><span class="pill ${s.active===false?'warn':'cash'}">${s.active===false?t('notWorking'):t('working')}</span><span style="flex:1"></span>
      <button class="btn primary sm rowsave" data-act="rowSave" data-row="s:${s.id}" disabled>${t('save')}</button><button class="btn sm" data-act="toggleStaff" data-id="${s.id}">${s.active===false?t('setActive'):t('setInactive')}</button><button class="btn sm danger" data-act="delStaff" data-id="${s.id}">${t('remove')}</button></div></section>`}).join('');
   h+=`<div class="note">${t('teamHint')}</div>`;
@@ -2074,7 +2134,7 @@ function setMark(id,k){const ref=db&&db.doc('attendance/'+S.day);save(()=>S.attE
 const val=id=>(document.getElementById(id)?.value||'').trim();
 const clear=(...ids)=>{ids.forEach(id=>{const e=document.getElementById(id);if(e)e.value=''});const a=document.activeElement;if(a&&a.blur)a.blur()};
 const A={
-  lang(b){LANG=b.dataset.k;try{localStorage.setItem('rd_lang',LANG)}catch(e){}render()},
+  lang(b){LANG=b.dataset.k;document.documentElement.dataset.lang=LANG;try{localStorage.setItem('rd_lang',LANG)}catch(e){}render()},
   tab(b){S.tab=b.dataset.k;try{localStorage.setItem('rd_tab',S.tab)}catch(e){}window.scrollTo(0,0);render()},
   staffSub(b){S.staffSub=b.dataset.k;render()},salesMode(b){S.salesMode=b.dataset.k;if(S.salesMode==='dates'&&!S.rFrom){S.rFrom=shift(today(),-6);S.rTo=today()}render()},
   rngGo(b){const k=+b.dataset.k,md=S.salesMode;S.day=md==='year'?(()=>{const y=+S.day.slice(0,4)+k;return y>=+today().slice(0,4)?today():y+'-12-31'})():md==='week'?shift(S.day,7*k):md==='month'?mShift(S.day.slice(0,7),k)+'-01':shift(S.day,k);if(!S.canEdit&&k<0&&S.day<minDay())toast(t('mgrWeekOnly'));S.day=clampDay(S.day);if(db)subAtt();render()},
@@ -2292,6 +2352,11 @@ const A={
   puMode(b){S.modal.mode=b.dataset.k;renderModal()},
   puSave(b){puSave(b)},
   cbrand(b){S.cbrand=b.dataset.k;render()},
+  attView(b){S.attView=b.dataset.k;render()},
+  attGo(b){const k=+b.dataset.k;S.day=S.attView==='week'?shift(S.day,7*k):mShift(S.day.slice(0,7),k)+'-01';if(S.day>today())S.day=today();S.day=clampDay(S.day);if(db)subAtt();render()},
+  attDay(b){S.day=clampDay(b.dataset.k);S.attView='day';if(db)subAtt();render()},
+  salLock(b){const id=b.dataset.id;save(()=>db.doc('staff/'+id).update({salLock:true}),t('salLocked'))},
+  salUnlock(b){if(!S.canEdit){toast(t('ownerOnly'));return}const id=b.dataset.id,st=S.staffAll.find(x=>x.id===id);confirmBox(t('salUnlockQ',{n:st?st.name:''}),t('unlockBtn'),()=>save(()=>db.doc('staff/'+id).update({salLock:false}),t('salUnlocked')))},
   copySummary(){const [a,b]=rangeOf();copyText(daySummaryText(moneyFor(S.rng,d=>!!d&&d>=a&&d<=b)),t('summaryCopied'))},
   exportXlsx(b){b.disabled=true;exportXlsx().finally(()=>{b.disabled=false})},
   goSup(){S.tab='credit';S.creditSub='sup';window.scrollTo(0,0);render()},
@@ -2365,7 +2430,7 @@ function commitPend(list){
   for(const sid in staff)saveStaffEdits(sid,staff[sid]);
   list.forEach(p=>{const el=document.getElementById(p.id);if(el)el.classList.remove('dirty')});
 }
-function saveStaffEdits(sid,ch){const st=S.staffAll.find(z=>z.id===sid);if(!st)return;const upd={};
+function saveStaffEdits(sid,ch){const st=S.staffAll.find(z=>z.id===sid);if(!st)return;const upd={};if(st.salLock){['salary','rate','payDay','divisor','payType'].forEach(k=>delete ch[k])}
   if('name' in ch){const v=ch.name.trim();if(!v){toast(t('needName'));return}upd.name=v}
   if('role' in ch)upd.role=ch.role.trim();
   if('salary' in ch)upd.salary=Math.max(0,Math.round(+ch.salary||0));
@@ -2400,7 +2465,7 @@ function applyTheme(){let th=null;try{th=localStorage.getItem('theme')}catch(e){
   if(th==='light'||th==='dark')document.documentElement.dataset.theme=th;else delete document.documentElement.dataset.theme;
   const dark=th==='dark'||(!th&&matchMedia('(prefers-color-scheme: dark)').matches);const b=$('#themeBtn');if(b){b.textContent=dark?'☀':'☾';b.title=dark?t('lightMode'):t('darkMode')}
   const mt=document.querySelector('meta[name=theme-color]');if(mt)mt.content=dark?'#0f3d22':'#14532d'}
-applyTheme();
+applyTheme();document.documentElement.dataset.lang=LANG;
 {const st=document.createElement('style');st.textContent=PRINT_CSS;document.head.appendChild(st)}
 render();
 (async()=>{
