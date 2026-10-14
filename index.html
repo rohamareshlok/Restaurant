@@ -549,7 +549,7 @@ const T={
  payDateOn:['Salary date: {d}','पगार तारीख: {d}','वेतन तारीख: {d}'],period:['Work period {a} – {b}','कामाचा काळ {a} – {b}','काम की अवधि {a} – {b}'],
  perDay:['Per day {d} · per hour {h}','प्रतिदिन {d} · प्रतितास {h}','प्रतिदिन {d} · प्रति घंटा {h}'],deduction:['Absence & short hours','गैरहजेरी व कमी तास','गैरहाज़िरी व कम घंटे'],
  dedDetail:['{a} absent, {p} part days','{a} गैरहजर, {p} दिवस काही तास','{a} गैरहाज़िर, {p} दिन कुछ घंटे'],
- unmarkedNote:['{n} day(s) not marked are counted as full days.','नोंद नसलेले {n} दिवस पूर्ण दिवस धरले आहेत.','दर्ज न किए {n} दिन पूरे दिन माने गए हैं।'],
+ unmarkedNote:['{n} day(s) have no attendance and are not paid. Mark them to add their pay.','{n} दिवसांची हजेरी नाही, त्यांचा पगार धरलेला नाही. हजेरी लावा.','{n} दिन की हाज़िरी नहीं, उनका वेतन नहीं जोड़ा. हाज़िरी लगाएँ.'],
  dueTodayS:['Due today','आज द्यायचा','आज देना है'],dueInS:['Due in {n} days','{n} दिवसांनी','{n} दिन में'],overdueS:['{n} days late','{n} दिवस उशीर','{n} दिन देर'],
  removeStaffQ2:['Remove {n} completely? Past salary records stay.','{n} ला पूर्णपणे काढायचे? जुने पगार रेकॉर्ड राहतील.','{n} को पूरी तरह हटाएं? पुराने वेतन रिकॉर्ड रहेंगे।'],
  teamHint:['Changes save when you leave a box. Mark someone Not working if they may come back; Remove deletes them.','चौकटीतून बाहेर पडल्यावर बदल सेव्ह होतात. परत येऊ शकणाऱ्यांना "कामावर नाही" करा; "काढा" पूर्ण काढून टाकते.','बॉक्स से बाहर आते ही बदल सेव होते हैं। जो वापस आ सकते हैं उन्हें "काम पर नहीं" करें; "हटाएं" पूरी तरह हटाता है।'],
@@ -720,7 +720,7 @@ const T={
  crKindCash:['Money given (cash/UPI went out)','पैसे दिले (रोख/UPI गेले)','पैसे दिए (नकद/UPI गया)'],crKindFood:['Food or goods on credit (no money given)','जेवण/माल उधारीवर (पैसे दिले नाहीत)','खाना/सामान उधार पर (पैसे नहीं दिए)'],
  crKindFoodNote:['Nothing is taken from the cash drawer. For a table bill, use "Pay later" on the bill screen so the sale is recorded too.','गल्ल्यातून काही जात नाही. टेबल बिलासाठी बिल स्क्रीनवरील "नंतर देणार" वापरा म्हणजे विक्रीही नोंदवली जाईल.','गल्ले से कुछ नहीं जाता। टेबल बिल के लिए बिल स्क्रीन पर "बाद में" इस्तेमाल करें ताकि बिक्री भी दर्ज हो।'],
  vegNonLbl:['Veg / Non-veg','शाकाहारी / मांसाहारी','शाकाहारी / मांसाहारी'],
- showMore:['Show more','आणखी दाखवा','और दिखाएँ'], absentLn:['Absent · {n} day(s)','गैरहजर · {n} दिवस','गैरहाज़िर · {n} दिन'],shortLn:['Short hours · {h}h on {n} day(s)','कमी तास · {n} दिवसांत {h} तास','कम घंटे · {n} दिन में {h} घंटे'],runningH:['Running now ({a} – today) · goes in salary of {d}','चालू काळ ({a} – आज) · {d} च्या पगारात','चालू अवधि ({a} – आज) · {d} के वेतन में'], workPeriodLbl:['Work period','कामाचा काळ','काम की अवधि'],periodDays:['{n} days','{n} दिवस','{n} दिन'],customPeriod:['Changed period','बदललेला काळ','बदली अवधि'],normalPeriod:['Use normal period','नेहमीचा काळ','सामान्य अवधि'],salaryForDays:['Salary for {n} days','{n} दिवसांचा पगार','{n} दिनों का वेतन'],finalPay:['Final salary to give ₹ (change if needed)','द्यायचा अंतिम पगार ₹ (गरज असल्यास बदला)','देने का अंतिम वेतन ₹ (ज़रूरत हो तो बदलें)'],changeWhy:['Reason for change (bonus, leaving early…)','बदलाचे कारण (बोनस, लवकर सोडले…)','बदलाव का कारण (बोनस, जल्दी छोड़ा…)'],payMore:['{a} more than calculated {b}','मोजलेल्या {b} पेक्षा {a} जास्त','गणना {b} से {a} ज़्यादा'],payLess:['{a} less than calculated {b}','मोजलेल्या {b} पेक्षा {a} कमी','गणना {b} से {a} कम'],needWhy:['Write a reason for changing the salary','पगार बदलण्याचे कारण लिहा','वेतन बदलने का कारण लिखें'],badPeriod:['Start date must be before end date','सुरुवात तारीख शेवटच्या आधी हवी','शुरू की तारीख अंत से पहले हो'], fromDay:['from {d}','{d} पासून','{d} से'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ showMore:['Show more','आणखी दाखवा','और दिखाएँ'], absentLn:['Absent · {n} day(s)','गैरहजर · {n} दिवस','गैरहाज़िर · {n} दिन'],shortLn:['Short hours · {h}h on {n} day(s)','कमी तास · {n} दिवसांत {h} तास','कम घंटे · {n} दिन में {h} घंटे'],runningH:['Running now ({a} – today) · goes in salary of {d}','चालू काळ ({a} – आज) · {d} च्या पगारात','चालू अवधि ({a} – आज) · {d} के वेतन में'], workPeriodLbl:['Work period','कामाचा काळ','काम की अवधि'],periodDays:['{n} days','{n} दिवस','{n} दिन'],customPeriod:['Changed period','बदललेला काळ','बदली अवधि'],normalPeriod:['Use normal period','नेहमीचा काळ','सामान्य अवधि'],salaryForDays:['Salary for {n} days','{n} दिवसांचा पगार','{n} दिनों का वेतन'],finalPay:['Final salary to give ₹ (change if needed)','द्यायचा अंतिम पगार ₹ (गरज असल्यास बदला)','देने का अंतिम वेतन ₹ (ज़रूरत हो तो बदलें)'],changeWhy:['Reason for change (bonus, leaving early…)','बदलाचे कारण (बोनस, लवकर सोडले…)','बदलाव का कारण (बोनस, जल्दी छोड़ा…)'],payMore:['{a} more than calculated {b}','मोजलेल्या {b} पेक्षा {a} जास्त','गणना {b} से {a} ज़्यादा'],payLess:['{a} less than calculated {b}','मोजलेल्या {b} पेक्षा {a} कमी','गणना {b} से {a} कम'],needWhy:['Write a reason for changing the salary','पगार बदलण्याचे कारण लिहा','वेतन बदलने का कारण लिखें'],badPeriod:['Start date must be before end date','सुरुवात तारीख शेवटच्या आधी हवी','शुरू की तारीख अंत से पहले हो'], fromDay:['from {d}','{d} पासून','{d} से'], unmLn:['Not marked · {n} day(s)','हजेरी नाही · {n} दिवस','हाज़िरी नहीं · {n} दिन'],markNow:['Mark attendance','हजेरी लावा','हाज़िरी लगाएँ'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1735,12 +1735,13 @@ function salaryCalc(s,mo,rng){
   /* monthly: per day = salary ÷ 30 (default, same every month) or ÷ the actual days in the period. per day: the agreed daily rate */
   const daily=perDay?+s.rate||0:(s.divisor==='actual'?(days?sal/days:0):sal/30),hourly=daily/F;
   const byDate={};S.attMonth.forEach(a=>byDate[a.date]=a.marks||{});
-  let ded=0,absDed=0,shortDed=0,shortH=0,ot=0,otH=0,abs=0,part=0,full=0,unmarked=0,future=0,counted=0;
+  let ded=0,unmDed=0,absDed=0,shortDed=0,shortH=0,ot=0,otH=0,abs=0,part=0,full=0,unmarked=0,future=0,counted=0;
   for(let d=start;d<=end;d=shift(d,1)){
     if(d>today()){future++;continue}
     counted++;
     const h=markHours((byDate[d]||{})[s.id],F);
-    if(h==null){unmarked++;continue}
+    /* a past day with no mark is not paid until attendance is marked */
+    if(h==null){unmarked++;unmDed+=F*hourly;ded+=F*hourly;continue}
     if(h>=F)full++;else if(h<=0)abs++;else part++;
     /* short hours are cut, extra hours are paid at the same hourly rate */
     if(h<=0){absDed+=F*hourly;ded+=F*hourly}else if(h<F){shortDed+=(F-h)*hourly;shortH+=F-h;ded+=(F-h)*hourly}else if(h>F){ot+=(h-F)*hourly;otH+=h-F}
@@ -1749,7 +1750,7 @@ function salaryCalc(s,mo,rng){
   /* per-day staff earn for the days that have passed; monthly staff get the full salary (or the share from their joining date) */
   const nDays=Math.max(0,daysBetween(start,end)+1);
   const base=perDay?Math.round(daily*counted):custom?Math.round(daily*nDays):start>pstart?Math.min(sal,Math.round(daily*workDays)):sal;
-  return {F,perDay,pd,start,end,custom,nDays,dStart,dEnd,days,counted,sal:payAmount(s),base,joined:!!(j&&j>pstart&&start===j),carried:!!(lastTo&&start===shift(lastTo,1)&&start>pstart),daily,hourly,ded:Math.min(base,Math.round(ded)),absDed:Math.round(absDed),shortDed:Math.round(shortDed),shortH,ot:Math.round(ot),otH,abs,part,full,unmarked,future};
+  return {F,perDay,pd,start,end,custom,nDays,dStart,dEnd,days,counted,sal:payAmount(s),base,joined:!!(j&&j>pstart&&start===j),carried:!!(lastTo&&start===shift(lastTo,1)&&start>pstart),daily,hourly,ded:Math.min(base,Math.round(ded)),absDed:Math.round(absDed),unmDed:Math.round(unmDed),shortDed:Math.round(shortDed),shortH,ot:Math.round(ot),otH,abs,part,full,unmarked,future};
 }
 const advFor=sid=>S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===sid);
 const paidFor=(sid,mo)=>S.salaries.filter(x=>x.staffId===sid&&x.month===mo);
@@ -1807,6 +1808,7 @@ function runLine(s,mo,c){
   const r=salaryCalc(s,mShift(mo,1));if(!r.counted)return '';
   return `<div class="runbox"><div class="ln" style="font-weight:700"><span>${t('runningH',{a:fmtDate(r.start),d:fmtDate(r.pd)})}</span><span></span></div>
    <div class="ln"><span>${t('absentLn',{n:r.abs})}</span><span>${r.absDed?'− '+inr(r.absDed):'—'}</span></div>
+   ${r.unmarked?`<div class="ln" style="color:var(--accent)"><span>${t('unmLn',{n:r.unmarked})}</span><span>− ${inr(r.unmDed)}</span></div>`:''}
    <div class="ln"><span>${t('shortLn',{h:Math.round(r.shortH*100)/100,n:r.part})}</span><span>${r.shortDed?'− '+inr(r.shortDed):'—'}</span></div>
    ${r.ot?`<div class="ln" style="color:var(--cash)"><span>${t('overtime')}</span><span>+ ${inr(r.ot)}</span></div>`:''}</div>`;
 }
@@ -1825,11 +1827,12 @@ function vSalary(){
      ${c.sal?`<div class="ln"><span>${c.perDay?t('daysPay',{n:c.counted}):t('salary')}${!c.perDay&&(c.joined||c.carried)?` <span class="muted">(${t(c.joined?'fromJoin':'fromDay',{d:fmtDate(c.start)})})</span>`:''}</span><span>${inr(c.base)}</span></div>
      <div class="ln" style="font-size:12.5px"><span>${c.perDay?t('dailyWage'):t('monthly')} · ${t('perDay',{d:inr(c.daily),h:inr(c.hourly)})} · ${t('shiftOfS',{h:c.F})}</span><span></span></div>
      <div class="ln"><span>${t('absentLn',{n:c.abs})}</span><span>${c.absDed?'− '+inr(c.absDed):'—'}</span></div>
+     ${c.unmarked?`<div class="ln" style="color:var(--accent)"><span>${t('unmLn',{n:c.unmarked})}</span><span>− ${inr(c.unmDed)}</span></div>`:''}
      <div class="ln"><span>${t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part})}</span><span>${c.shortDed?'− '+inr(c.shortDed):'—'}</span></div>
      ${c.ot?`<div class="ln" style="color:var(--cash)"><span>${t('overtime')} <span class="muted">(${t('otDetail',{h:Math.round(c.otH*100)/100})})</span></span><span>+ ${inr(c.ot)}</span></div>`:''}
      <div class="ln"><span>${t('advances')}</span><span>− ${inr(advT)}</span></div>
      <div class="ln tot"><span>${t('toPay')}</span><span>${inr(toPay)}</span></div>
-     ${c.unmarked?`<div class="ln" style="color:var(--accent)"><span>${t('unmarkedNote',{n:c.unmarked})}</span></div>`:''}${runLine(s,mo,c)}`
+     ${c.unmarked?`<div class="ln" style="color:var(--accent);align-items:center"><span>${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}${runLine(s,mo,c)}`
      :`<div class="ln"><span style="color:var(--warn)">${t('noSalary')}</span></div>`}</div>`}).join('')+`</div><div class="note">${t('salaryNote')}</div>`;
   return h;
 }
@@ -2133,8 +2136,8 @@ function renderModal(){
      <div class="label">${t('workPeriodLbl')}</div>
      <div class="form"><label for="spFrom">${t('fromT')}</label><input type="date" id="spFrom" data-spd="from" min="${minD}" value="${c.start}"><label for="spTo">${t('toT')}</label><input type="date" id="spTo" data-spd="to" min="${minD}" value="${c.end}"></div>
      <div class="row" style="font-size:13.5px"><span class="muted">${t('periodDays',{n:c.nDays})}</span><span style="flex:1"></span>${c.custom?`<span class="pill open">${t('customPeriod')}</span><button class="btn sm" data-act="spReset">${t('normalPeriod')}</button>`:''}</div>
-     <div class="ledger"><span>${c.perDay?t('daysPay',{n:c.counted}):c.custom?t('salaryForDays',{n:c.nDays}):t('salary')}</span><span>${inr(c.base)}</span><span>${t('absentLn',{n:c.abs})}</span><span>${c.absDed?'− '+inr(c.absDed):'—'}</span><span>${t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part})}</span><span>${c.shortDed?'− '+inr(c.shortDed):'—'}</span>${c.ot?`<span>${t('overtime')}</span><span>+ ${inr(c.ot)}</span>`:''}<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span></div>
-     ${c.unmarked?`<div class="note">${t('unmarkedNote',{n:c.unmarked})}</div>`:''}
+     <div class="ledger"><span>${c.perDay?t('daysPay',{n:c.counted}):c.custom?t('salaryForDays',{n:c.nDays}):t('salary')}</span><span>${inr(c.base)}</span><span>${t('absentLn',{n:c.abs})}</span><span>${c.absDed?'− '+inr(c.absDed):'—'}</span>${c.unmarked?`<span style="color:var(--accent)">${t('unmLn',{n:c.unmarked})}</span><span style="color:var(--accent)">− ${inr(c.unmDed)}</span>`:''}<span>${t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part})}</span><span>${c.shortDed?'− '+inr(c.shortDed):'—'}</span>${c.ot?`<span>${t('overtime')}</span><span>+ ${inr(c.ot)}</span>`:''}<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span></div>
+     ${c.unmarked?`<div class="row" style="color:var(--accent);font-size:13.5px"><span style="flex:1">${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}
      <label class="label" for="spAmt">${t('finalPay')}</label><input type="number" id="spAmt" min="0" inputmode="decimal" value="${amt}">
      <div id="spChg" ${chg?'':'hidden'} style="display:grid;gap:6px"><div class="note" id="spDiff" style="color:var(--accent);font-weight:700">${chg?diffTxt(+amt-due,due):''}</div><input type="text" id="spWhy" placeholder="${esc(t('changeWhy'))}" value="${esc(m.why||'')}"></div>
      ${advT?`<div class="note">${t('advCut',{a:inr(advT)})}</div>`:''}
@@ -2403,6 +2406,7 @@ const A={
   puMode(b){S.modal.mode=b.dataset.k;renderModal()},
   puSave(b){puSave(b)},
   cbrand(b){S.cbrand=b.dataset.k;render()},
+  markNow(){S.modal=null;renderModal();S.staffSub='att';S.attView='month';render();window.scrollTo(0,0)},
   attView(b){S.attView=b.dataset.k;render()},
   attGo(b){const k=+b.dataset.k;S.day=S.attView==='week'?shift(S.day,7*k):mShift(S.day.slice(0,7),k)+'-01';if(S.day>today())S.day=today();S.day=clampDay(S.day);if(db)subAtt();render()},
   attDay(b){S.day=clampDay(b.dataset.k);S.attView='day';if(db)subAtt();render()},
