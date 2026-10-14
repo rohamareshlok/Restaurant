@@ -1,6 +1,6 @@
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
-import {initializeFirestore,persistentLocalCache,persistentMultipleTabManager,collection,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,addDoc,onSnapshot,query,where,runTransaction} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+import {initializeFirestore,persistentLocalCache,persistentMultipleTabManager,collection,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,addDoc,onSnapshot,query,where,runTransaction,FieldPath} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const C=window.APP_CONFIG||{},BASE=(C.owners||[C.owner]).filter(Boolean).map(x=>String(x).trim().toLowerCase());
 const app=initializeApp(C.firebase);
@@ -8,6 +8,11 @@ const auth=getAuth(app);
 let fs;
 try{fs=initializeFirestore(app,{ignoreUndefinedProperties:true,localCache:persistentLocalCache({tabManager:persistentMultipleTabManager()})})}
 catch(e){fs=initializeFirestore(app,{ignoreUndefinedProperties:true})}
+
+/* the app expects update() to merge nested objects (like Claude's store); Firestore replaces them, so send each leaf as its own field path */
+const plain=v=>v&&typeof v==='object'&&!Array.isArray(v)&&Object.getPrototypeOf(v)===Object.prototype&&Object.keys(v).length>0;
+function leaves(o,p=[],out=[]){for(const k of Object.keys(o)){const v=o[k];if(v===undefined)continue;if(plain(v))leaves(v,[...p,k],out);else out.push(new FieldPath(...p,k),v)}return out}
+const mergeUpdate=(ref,d)=>{const a=leaves(d);return a.length?updateDoc(ref,...a):Promise.resolve()};
 
 /* ---- database wrapper with the same shape the app already uses ---- */
 const sDoc=s=>({id:s.id,exists:s.exists(),data:()=>s.data(),metadata:s.metadata});
@@ -23,7 +28,7 @@ function Q(path,cons=[]){
 function D(ref){
   return {id:ref.id,
     get:async()=>sDoc(await getDoc(ref)),
-    set:(d,o)=>setDoc(ref,d,o||{}),update:d=>updateDoc(ref,d),delete:()=>deleteDoc(ref),
+    set:(d,o)=>setDoc(ref,d,o||{}),update:d=>mergeUpdate(ref,d),delete:()=>deleteDoc(ref),
     onSnapshot:(n,e)=>onSnapshot(ref,s=>n(sDoc(s)),e||(()=>{})),
     collection:p=>Q(ref.path+'/'+p),
     /* safe counters: two phones can never take the same bill number or overwrite stock */
