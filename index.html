@@ -719,7 +719,7 @@ const T={
  crKindCash:['Money given (cash/UPI went out)','पैसे दिले (रोख/UPI गेले)','पैसे दिए (नकद/UPI गया)'],crKindFood:['Food or goods on credit (no money given)','जेवण/माल उधारीवर (पैसे दिले नाहीत)','खाना/सामान उधार पर (पैसे नहीं दिए)'],
  crKindFoodNote:['Nothing is taken from the cash drawer. For a table bill, use "Pay later" on the bill screen so the sale is recorded too.','गल्ल्यातून काही जात नाही. टेबल बिलासाठी बिल स्क्रीनवरील "नंतर देणार" वापरा म्हणजे विक्रीही नोंदवली जाईल.','गल्ले से कुछ नहीं जाता। टेबल बिल के लिए बिल स्क्रीन पर "बाद में" इस्तेमाल करें ताकि बिक्री भी दर्ज हो।'],
  vegNonLbl:['Veg / Non-veg','शाकाहारी / मांसाहारी','शाकाहारी / मांसाहारी'],
- savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ showMore:['Show more','आणखी दाखवा','और दिखाएँ'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1061,7 +1061,7 @@ function moneyLog(M,f='all'){
   const LL=f==='all'?L:L.filter(e=>(FT[f]||[]).includes(e.type));
   LL.sort((a,b)=>(b.at||0)-(a.at||0));
   const md=new Set(LL.map(e=>e.at?new Date(e.at).toDateString():'')).size>1;
-  return `<section><div class="spread" style="margin-bottom:8px"><span class="label">${t(f==='exp'?'expListH':'logH')} · ${LL.length}</span><span class="note">${t('tapToEdit')}</span></div>`+(LL.length?`<div class="list">`+LL.map(e=>`<button class="li" data-act="editOpen" data-type="${e.type}" data-id="${e.id}"><span class="tm">${e.at?(md?new Date(e.at).toLocaleDateString(LOC[LANG],{day:'numeric',month:'short'})+'<br>':'')+hm(e.at):''}</span><div class="grow"><div class="name">${esc(e.lbl)}${e.ed?` <span class="pill open">${t('editedTag')}</span>`:''}</div>${e.sub?`<div class="meta">${esc(e.sub)}</div>`:''}</div><span class="pill ${e.pay}">${payLbl(e.pay)}</span><span class="amt ${e.count?'':e.v<0?'out':'in'}">${e.count?e.amtTxt:(e.v<0?'− ':'+ ')+inr(Math.abs(e.v))}</span></button>`).join('')+`</div>`:`<div class="empty">${t('logEmpty')}</div>`)+`</section>`;
+  return `<section><div class="spread" style="margin-bottom:8px"><span class="label">${t(f==='exp'?'expListH':'logH')} · ${LL.length}</span><span class="note">${t('tapToEdit')}</span></div>`+(LL.length?`<div class="list">`+LL.slice(0,S.logN||150).map(e=>`<button class="li" data-act="editOpen" data-type="${e.type}" data-id="${e.id}"><span class="tm">${e.at?(md?new Date(e.at).toLocaleDateString(LOC[LANG],{day:'numeric',month:'short'})+'<br>':'')+hm(e.at):''}</span><div class="grow"><div class="name">${esc(e.lbl)}${e.ed?` <span class="pill open">${t('editedTag')}</span>`:''}</div>${e.sub?`<div class="meta">${esc(e.sub)}</div>`:''}</div><span class="pill ${e.pay}">${payLbl(e.pay)}</span><span class="amt ${e.count?'':e.v<0?'out':'in'}">${e.count?e.amtTxt:(e.v<0?'− ':'+ ')+inr(Math.abs(e.v))}</span></button>`).join('')+(LL.length>(S.logN||150)?`<button class="btn full" data-act="logMore">${t('showMore')} (${LL.length-(S.logN||150)})</button>`:'')+`</div>`:`<div class="empty">${t('logEmpty')}</div>`)+`</section>`;
 }
 function auditList(){
   const A=(S.rng.audit||[]).slice().sort((a,b)=>b.at-a.at);
@@ -1672,7 +1672,7 @@ function vPeople(){
     <input type="tel" id="crPhone" placeholder="${esc(t('phone'))}" inputmode="tel">
     <input type="number" id="crAmt" placeholder="${esc(t('amount'))}" min="0" inputmode="decimal">
     <select id="crKind" class="full" data-crk="1"><option value="cash" ${S.crKind!=='food'?'selected':''}>${t('crKindCash')}</option><option value="food" ${S.crKind==='food'?'selected':''}>${t('crKindFood')}</option></select>
-    ${S.crKind==='food'?`<div class="note full">${t('crKindFoodNote')}</div>`:paySelect('crPay','givenCash')}
+    <div class="note full" id="crFoodNote" ${S.crKind==='food'?'':'hidden'}>${t('crKindFoodNote')}</div><div class="full crpay" id="crPayWrap" ${S.crKind==='food'?'hidden':''}><div class="form">${paySelect('crPay','givenCash')}</div></div>
     <label for="crDays">${t('dueDays')}</label><input type="number" id="crDays" min="1" max="365" ${canSetDays?'':'disabled'} value="${days}" ${canSetDays?'':'data-live'}>
     <input type="text" id="crNote" class="full" placeholder="${esc(t('noteOpt'))}">
     ${canSetDays?'':`<div class="note full">${t('lockedNote',{n:days})}</div>`}
@@ -2207,6 +2207,7 @@ const A={
   async closeSheet(){const d=S.draft;if(d&&d.paidEdit){if(d.dirty){confirmBox(t('discardQ'),t('discard'),()=>{S.draft=null;render()});return}S.draft=null;render();return}
     if(d&&d.dirty&&(d.items.length||d.id)){if(!(await persistDraft()))return;if(d.items.length)toast(t('orderSaved'))}S.draft=null;render()},
   clearTable(){const d=S.draft;confirmBox(t('clearTableQ',{t:orderName(d)}),t('clearTable'),async()=>{if(await persistDraft()){S.draft=null;render()}})},
+  logMore(){S.logN=(S.logN||150)+300;render()},
   addItem(b){const x=catalog().find(c=>c.key===b.dataset.key);if(!x)return;const d=S.draft,ex=d.items.find(i=>ikey(i)===x.key);
     if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1,vk:x.vk,cost:r2(pcCost(x.pid))}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
     if(d.q&&!b.closest('.stepper')){d.q='';const i=$('#mq');if(i){i.value='';i.blur()}}
@@ -2349,7 +2350,7 @@ const A={
     const ok=await save(()=>m.id?db.doc('products/'+m.id).update(d):db.collection('products').add({...d,qty:Math.round(+val('pfQty')||0),active:true}),m.id?t('saved'):t('added'));
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
   prodDel(b){const id=b.dataset.id,p=S.products.find(x=>x.id===id);S.modal=null;renderModal();confirmBox(t('removeProdQ',{n:p?p.name:''}),t('remove'),()=>save(()=>db.doc('products/'+id).update({active:false}),t('removed')))},
-  rsUnit(b){S.modal.unit=b.dataset.k;const q=val('rsQty');renderModal();const e=$('#rsQty');if(e)e.value=q},
+  rsUnit(b){S.modal.unit=b.dataset.k;const q=val('rsQty'),c=val('rsCost');renderModal();const e=$('#rsQty');if(e)e.value=q;const f=$('#rsCost');if(f)f.value=c},
   accAdd(){const e=val('accEmail').toLowerCase(),k=val('accRole')||'managers';if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e)){toast(t('badEmail'));return}
     const a=S.access||{owners:[],managers:[],staff:[]},base=window.__fbUser.baseOwners||[];const nx={owners:(a.owners||[]).filter(x=>!base.includes(x)),managers:a.managers||[],staff:a.staff||[]};
     for(const r of ['owners','managers','staff'])nx[r]=nx[r].filter(x=>x!==e);nx[k]=[...nx[k],e];
@@ -2415,7 +2416,7 @@ document.addEventListener('input',e=>{const pl=e.target.dataset&&e.target.datase
   if(e.target.dataset.ed&&S.modal&&S.modal.kind==='edit'){S.modal.f[e.target.dataset.ed]=e.target.value}
   if(e.target.dataset.split&&S.draft&&S.draft.split){S.draft.split[e.target.dataset.split]=e.target.value;updateSplitInfo()}});
 document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
-  if(d.crk){S.crKind=x.value;render();return}
+  if(d.crk){S.crKind=x.value;const f=x.value==='food',a=$('#crFoodNote'),b=$('#crPayWrap');if(a)a.hidden=!f;if(b)b.hidden=f;return}
   if(d.pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=d.pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=x.value;if(f==='name'||f==='brand')puFill(+i);else puRefresh()}return}
   if(d.sp){const bx=document.getElementById(x.id+'S_box');if(bx){bx.hidden=x.value!=='split';if(x.value==='split'){const f=document.getElementById(x.id+'S_cash');f&&f.focus()}}return}
   if(x.id==='exCat'||x.id==='spCat'){S.catSel=S.catSel||{};S.catSel[x.id]=x.value;const o=$('#'+x.id+'Other');if(o){o.hidden=x.value!=='other';if(x.value==='other')setTimeout(()=>o.focus(),0)}return}
