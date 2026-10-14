@@ -268,6 +268,11 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.modal .box{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+.pline{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;background:var(--sunk)}
+.pline .pcalc{font-weight:600;color:var(--brand-text)}
+.ptotal{display:flex;justify-content:space-between;align-items:baseline;font-size:18px;padding:6px 2px;border-top:2px dashed var(--line)}.ptotal b{font-family:var(--f-display);font-size:22px}
+.brandtag{font-size:11px;font-weight:800;background:var(--brand-soft);color:var(--brand-text);border-radius:6px;padding:1px 6px;vertical-align:middle}
 .marginbox{display:grid;gap:2px;border-radius:12px;padding:10px 12px;background:var(--sunk);border:1px solid var(--line)}
 .marginbox .mv{font-family:var(--f-display);font-size:24px;font-weight:800}.marginbox .mv small{font-size:13px;font-weight:600;color:var(--muted)}
 .marginbox.pos{background:var(--cash-soft);border-color:transparent}.marginbox.pos .mv{color:var(--cash)}
@@ -656,6 +661,19 @@ const T={
  marginH:['Your margin','तुमचा नफा','आपका मार्जिन'],marginNeed:['Enter MRP and buying cost to see the margin','नफा पाहण्यासाठी MRP व खरेदी किंमत लिहा','मार्जिन देखने के लिए MRP और खरीद कीमत लिखें'],perPcShort:['per piece','प्रति नग','प्रति पीस'],
  marginCalc:['MRP {mrp} − cost {c}','MRP {mrp} − खरेदी {c}','MRP {mrp} − खरीद {c}'],ofMrp:['of MRP','MRP च्या','MRP का'],marginBox:['{m} per box of {n}','{n} च्या बॉक्सवर {m}','{n} के बॉक्स पर {m}'],
  marginNeg:['Buying cost is more than MRP: you lose money on each piece','खरेदी किंमत MRP पेक्षा जास्त: प्रत्येक नगावर तोटा','खरीद कीमत MRP से ज़्यादा: हर पीस पर घाटा'],
+ purchaseH:['Add purchase bill','खरेदी बिल जोडा','खरीद बिल जोड़ें'],purchaseNote:['Copy each line from the supplier bill. Stock, buying cost and MRP update automatically.','पुरवठादाराच्या बिलातील प्रत्येक ओळ लिहा. साठा, खरेदी किंमत व MRP आपोआप अद्ययावत होतात.','सप्लायर बिल की हर लाइन लिखें। स्टॉक, खरीद कीमत और MRP अपने आप अपडेट होते हैं।'],
+ billNoOpt:['Bill no. (optional)','बिल नं. (ऐच्छिक)','बिल नं. (वैकल्पिक)'],itemN:['Item {n}','वस्तू {n}','आइटम {n}'],brandPh:['Brand, e.g. Amul','ब्रँड, उदा. Amul','ब्रांड, जैसे Amul'],brandLbl:['Brand','ब्रँड','ब्रांड'],
+ boxesBought:['Boxes bought','घेतलेले बॉक्स','खरीदे बॉक्स'],boxPriceLbl:['Price per box ₹','प्रति बॉक्स किंमत ₹','प्रति बॉक्स कीमत ₹'],amountLbl:['Amount ₹','रक्कम ₹','रकम ₹'],mrpPcLbl:['MRP per piece ₹','प्रति नग MRP ₹','प्रति पीस MRP ₹'],
+ plHint:['Fill pieces per box, boxes and price to see cost and margin','खरेदी व नफा पाहण्यासाठी नग, बॉक्स व किंमत भरा','लागत और मार्जिन देखने के लिए पीस, बॉक्स और कीमत भरें'],plPcs:['{n} pieces','{n} नग','{n} पीस'],plCost:['cost {c}/pc','खरेदी {c}/नग','लागत {c}/पीस'],plMargin:['margin {m}/pc ({p}%)','नफा {m}/नग ({p}%)','मार्जिन {m}/पीस ({p}%)'],
+ addLine:['Add another item','आणखी वस्तू जोडा','और आइटम जोड़ें'],billTotal:['Bill total','बिल एकूण','बिल कुल'],paidNow:['Paid now','आत्ता दिले','अभी दिया'],onCreditSup:['On credit (pay later)','उधारीवर (नंतर देणे)','उधार पर (बाद में)'],
+ creditSupNote:['The bill is added to Credit → Suppliers. It becomes an expense when you pay it.','बिल उधारी → पुरवठादार मध्ये जाते. पैसे दिल्यावर खर्च होते.','बिल उधार → सप्लायर में जाता है। भुगतान पर खर्च बनता है।'],savePurchase:['Save purchase','खरेदी सेव्ह करा','खरीद सेव करें'],
+ puNeedItem:['Add at least one item','किमान एक वस्तू जोडा','कम से कम एक आइटम जोड़ें'],puNeedQty:['Enter pieces per box and boxes for {n}','{n} साठी नग प्रति बॉक्स व बॉक्स लिहा','{n} के लिए पीस प्रति बॉक्स और बॉक्स लिखें'],puNeedSup:['Enter the supplier name for a credit bill','उधारी बिलासाठी पुरवठादाराचे नाव लिहा','उधार बिल के लिए सप्लायर का नाम लिखें'],
+ puSaved:['Purchase saved: {a}','खरेदी सेव्ह: {a}','खरीद सेव: {a}'],purchaseShort:['Stock purchase','साठा खरेदी','स्टॉक खरीद'],addPurchase:['Add purchase bill','खरेदी बिल जोडा','खरीद बिल जोड़ें'],allBrands:['All brands','सर्व ब्रँड','सभी ब्रांड'],
+ counterTabN:['Counter','काउंटर','काउंटर'],counterMenuAuto:['These come from Stock automatically and can be added to any bill. Add or change them in the Stock tab.','हे साठ्यातून आपोआप येतात व कोणत्याही बिलात जोडता येतात. साठा टॅबमध्ये बदला.','ये स्टॉक से अपने आप आते हैं और किसी भी बिल में जुड़ सकते हैं। स्टॉक टैब में बदलें।'],
+ counterMenuEmpty:['Add a purchase bill in the Stock tab and the items appear here.','साठा टॅबमध्ये खरेदी बिल जोडा, वस्तू इथे दिसतील.','स्टॉक टैब में खरीद बिल जोड़ें, आइटम यहाँ दिखेंगे।'],
+ ctrMarginH:['Ice cream & drinks margin','आईस्क्रीम व पेये नफा','आइसक्रीम व ड्रिंक मार्जिन'],ctrSold:['Sold','विक्री','बिक्री'],ctrCostL:['Buying cost of what was sold','विकलेल्या मालाची खरेदी किंमत','बिके माल की खरीद कीमत'],ctrMarginL:['Margin','नफा','मार्जिन'],
+ ctrMarginNote:['Margin = selling price − buying cost, for each piece sold. Profit above still counts stock purchases as expenses on the day you buy.','नफा = विक्री किंमत − खरेदी किंमत, प्रत्येक विकलेल्या नगावर. वरील एकूण नफ्यात खरेदी त्या दिवशीच्या खर्चात धरली जाते.','मार्जिन = बिक्री कीमत − खरीद कीमत, हर बिके पीस पर। ऊपर के मुनाफ़े में खरीद उसी दिन के खर्च में गिनी जाती है।'],
+ undoPurchaseQ:['This came from a purchase bill. Undo the whole bill ({n} items)? Stock and the expense will be reversed.','हे खरेदी बिलातून आले. संपूर्ण बिल ({n} वस्तू) रद्द करायचे? साठा व खर्च परत होईल.','यह खरीद बिल से आया। पूरा बिल ({n} आइटम) रद्द करें? स्टॉक और खर्च वापस होंगे।'],
  savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
@@ -701,7 +719,7 @@ function subscribe(){
   const err=()=>toast(t('lost'));
   const on=(q,f)=>q.onSnapshot(s=>{f(docs(s));render()},err);
   on(db.collection('menu'),d=>S.menu=d.sort((a,b)=>(a.o??1e15)-(b.o??1e15)||a.name.localeCompare(b.name)));
-  on(db.collection('products'),d=>S.products=d.filter(p=>p.active!==false).sort((a,b)=>TYPES.indexOf(a.type)-TYPES.indexOf(b.type)||a.name.localeCompare(b.name)));
+  on(db.collection('products'),d=>S.products=d.filter(p=>p.active!==false).sort((a,b)=>TYPES.indexOf(a.type)-TYPES.indexOf(b.type)||(a.brand||'').localeCompare(b.brand||'')||a.name.localeCompare(b.name)));
   db.doc('counters/bills').onSnapshot(s=>{S.billN=s.exists?(+s.data().n||0):0;render()},()=>{});
   db.doc('config/main').onSnapshot(s=>{if(s.exists)S.config={...S.config,...s.data()};render()},err);
   on(db.collection('orders').where('status','==','open'),d=>S.open=d);
@@ -823,7 +841,7 @@ const segTabs=(act,cur,opts)=>`<div class="segtabs" role="tablist">${opts.map(([
 const minDay=()=>S.canEdit?'2000-01-01':shift(today(),-2);
 const clampDay=d=>{d=d>today()?today():d;const m=minDay();return d<m?m:d};
 const lockedDay=(d=S.day)=>!S.canEdit&&d<today();
-const MGR_DAY_ACTS=new Set(['addExp','delExp','drawerMove','drawerCount','sellOpen','sellDo','restockOpen','restockDo','delRestock','mark','hoursOpen','hoursSave','hoursClear','delSale','addManualSale','hrSave','hrClear','hrQuick','paidBillOpen','edItems','edCancelBill','edDelete','edSave']);
+const MGR_DAY_ACTS=new Set(['purchaseOpen','puSave','addExp','delExp','drawerMove','drawerCount','sellOpen','sellDo','restockOpen','restockDo','delRestock','mark','hoursOpen','hoursSave','hoursClear','delSale','addManualSale','hrSave','hrClear','hrQuick','paidBillOpen','edItems','edCancelBill','edDelete','edSave']);
 function dayNav(){
   return `<div class="daynav"><button class="icon-btn" data-act="day" data-k="-1" aria-label="${t('prevDay')}">‹</button><input type="date" class="datepick" id="pickDay2" data-live value="${S.day}" min="${minDay()}" max="${today()}" aria-label="${t('pickDate')}"><button class="icon-btn" data-act="day" data-k="1" ${S.day>=today()?'disabled':''} aria-label="${t('nextDay')}">›</button></div>`;
 }
@@ -863,18 +881,21 @@ function vStock(){return vCounter()}
 
 function vCounter(){
   const cd=counterDay(S.day);
-  const list=S.products.filter(p=>S.ctype==='all'||p.type===S.ctype);
+  const bl=brands();if(S.cbrand&&S.cbrand!=='all'&&!bl.includes(S.cbrand))S.cbrand='all';
+  const list=S.products.filter(p=>(S.ctype==='all'||p.type===S.ctype)&&(!S.cbrand||S.cbrand==='all'||(p.brand||'')===S.cbrand));
   const units=sum(list,p=>Math.max(0,+p.qty)),value=sum(list,p=>Math.max(0,+p.qty)*p.price);
   const soldUnits=sum(list,p=>cd.soldBy[p.id]||0);
   let h=`<div class="spread"><h2 style="font-size:20px">${t('counterTitle')}</h2>${dayNav()}</div>
-  <div class="chips"><button class="chip ${S.ctype==='all'?'on':''}" data-act="ctype" data-k="all">${t('all')}</button>${TYPES.map(k=>`<button class="chip ${S.ctype===k?'on':''}" data-act="ctype" data-k="${k}">${t('t_'+k)} ${S.products.filter(p=>p.type===k).length}</button>`).join('')}</div>`;
+  <div class="chips"><button class="chip ${S.ctype==='all'?'on':''}" data-act="ctype" data-k="all">${t('all')}</button>${TYPES.map(k=>`<button class="chip ${S.ctype===k?'on':''}" data-act="ctype" data-k="${k}">${t('t_'+k)} ${S.products.filter(p=>p.type===k).length}</button>`).join('')}</div>`
+  +(bl.length?`<div class="chips"><button class="chip ${!S.cbrand||S.cbrand==='all'?'on':''}" data-act="cbrand" data-k="all">${t('allBrands')}</button>${bl.map(b=>`<button class="chip ${S.cbrand===b?'on':''}" data-act="cbrand" data-k="${esc(b)}">${esc(b)}</button>`).join('')}</div>`:'')
+  +(S.canEdit||!isStaffRole()?`<button class="btn primary" data-act="purchaseOpen" style="min-height:48px;font-size:15.5px">🧾 ${t('addPurchase')}</button>`:'');
   if(S.products.length)h+=`<section class="hero" style="gap:10px"><div class="pair"><div class="stat"><span class="label">${t('inStock')}</span><span class="v">${units} <span class="muted" style="font-size:13px;font-weight:600">${t('pcs')}</span></span><span class="note">${t('stockValue')} ${inr(value)}</span></div><div class="stat"><span class="label">${t('unitsSold')} · ${fmtDay(S.day)}</span><span class="v">${soldUnits} <span class="muted" style="font-size:13px;font-weight:600">${t('pcs')}</span></span><span class="note">${inr(cd.cash+cd.online)}</span></div></div>
    <div class="pair"><div class="stat cash"><span class="label">${t('counterCash')}</span><span class="v">${inr(cd.cash)}</span></div><div class="stat online"><span class="label">${t('counterOnline')}</span><span class="v">${inr(cd.online)}</span>${upiSplit(cd.paytm,cd.phonepe,cd.online-cd.paytm-cd.phonepe)}</div></div></section>`;
   if(list.length){
     h+=`<div class="list">`;
     list.forEach(p=>{
       const q=+p.qty||0,isLow=q<=(+p.low||0),sold=cd.soldBy[p.id]||0,tb=cd.tableBy[p.id]||0;
-      h+=`<div class="prod"><div style="min-width:0"><div class="name">${esc(p.name)}</div><div class="meta"><span class="pill ${p.type}">${t('t_'+p.type)}</span> ${t('mrpT')} ${inr(p.price)}${perPc(p)?` · ${t('costT')} ${inr(r2(perPc(p)))}`:''}${+p.perBox>0?` · ${t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)})}`:''}</div><div class="meta">${t('soldDay',{n:sold})}${tb?' ('+t('atTables',{n:tb})+')':''}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div>${q<0?`<div class="meta" style="color:var(--warn);font-weight:600">${t('mismatch')}</div>`:isLow?`<div style="margin-top:3px"><span class="pill warn">${t('low')}</span></div>`:''}</div>
+      h+=`<div class="prod"><div style="min-width:0"><div class="name">${p.brand?`<span class="brandtag">${esc(p.brand)}</span> `:''}${esc(p.name)}</div><div class="meta"><span class="pill ${p.type}">${t('t_'+p.type)}</span> ${t('mrpT')} ${inr(p.price)}${perPc(p)?` · ${t('costT')} ${inr(r2(perPc(p)))}`:''}${+p.perBox>0?` · ${t('boxOfT',{n:p.perBox,c:inr(p.boxCost||0)})}`:''}</div><div class="meta">${t('soldDay',{n:sold})}${tb?' ('+t('atTables',{n:tb})+')':''}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div>${q<0?`<div class="meta" style="color:var(--warn);font-weight:600">${t('mismatch')}</div>`:isLow?`<div style="margin-top:3px"><span class="pill warn">${t('low')}</span></div>`:''}</div>
        <div class="stk"><span class="label">${t('inStock')}</span><input type="number" id="ps_${p.id}" data-live data-pid="${p.id}" class="${q<0?'neg':''}" value="${q}" aria-label="${esc(t('stockOf',{n:p.name}))}" step="1"><button class="btn primary sm rowsave" data-act="rowSave" data-row="k:${p.id}" disabled>${t('save')}</button></div>
        <div class="acts"><button class="btn primary sm" data-act="sellOpen" data-id="${p.id}">${t('sell')}</button><button class="btn sm" data-act="restockOpen" data-id="${p.id}">${t('addStockBtn')}</button><button class="btn sm ghost" data-act="prodOpen" data-id="${p.id}">✎ ${t('editBtn')}</button></div></div>`;
     });
@@ -901,8 +922,10 @@ function moneyFor(src,inR){
   paid.forEach(o=>{const p=payParts(o);sales.cash+=p.cash;sales.paytm+=p.paytm;sales.phonepe+=p.phonepe;sales.upi+=p.paytm+p.phonepe+p.other});
   cs.forEach(x=>add(sales,x.pay,x.total));
   /* a bill's discount is spread over its dishes so the kitchen figures add up to what was collected */
-  let veg=0,non=0,ctr=sum(cs,x=>x.total);
-  paid.forEach(o=>{const g=orderTotal(o),f=g?(+o.total||0)/g:1;(o.items||[]).forEach(i=>{const v=i.price*i.qty*f;if(i.pid)ctr+=v;else if(i.k==='nonveg')non+=v;else veg+=v})});
+  let veg=0,non=0,ctr=sum(cs,x=>x.total),ctrCost=sum(cs,x=>x.cost!=null?x.cost:pcCost(x.pid)*x.qty);const ctrBy={};
+  const cb=(pid,name,q,v,c)=>{const k=pid||name;const o=ctrBy[k]=ctrBy[k]||{name,qty:0,sales:0,cost:0};o.qty+=q;o.sales+=v;o.cost+=c};
+  cs.forEach(x=>cb(x.pid,x.name,x.qty,+x.total||0,x.cost!=null?x.cost:pcCost(x.pid)*x.qty));
+  paid.forEach(o=>{const g=orderTotal(o),f=g?(+o.total||0)/g:1;(o.items||[]).forEach(i=>{const v=i.price*i.qty*f;if(i.pid){ctr+=v;const c=(i.cost!=null?i.cost:pcCost(i.pid))*i.qty;ctrCost+=c;cb(i.pid,i.name,i.qty,v,c)}else if(i.k==='nonveg')non+=v;else veg+=v})});
   const exps=src.expenses.filter(e=>inR(e.date)),sals=src.salaries.filter(x=>inR(x.date));
   const advs=src.credits.filter(c=>c.kind==='staff'&&inR(c.date)),given=src.credits.filter(c=>c.kind!=='staff'&&inR(c.date)),back=src.creditPays.filter(c=>inR(c.date));
   const drw=(src.drawer||[]).filter(x=>inR(x.date)),oin=z(),oout=z();
@@ -913,7 +936,7 @@ function moneyFor(src,inR){
   const tot=b=>b.cash+b.upi;
   const net={cash:sales.cash+bk.cash-exp.cash-sal.cash-adv.cash-giv.cash+oin.cash-oout.cash,upi:sales.upi+bk.upi-exp.upi-sal.upi-adv.upi-giv.upi};
   const refT=sum(paid,o=>sum(o.refunds||[],r=>r.amount));
-  return {drw,oin,oout,refT,paid,cs,exps,sals,advs,given,back,sales,exp,sal,adv,giv,bk,net,veg,non,ctr,discT:sum(paid,o=>o.discount),tot,
+  return {ctrCost,ctrBy,ctrMargin:ctr-ctrCost,drw,oin,oout,refT,paid,cs,exps,sals,advs,given,back,sales,exp,sal,adv,giv,bk,net,veg,non,ctr,discT:sum(paid,o=>o.discount),tot,
     profit:tot(sales)-tot(exp)-tot(sal)-tot(adv)};
 }
 const EMPTY_SRC=()=>({orders:[],csales:[],expenses:[],salaries:[],credits:[],creditPays:[],audit:[],drawer:[]});
@@ -1076,6 +1099,10 @@ function sumView(M,multi){
   let h=`<section class="panel"><div class="label">${t('payH')}</div>${barRows([[t('cash'),sl.cash,'var(--cash)'],['Paytm',sl.paytm,'var(--paytm)'],['PhonePe',sl.phonepe,'var(--phonepe)'],...(oth?[[t('otherUpi'),oth,'var(--online)']]:[])],tot)}</section>`;
   h+=`<section class="panel"><div class="label">${t('kitchensH')}</div>${barRows([[`${vm('veg')} ${t('kVeg')}`,M.veg,'var(--cash)'],[`${vm('nonveg')} ${t('kNon')}`,M.non,'var(--warn)'],[t('counterSales'),M.ctr,'var(--online)']],tot)}
     ${M.discT||M.refT?`<div class="ledger" style="margin-top:8px;font-size:13px">${M.discT?`<span class="muted">${t('discGiven')}</span><span class="muted">${inr(M.discT)}</span>`:''}${M.refT?`<span class="muted">${t('refundsShort')}</span><span class="muted">${inr(M.refT)}</span>`:''}</div>`:''}</section>`;
+  if(M.ctr>0){const rows=Object.values(M.ctrBy).sort((a,b)=>b.sales-a.sales),mg=M.ctrMargin;
+    h+=`<section class="panel"><div class="label">${t('ctrMarginH')}</div><div class="ledger"><span>${t('ctrSold')}</span><span>${inr(Math.round(M.ctr))}</span><span>${t('ctrCostL')}</span><span class="out">− ${inr(Math.round(M.ctrCost))}</span><span class="tot">${t('ctrMarginL')}</span><span class="tot" style="color:${mg<0?'var(--warn)':'var(--cash)'}">${inr(Math.round(mg))} <small class="muted">${M.ctr?Math.round(mg/M.ctr*100):0}%</small></span></div>
+     <div class="list" style="margin-top:10px">${rows.slice(0,10).map(r=>`<div class="li"><div class="grow"><div class="name">${esc(r.name)}</div><div class="meta">${t('sold',{n:r.qty})} · ${inr(Math.round(r.sales))}</div></div><span class="amt" style="color:${r.sales-r.cost<0?'var(--warn)':'var(--cash)'}">+ ${inr(Math.round(r.sales-r.cost))}</span></div>`).join('')}</div>
+     <div class="note" style="margin-top:6px">${t('ctrMarginNote')}</div></section>`}
   h+=`<section class="panel"><div class="label">${t('profitCalcH')}</div><div class="ledger">
     <span>${t('rowSales')}</span><span>${inr(tot)}</span>
     <span>${t('rowExp')}</span><span class="out">− ${inr(M.tot(M.exp))}</span>
@@ -1503,6 +1530,79 @@ function printerPanel(){
    <div class="note">${t('printerHelp')}</div></section>`;
 }
 
+/* ---------- stock purchases from a supplier bill ---------- */
+const pcCost=pid=>{const p=S.products.find(x=>x.id===pid);return p?perPc(p):0};
+const brands=()=>[...new Set(S.products.map(p=>(p.brand||'').trim()).filter(Boolean))].sort();
+const prodLabel=p=>(p.brand?p.brand+' · ':'')+p.name;
+const newLine=()=>({name:'',brand:'',type:'icecream',perBox:'',boxes:'',boxPrice:'',amount:'',mrp:'',pid:null,amtTouched:false});
+const lineAmt=l=>l.amtTouched&&l.amount!==''?+l.amount:Math.round((+l.boxes||0)*(+l.boxPrice||0)*100)/100;
+const lineCost=l=>(+l.perBox>0&&+l.boxPrice>0)?(+l.boxPrice)/(+l.perBox):(+l.perBox>0&&+l.boxes>0&&lineAmt(l)>0?lineAmt(l)/((+l.boxes)*(+l.perBox)):0);
+function lineCalcText(l){const pcs=(+l.boxes||0)*(+l.perBox||0),c=lineCost(l),mrp=+l.mrp||0;
+  if(!pcs&&!c)return t('plHint');
+  return [pcs?t('plPcs',{n:pcs}):'',c?t('plCost',{c:inr(r2(c))}):'',c&&mrp?t('plMargin',{m:inr(r2(mrp-c)),p:Math.round((mrp-c)/mrp*100)}):''].filter(Boolean).join(' · ')}
+function purchaseModalHTML(m){
+  const total=sum(m.lines,lineAmt),sups=[...new Set([...(S.supOpen||[]),...(S.supRecent||[])].map(s=>s.name))];
+  return `<h3>${t('purchaseH')}</h3><div class="note">${t('purchaseNote')}</div>
+  <div class="form"><input type="text" id="puSup" placeholder="${esc(t('supName'))}" list="puSupL" value="${esc(m.sup||'')}" data-pu="sup"><datalist id="puSupL">${sups.map(n=>`<option value="${esc(n)}">`).join('')}</datalist>
+   <input type="text" id="puNo" placeholder="${esc(t('billNoOpt'))}" value="${esc(m.no||'')}" data-pu="no"></div>
+  <datalist id="puItems">${S.products.map(p=>`<option value="${esc(p.name)}">${esc(p.brand||'')}</option>`).join('')}</datalist><datalist id="puBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
+  ${m.lines.map((l,i)=>`<div class="pline">
+    <div class="spread"><b>${t('itemN',{n:i+1})}</b>${m.lines.length>1?`<button class="icon-btn" data-act="puDel" data-i="${i}" aria-label="${t('remove')}">×</button>`:''}</div>
+    <div class="form">
+     <input type="text" class="full" placeholder="${esc(t('prodName'))}" list="puItems" value="${esc(l.name)}" data-pl="${i}:name">
+     <input type="text" placeholder="${esc(t('brandPh'))}" list="puBrands" value="${esc(l.brand)}" data-pl="${i}:brand">
+     <select data-pl="${i}:type">${TYPES.map(k=>`<option value="${k}" ${l.type===k?'selected':''}>${t('t_'+k)}</option>`).join('')}</select>
+     <label>${t('perBoxLbl')}</label><input type="number" min="1" inputmode="numeric" value="${esc(l.perBox)}" data-pl="${i}:perBox" placeholder="0">
+     <label>${t('boxesBought')}</label><input type="number" min="0" inputmode="decimal" value="${esc(l.boxes)}" data-pl="${i}:boxes" placeholder="0">
+     <label>${t('boxPriceLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" value="${esc(l.boxPrice)}" data-pl="${i}:boxPrice" placeholder="0">
+     <label>${t('amountLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" id="plAmt_${i}" value="${l.amtTouched?esc(l.amount):(lineAmt(l)||'')}" data-pl="${i}:amount" placeholder="0">
+     <label>${t('mrpPcLbl')}</label><input type="number" min="0" step="any" inputmode="decimal" value="${esc(l.mrp)}" data-pl="${i}:mrp" placeholder="0">
+    </div><div class="note pcalc" id="plCalc_${i}">${lineCalcText(l)}</div></div>`).join('')}
+  <button class="btn" data-act="puAdd">+ ${t('addLine')}</button>
+  <div class="ptotal"><span>${t('billTotal')}</span><b id="puTot">${inr(total)}</b></div>
+  <div class="seg" role="group"><button class="${m.mode!=='credit'?'on dk':''}" data-act="puMode" data-k="paid">${t('paidNow')}</button><button class="${m.mode==='credit'?'on dk':''}" data-act="puMode" data-k="credit">${t('onCreditSup')}</button></div>
+  ${m.mode==='credit'?`<div class="note">${t('creditSupNote')}</div>`:payButtons('mpay',m.pay,true)+(m.pay==='split'?splitInputs('mpS',false):'')}
+  <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="puSave">${t('savePurchase')}</button></div>`;
+}
+function puRefresh(){const m=S.modal;if(!m||m.kind!=='purchase')return;
+  m.lines.forEach((l,i)=>{const c=$('#plCalc_'+i);if(c)c.textContent=lineCalcText(l);const a=$('#plAmt_'+i);if(a&&!l.amtTouched&&document.activeElement!==a)a.value=lineAmt(l)||''});
+  const tt=$('#puTot');if(tt)tt.textContent=inr(sum(m.lines,lineAmt))}
+function puFill(i){const m=S.modal,l=m.lines[i],nm=l.name.trim().toLowerCase();if(!nm)return;
+  const p=S.products.find(x=>x.name.trim().toLowerCase()===nm&&(!l.brand||(x.brand||'').toLowerCase()===l.brand.trim().toLowerCase()))||S.products.find(x=>x.name.trim().toLowerCase()===nm);
+  if(!p){l.pid=null;return}
+  l.pid=p.id;if(!l.brand)l.brand=p.brand||'';l.type=p.type||l.type;if(!l.perBox&&+p.perBox)l.perBox=p.perBox;if(!l.boxPrice&&+p.boxCost)l.boxPrice=p.boxCost;if(!l.mrp&&+p.price)l.mrp=p.price;
+  setTimeout(()=>{const f=document.activeElement&&document.activeElement.dataset?document.activeElement.dataset.pl:null;renderModal();if(f){const e=document.querySelector(`[data-pl="${f}"]`);if(e)e.focus()}},0)}
+async function puSave(b){
+  const m=S.modal,lines=m.lines.filter(l=>l.name.trim());
+  if(!lines.length){toast(t('puNeedItem'));return}
+  for(const l of lines){if(!(+l.perBox>0)||!(+l.boxes>0)){toast(t('puNeedQty',{n:l.name}));return}}
+  const total=Math.round(sum(lines,lineAmt)*100)/100,sup=(m.sup||'').trim(),d=S.day;
+  let pp=null;if(m.mode!=='credit'){pp=total>0?mPayOf(total):{pay:m.pay||'cash'};if(!pp)return}
+  else if(!sup){toast(t('puNeedSup'));return}
+  b.disabled=true;
+  const ok=await save(async()=>{
+    const pr=await db.collection('purchases').add({supplier:sup,billNo:m.no||'',date:d,at:Date.now(),total,mode:m.mode||'paid',...(pp||{}),lines:lines.map(l=>({name:l.name.trim(),brand:l.brand.trim(),type:l.type,perBox:+l.perBox,boxes:+l.boxes,boxPrice:+l.boxPrice||0,amount:lineAmt(l),mrp:+l.mrp||0}))});
+    for(const l of lines){
+      const pcs=Math.round((+l.boxes)*(+l.perBox)),cost=r2(lineCost(l)),upd={brand:l.brand.trim(),type:l.type,perBox:+l.perBox,boxCost:+l.boxPrice||r2(cost*(+l.perBox)),cost,updatedAt:Date.now()};
+      if(+l.mrp>0)upd.price=+l.mrp;
+      let pid=l.pid&&S.products.find(x=>x.id===l.pid)?l.pid:null;
+      if(pid){await db.doc('products/'+pid).update(upd);await adjustStock(pid,pcs)}
+      else{const r=await db.collection('products').add({name:l.name.trim(),...upd,price:+l.mrp||0,qty:pcs,low:0,active:true});pid=r.id}
+      await db.collection('restock').add({pid,name:l.name.trim(),qty:pcs,cost:lineAmt(l),purchase:pr.id,date:d,at:Date.now(),...(pp||{pay:'credit'})});
+    }
+    const note=`${t('purchaseShort')}${sup?': '+sup:''}${m.no?' · #'+m.no:''} (${lines.length})`;
+    if(m.mode==='credit')await db.collection('supbills').add({name:sup,phone:'',amount:Math.round(total),paid:0,cat:'counter',note,purchase:pr.id,date:d,at:Date.now(),status:'open'});
+    else if(total>0)await db.collection('expenses').add({note,amount:total,...pp,cat:'counter',purchase:pr.id,date:d,at:Date.now()});
+  },t('puSaved',{a:inr(total)}),[d]);
+  if(ok){S.modal=null;renderModal()}else b.disabled=false;
+}
+/* counter items in the Menu tab, straight from Stock */
+function counterMenuHTML(){
+  if(!S.products.length)return `<div class="empty"><b>${t('noProdT')}</b>${t('counterMenuEmpty')}</div>`;
+  const groups={};S.products.forEach(p=>{const g=t('t_'+p.type)+(p.brand?' · '+p.brand:'');(groups[g]=groups[g]||[]).push(p)});
+  return `<div class="note">${t('counterMenuAuto')}</div>`+Object.entries(groups).map(([g,list])=>`<section><div class="label" style="margin-bottom:8px">${esc(g)} · ${list.length}</div><div class="list">`+list.map(p=>`<div class="li"><span class="vsp"></span><div class="grow"><div class="name">${esc(p.name)}</div><div class="meta">${t('inStock')}: ${+p.qty||0}${perPc(p)?' · '+t('marginT',{m:inr(r2(p.price-perPc(p))),p:p.price?Math.round((p.price-perPc(p))/p.price*100):0}):''}</div></div><span class="amt">${inr(p.price)}</span>${S.canEdit?`<button class="btn sm ghost" data-act="prodOpen" data-id="${p.id}">✎</button>`:''}</div>`).join('')+`</div></section>`).join('');
+}
+
 /* ---------- credit ---------- */
 function vCredit(){
   return segTabs('creditSub',S.creditSub,[['people',t('cPeople')],['staff',t('cStaff')],['sup',t('cSup')]])+(S.creditSub==='staff'?vAdvances():S.creditSub==='sup'?vSuppliers():vPeople());
@@ -1697,7 +1797,8 @@ function vSetup(){
       <div class="armonths"><label for="arMonths">${t('archiveOlder')}</label><select id="arMonths" data-live data-armo>${[3,6,12].map(n=>`<option value="${n}" ${arMonths()===n?'selected':''}>${n} ${t('monthsW')}</option>`).join('')}</select><button class="btn primary sm rowsave" id="arSave" data-act="arSave" disabled>${t('save')}</button></div>
       <div class="note">${t('archiveCut',{d:new Date(arCut()+'T12:00:00').toLocaleDateString(LOC[LANG],{day:'numeric',month:'short',year:'numeric'})})}</div>
       <button class="btn danger" data-act="archive">${t('archiveBtn')}</button><div class="note">${t('archiveNote')}</div></section>`;}
-  h+=segTabs('mk',S.mk,[['veg',`${vm('veg')} ${t('kVegN')} · ${S.menu.filter(m=>(m.k||'veg')==='veg').length}`],['nonveg',`${vm('nonveg')} ${t('kNonN')} · ${S.menu.filter(m=>m.k==='nonveg').length}`]]);
+  h+=segTabs('mk',S.mk,[['veg',`${vm('veg')} ${t('kVegN')} · ${S.menu.filter(m=>(m.k||'veg')==='veg').length}`],['nonveg',`${vm('nonveg')} ${t('kNonN')} · ${S.menu.filter(m=>m.k==='nonveg').length}`],['counter',`🧊 ${t('counterTabN')} · ${S.products.length}`]]);
+  if(S.mk==='counter')return h+counterMenuHTML();
   if(S.canEdit)h+=`<section style="display:grid;gap:8px"><div class="label">${t('addMenuItem')}</div><div class="form"><input type="text" id="mName" class="full" placeholder="${esc(t('dish'))}"><input type="number" id="mPrice" placeholder="${esc(t('price'))}" min="0"><input type="text" id="mCat" placeholder="${esc(t('cat'))}" list="catlist"><datalist id="catlist">${Object.keys(cats).map(c=>`<option value="${esc(c)}">`).join('')}</datalist><select id="mK" class="full"><option value="veg" ${S.mk==='veg'?'selected':''}>${t('kVeg')}</option><option value="nonveg" ${S.mk==='nonveg'?'selected':''}>${t('kNon')}</option></select><button class="btn primary full" data-act="addMenu">${t('addToMenu')}</button></div></section>`;
   if(mine.length&&S.canEdit)h+=`<div class="note">${t('menuEditHint')}</div>`;
   if(!mine.length)h+=`<div class="empty"><b>${t('menuEmptyT')}</b>${t('menuEmptyB')}</div>`;
@@ -1710,7 +1811,7 @@ function vSetup(){
 const ikey=i=>i.pid?'p:'+i.pid:'m:'+i.mid;
 function catalog(){
   return [...S.menu.map(m=>({key:'m:'+m.id,mid:m.id,name:m.name,price:+m.price,cat:m.cat||t('other'),k:m.k||'veg'})),
-          ...S.products.map(p=>({key:'p:'+p.id,pid:p.id,name:p.name,price:+p.price,cat:t('t_'+p.type),k:'counter',stock:+p.qty||0}))];
+          ...S.products.map(p=>({key:'p:'+p.id,pid:p.id,name:prodLabel(p),price:+p.price,cat:t('t_'+p.type)+(p.brand?' · '+p.brand:''),k:'counter',stock:+p.qty||0}))];
 }
 function openDraft(o,table,label){
   const base={dirty:false,mode:'edit',pay:'cash',cat:'*',kf:'*',q:''};
@@ -1877,6 +1978,7 @@ function prodModalHTML(m){
   const p=m.id?S.products.find(x=>x.id===m.id)||{}:{},box=m.buy==='box';
   return `<h3>${m.id?t('editProdT'):t('addProduct')}</h3><div class="form">
    <label for="pfName" class="full">${t('name')}</label><input type="text" id="pfName" class="full" value="${esc(p.name||'')}" placeholder="${esc(t('prodName'))}">
+   <label for="pfBrand">${t('brandLbl')}</label><input type="text" id="pfBrand" list="pfBrands" value="${esc(p.brand||'')}" placeholder="${esc(t('brandPh'))}"><datalist id="pfBrands">${brands().map(b=>`<option value="${esc(b)}">`).join('')}</datalist>
    <label for="pfType">${t('categoryLbl')}</label><select id="pfType">${TYPES.map(k=>`<option value="${k}" ${(p.type||'icecream')===k?'selected':''}>${t('t_'+k)}</option>`).join('')}</select>
    <label for="pfMrp">${t('mrpLbl')}</label><input type="number" id="pfMrp" min="0" step="any" inputmode="decimal" value="${p.price??''}" placeholder="0">
    <div class="full"><div class="label" style="margin:4px 0 6px">${t('buyPriceLbl')}</div><div class="seg" role="group"><button class="${box?'':'on dk'}" data-act="pfBuy" data-k="piece">${t('perPiece')}</button><button class="${box?'on dk':''}" data-act="pfBuy" data-k="box">${t('perBoxT')}</button></div></div>
@@ -1906,6 +2008,7 @@ function renderModal(){
   if(m.kind==='edit'){const eh=editModalHTML(m);if(eh==null){S.modal=null;el.hidden=true;return}h=eh}
   else if(m.kind==='print'){h=printModalHTML(m)}
   else if(m.kind==='prod'){h=prodModalHTML(m)}
+  else if(m.kind==='purchase'){h=purchaseModalHTML(m)}
   else if(m.kind==='suppay'){const sp=(S.supOpen||[]).find(x=>x.id===m.sid);if(!sp){S.modal=null;el.hidden=true;return}
     h=`<h3>${esc(t('paySupTitle',{n:sp.name}))}</h3><div class="muted">${esc(expCat(sp))} · ${t('leftOf',{a:inr(supRemaining(sp)),t:inr(sp.amount)})}</div>
      <label class="label" for="sppAmt">${t('howMuch')}</label><input type="number" id="sppAmt" min="1" inputmode="decimal" value="${supRemaining(sp)}">
@@ -2019,7 +2122,7 @@ const A={
     if(d&&d.dirty&&(d.items.length||d.id)){if(!(await persistDraft()))return;if(d.items.length)toast(t('orderSaved'))}S.draft=null;render()},
   clearTable(){const d=S.draft;confirmBox(t('clearTableQ',{t:orderName(d)}),t('clearTable'),async()=>{if(await persistDraft()){S.draft=null;render()}})},
   addItem(b){const x=catalog().find(c=>c.key===b.dataset.key);if(!x)return;const d=S.draft,ex=d.items.find(i=>ikey(i)===x.key);
-    if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
+    if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1,cost:r2(pcCost(x.pid))}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
     if(d.q&&!b.closest('.stepper')){d.q='';const i=$('#mq');if(i){i.value='';i.blur()}}
     renderSheet()},
   decItem(b){const d=S.draft,ix=d.items.findIndex(i=>ikey(i)===b.dataset.key);if(ix<0)return;d.items[ix].qty--;if(d.items[ix].qty<=0)d.items.splice(ix,1);d.dirty=true;if(!d.items.length&&d.mode==='bill')d.mode='edit';renderSheet()},
@@ -2059,7 +2162,7 @@ const A={
   restockOpen(b){const p=S.products.find(x=>x.id===b.dataset.id);S.modal={kind:'restock',pid:b.dataset.id,pay:'cash',unit:p&&+p.perBox>0?'box':'pc'};renderModal()},
   mq(b){S.modal.qty=Math.max(1,S.modal.qty+ +b.dataset.k);renderModal()},
   async sellDo(b){const m=S.modal,p=S.products.find(x=>x.id===m.pid);if(!p)return;b.disabled=true;
-    const ok=await save(async()=>{await db.collection('csales').add({pid:p.id,name:p.name,type:p.type,qty:m.qty,price:+p.price,total:m.qty*p.price,pay:m.pay,date:S.day,at:Date.now()});await adjustStock(p.id,-m.qty)},t('saleRec'));
+    const ok=await save(async()=>{await db.collection('csales').add({pid:p.id,name:prodLabel(p),type:p.type,qty:m.qty,price:+p.price,total:m.qty*p.price,cost:r2(perPc(p)*m.qty),pay:m.pay,date:S.day,at:Date.now()});await adjustStock(p.id,-m.qty)},t('saleRec'));
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
   async restockDo(b){const m=S.modal,p=S.products.find(x=>x.id===m.pid),u=Math.round(+val('rsQty'));if(!p)return;if(!(u>0)){toast(t('needQty'));return}b.disabled=true;
     const isBox=m.unit==='box'&&+p.perBox>0,n=isBox?u*+p.perBox:u;
@@ -2069,7 +2172,11 @@ const A={
       if(cost>0)await db.collection('expenses').add({note:`${p.name} × ${n}`,amount:cost,...pp,cat:'counter',restock:r.id,date:d,at:Date.now()});},t('restockLbl'),[d]);
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
   delSale(b){const x=S.csales.find(s=>s.id===b.dataset.id);if(!x)return;confirmBox(t('undoSaleQ',{n:x.qty}),t('del'),()=>save(async()=>{await db.doc('csales/'+x.id).delete();await adjustStock(x.pid,x.qty);audit('delete','sale',x.id,x.date,x.name,{qty:x.qty,pay:x.pay},null)},t('removed'),[x.date]))},
-  delRestock(b){const x=S.restock.find(s=>s.id===b.dataset.id);if(!x)return;confirmBox(t('undoStockQ',{n:x.qty}),t('del'),()=>save(async()=>{await db.doc('restock/'+x.id).delete();await adjustStock(x.pid,-x.qty);const ex=docs(await db.collection('expenses').where('restock','==',x.id).get());for(const e of ex)await db.doc('expenses/'+e.id).delete()},t('removed'),[x.date]))},
+  delRestock(b){const x=S.restock.find(s=>s.id===b.dataset.id);if(!x)return;
+    if(x.purchase){const lines=S.restock.filter(r=>r.purchase===x.purchase);confirmBox(t('undoPurchaseQ',{n:lines.length}),t('del'),()=>save(async()=>{
+      for(const r of lines){await db.doc('restock/'+r.id).delete();await adjustStock(r.pid,-r.qty)}
+      for(const c of ['expenses','supbills']){const q=docs(await db.collection(c).where('purchase','==',x.purchase).get());for(const e of q)await db.doc(c+'/'+e.id).delete()}
+      await db.doc('purchases/'+x.purchase).delete();audit('delete','purchase',x.purchase,x.date,t('purchaseShort'),{items:lines.length},null)},t('removed'),[x.date]));return}confirmBox(t('undoStockQ',{n:x.qty}),t('del'),()=>save(async()=>{await db.doc('restock/'+x.id).delete();await adjustStock(x.pid,-x.qty);const ex=docs(await db.collection('expenses').where('restock','==',x.id).get());for(const e of ex)await db.doc('expenses/'+e.id).delete()},t('removed'),[x.date]))},
   addProd(){const name=val('pName'),price=+val('pPrice');if(!name||val('pPrice')===''||!(price>=0)){toast(t('needDish'));return}
     save(()=>db.collection('products').add({name,type:val('pType')||'icecream',price,cost:+val('pCost')||0,qty:Math.round(+val('pQty')||0),low:Math.round(+val('pLow')||0),active:true,updatedAt:Date.now()}),t('added')).then(ok=>ok&&clear('pName','pPrice','pQty','pLow','pCost'))},
   delProd(b){const p=S.products.find(x=>x.id===b.dataset.id);confirmBox(t('removeProdQ',{n:p?p.name:''}),t('remove'),()=>save(()=>db.doc('products/'+b.dataset.id).update({active:false}),t('removed')))},
@@ -2142,9 +2249,9 @@ const A={
   billPdf(b){b.disabled=true;billPdf(S.modal).finally(()=>{b.disabled=false})},
   salesView(b){S.salesView=b.dataset.k;render()},logF(b){S.logF=b.dataset.k;render()},
   prodOpen(b){const id=b.dataset.id||null,p=id?S.products.find(x=>x.id===id):null;S.modal={kind:'prod',id,buy:p&&+p.perBox>0?'box':'piece'};renderModal()},
-  pfBuy(b){const keep={};['pfName','pfType','pfMrp','pfQty','pfLow'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.buy=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}updatePfPer()},
+  pfBuy(b){const keep={};['pfName','pfBrand','pfType','pfMrp','pfQty','pfLow'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.buy=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}updatePfPer()},
   async prodSave(b){const m=S.modal,name=val('pfName'),mrp=val('pfMrp');if(!name||mrp===''||!(+mrp>=0)){toast(t('needDish'));return}
-    const d={name,type:val('pfType')||'other',price:+mrp,low:Math.round(+val('pfLow')||0),updatedAt:Date.now()};
+    const d={name,brand:val('pfBrand'),type:val('pfType')||'other',price:+mrp,low:Math.round(+val('pfLow')||0),updatedAt:Date.now()};
     if(m.buy==='box'){const bc=+val('pfBoxCost')||0,n=Math.round(+val('pfPerBox')||0);if(bc>0&&!(n>0)){toast(t('needPerBox'));return}d.boxCost=bc;d.perBox=n;d.cost=n>0?r2(bc/n):0}
     else{d.cost=+val('pfCost')||0;d.boxCost=0;d.perBox=0}
     b.disabled=true;
@@ -2170,6 +2277,12 @@ const A={
   btPrint(b){const d=billData(S.modal.src);if(!d)return;b.disabled=true;btPrintBill(d).finally(()=>{b.disabled=false})},
   paperSet(b){setPaper(b.dataset.k);render()},
   printTestSys(){S.modal={kind:'print',src:{kind:'order',id:'__test',snap:{table:'TA',label:t('btTestT'),items:[{name:t('btTestLine'),qty:1,price:0}],subtotal:0,total:0,pay:'cash',status:'paid',paidAt:Date.now(),date:today()}}};renderModal()},
+  purchaseOpen(){S.modal={kind:'purchase',lines:[newLine()],mode:'paid',pay:'cash',sup:'',no:''};renderModal()},
+  puAdd(){S.modal.lines.push(newLine());renderModal()},
+  puDel(b){S.modal.lines.splice(+b.dataset.i,1);renderModal()},
+  puMode(b){S.modal.mode=b.dataset.k;renderModal()},
+  puSave(b){puSave(b)},
+  cbrand(b){S.cbrand=b.dataset.k;render()},
   copySummary(){const [a,b]=rangeOf();copyText(daySummaryText(moneyFor(S.rng,d=>!!d&&d>=a&&d<=b)),t('summaryCopied'))},
   exportXlsx(b){b.disabled=true;exportXlsx().finally(()=>{b.disabled=false})},
   goSup(){S.tab='credit';S.creditSub='sup';window.scrollTo(0,0);render()},
@@ -2195,14 +2308,16 @@ const A={
 };
 document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(!b||b.disabled)return;const a=b.dataset.act;
   if(lockedDay()&&MGR_DAY_ACTS.has(a)&&(S.tab==='today'||S.tab==='stock'||S.tab==='staff')){toast(t('mgrPastLocked'));return}
-  if(isStaffRole()&&['prodOpen','prodSave','prodDel','restockOpen','restockDo','delRestock','delSale','rowSave','pendSave','editOpen','paidBillOpen','edItems','edCancelBill','edDelete','edSave'].includes(a)){toast(t('ownerOnly'));return}
+  if(isStaffRole()&&['purchaseOpen','puSave','prodOpen','prodSave','prodDel','restockOpen','restockDo','delRestock','delSale','rowSave','pendSave','editOpen','paidBillOpen','edItems','edCancelBill','edDelete','edSave'].includes(a)){toast(t('ownerOnly'));return}
   if(!S.canEdit&&['exportXlsx','salesMode','addMenu','delMenu','saveCfg','resetBills','archive','arSave','checkStorage','rebuild'].includes(a)){toast(t('ownerOnly'));return}
   const f=A[a];if(f)f(b,e)});
-document.addEventListener('input',e=>{if(/^pf/.test(e.target.id||''))updatePfPer();if(isPendField(e.target)&&e.target.dataset.sedit!=='payType'&&e.target.tagName!=='SELECT')markPend(e.target);if(e.target.id==='mq'&&S.draft){S.draft.q=e.target.value;renderSheet()}if(e.target.dataset.hr&&S.modal&&S.modal.kind==='hours'){S.modal[e.target.dataset.hr]=e.target.value;const F=shiftOf(S.staffAll.find(x=>x.id===S.modal.sid)),hh=spanHours(S.modal.from,S.modal.to,24),o=$('#hrOut');if(o)o.textContent=hh==null?'':hrOutText(hh,F)}
+document.addEventListener('input',e=>{const pl=e.target.dataset&&e.target.dataset.pl;if(pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=e.target.value;if(f==='amount')l.amtTouched=e.target.value!=='';puRefresh()}}
+  if(e.target.dataset&&e.target.dataset.pu&&S.modal&&S.modal.kind==='purchase')S.modal[e.target.dataset.pu]=e.target.value;if(/^pf/.test(e.target.id||''))updatePfPer();if(isPendField(e.target)&&e.target.dataset.sedit!=='payType'&&e.target.tagName!=='SELECT')markPend(e.target);if(e.target.id==='mq'&&S.draft){S.draft.q=e.target.value;renderSheet()}if(e.target.dataset.hr&&S.modal&&S.modal.kind==='hours'){S.modal[e.target.dataset.hr]=e.target.value;const F=shiftOf(S.staffAll.find(x=>x.id===S.modal.sid)),hh=spanHours(S.modal.from,S.modal.to,24),o=$('#hrOut');if(o)o.textContent=hh==null?'':hrOutText(hh,F)}
   if('discv' in e.target.dataset&&S.draft){const d=S.draft;d.disc={type:(d.disc&&d.disc.type)||'amt',v:e.target.value};d.dirty=true;updateBillNumbers()}
   if(e.target.dataset.ed&&S.modal&&S.modal.kind==='edit'){S.modal.f[e.target.dataset.ed]=e.target.value}
   if(e.target.dataset.split&&S.draft&&S.draft.split){S.draft.split[e.target.dataset.split]=e.target.value;updateSplitInfo()}});
 document.addEventListener('change',e=>{const x=e.target,d=x.dataset;
+  if(d.pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=d.pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=x.value;if(f==='name'||f==='brand')puFill(+i);else puRefresh()}return}
   if(d.sp){const bx=document.getElementById(x.id+'S_box');if(bx){bx.hidden=x.value!=='split';if(x.value==='split'){const f=document.getElementById(x.id+'S_cash');f&&f.focus()}}return}
   if(x.id==='exCat'||x.id==='spCat'){S.catSel=S.catSel||{};S.catSel[x.id]=x.value;const o=$('#'+x.id+'Other');if(o){o.hidden=x.value!=='other';if(x.value==='other')setTimeout(()=>o.focus(),0)}return}
   if(d.ed==='cat'&&S.modal&&S.modal.kind==='edit'){S.modal.f.cat=x.value;if(x.value!=='other')S.modal.f.catName='';renderModal();if(x.value==='other')setTimeout(()=>{const o=$('#edCatName');o&&o.focus()},0);return}
