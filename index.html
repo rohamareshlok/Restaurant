@@ -272,6 +272,9 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.dstrip{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:3px;margin:4px 0 2px}.dstrip i{width:9px;height:16px;border-radius:3px;background:var(--line)}
+.dstrip i.P{background:var(--cash)}.dstrip i.H{background:var(--accent)}.dstrip i.A{background:var(--warn)}.dkey{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted)}.dkey span{display:flex;align-items:center;gap:4px}.dkey i{width:9px;height:14px;border-radius:3px;background:var(--line);display:inline-block}.dkey i.P{background:var(--cash)}.dkey i.H{background:var(--accent)}.dkey i.A{background:var(--warn)}.dkey i.F{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
+.dstrip i.F{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
 body.busy #shFoot button,body.busy #shBill button{opacity:.6;pointer-events:none}
 .qpay .paylater{min-height:40px;border:1.5px dashed var(--warn);color:var(--warn);background:var(--surface);font-weight:800}
 .pill.credit{background:var(--warn-soft);color:var(--warn)}
@@ -730,7 +733,16 @@ const T={
  countsLn:['P {p} · Short {s} · A {a} · Not marked {u}','हजर {p} · कमी तास {s} · गैरहजर {a} · नोंद नाही {u}','हाज़िर {p} · कम घंटे {s} · गैरहाज़िर {a} · दर्ज नहीं {u}'],
  soFar:['So far','आतापर्यंत','अब तक'],earnedSoFar:['Earned so far','आतापर्यंत कमावले','अब तक कमाया'],payOnS:['pay on {d}','पगार {d}','वेतन {d}'],paidOnS:['paid {d}','{d} ला दिला','{d} को दिया'],
  paidRecent:['Paid recently','अलीकडे दिलेले पगार','हाल में दिया वेतन'],thisCycle:['Normal period','नेहमीचा काळ','सामान्य अवधि'],tillToday:['Till today','आजपर्यंत','आज तक'],
- salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7. Daily staff follow the same salary-day cycle as monthly staff.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], joinLbl:['Joined on (optional)','कामावर रुजू तारीख (ऐच्छिक)','काम शुरू की तारीख (वैकल्पिक)'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7. Daily staff follow the same salary-day cycle as monthly staff.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], joinLbl:['Joined on (optional)','कामावर रुजू तारीख (ऐच्छिक)','काम शुरू की तारीख (वैकल्पिक)'], slFull:['P · {n} full day(s)','हजर · {n} पूर्ण दिवस','हाज़िर · {n} पूरे दिन'],slPart:['Hours · {n} day(s), {h}h','तास · {n} दिवस, {h} तास','घंटे · {n} दिन, {h} घंटे'],slOt:['Extra hours · {h}h','जादा तास · {h} तास','अतिरिक्त घंटे · {h} घंटे'],
+ slAbs:['A · {n} day(s)','गैरहजर · {n} दिवस','गैरहाज़िर · {n} दिन'],slUnm:['Not marked · {n} day(s)','नोंद नाही · {n} दिवस','दर्ज नहीं · {n} दिन'],earned:['Earned','कमावले','कमाया'],
+ countsLn2:['P {p} · Hours {h} · A {a} · Not marked {u}','हजर {p} · तास {h} · गैरहजर {a} · नोंद नाही {u}','हाज़िर {p} · घंटे {h} · गैरहाज़िर {a} · दर्ज नहीं {u}'],
+ perDayS:['{a}/day','{a}/दिवस','{a}/दिन'],nDaysS:['{n} day(s)','{n} दिवस','{n} दिन'],daysLeft:['{n} still to come','{n} दिवस बाकी','{n} दिन बाकी'],salOnS:['salary on {d}','पगार {d} ला','वेतन {d} को'],
+ paidToday:['Paid for today','आजचा पगार दिला','आज का वेतन दिया'],payAmt:['Pay {a}','{a} द्या','{a} दें'],payEarly:['Pay now','आता द्या','अभी दें'],
+ grpDaily:['Daily wage','रोजंदारी','दिहाड़ी'],grpWeekly:['Weekly salary','साप्ताहिक पगार','साप्ताहिक वेतन'],grpMonthly:['Monthly salary','मासिक पगार','मासिक वेतन'],
+ cycleHintD2:['Paid for each day worked — from the Salary tab, any day','काम केलेल्या प्रत्येक दिवसाचा पगार — पगार टॅबमधून कधीही','काम के हर दिन का वेतन — वेतन टैब से कभी भी'],
+ salToExp:['Paying adds this amount to today\'s expenses as Salary.','पगार दिल्यावर ही रक्कम आजच्या खर्चात "पगार" म्हणून जाते.','वेतन देने पर यह रकम आज के खर्च में "वेतन" के रूप में जुड़ती है.'],
+ salaryPaidExp:['Salary {a} paid · added to today\'s expenses','पगार {a} दिला · आजच्या खर्चात जोडला','वेतन {a} दिया · आज के खर्च में जोड़ा'],
+ salaryNote3:['How pay is worked out: P = one day\'s pay · Hours = that share of a day · A or not marked = ₹0. Monthly day pay = salary ÷ days in that cycle, so full attendance gives exactly the salary. Weekly = salary ÷ 7.','पगार कसा मोजतो: हजर = एका दिवसाचा पगार · तास = दिवसाचा तेवढा भाग · गैरहजर/नोंद नाही = ₹0. मासिक दिवसाचा पगार = पगार ÷ त्या काळातील दिवस, त्यामुळे पूर्ण हजेरीला पूर्ण पगार. साप्ताहिक = पगार ÷ 7.','वेतन कैसे: हाज़िर = एक दिन का वेतन · घंटे = दिन का उतना हिस्सा · गैरहाज़िर/दर्ज नहीं = ₹0. मासिक दिन का वेतन = वेतन ÷ उस अवधि के दिन, पूरी हाज़िरी पर पूरा वेतन. साप्ताहिक = वेतन ÷ 7.'], notMarkedS:['Not marked','नोंद नाही','दर्ज नहीं'],toComeS:['To come','पुढे','आगे'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1191,7 +1203,7 @@ function expView(M,multi){
     if(S.day<today()&&!lockedDay())h+=`<div class="banner" style="background:var(--online-soft);color:var(--online)">${t('pastDayNote',{d:fmtDay(S.day)})}</div>`;
     h+=`<section class="panel mgr-hide" style="display:grid;gap:8px"><div class="label">${t('addExpense')}</div><div class="form">${catSelect('exCat',(S.catSel||{}).exCat||'veg')}<input type="number" id="exAmt" inputmode="decimal" placeholder="${esc(t('amount'))}" min="0">${otherInput('exCatOther','exCat')}${paySelect('exPay','paidCash')}<button class="btn primary full" data-act="addExp">${t('addExpense')}</button></div></section>`;
   }
-  if(M.exps.length){const cats={};M.exps.forEach(e=>{const k=expCat(e);cats[k]=(cats[k]||0)+(+e.amount||0)});const tt=sum(Object.values(cats),v=>v);
+  if(M.exps.length||M.sals.length){const cats={};M.exps.forEach(e=>{const k=expCat(e);cats[k]=(cats[k]||0)+(+e.amount||0)});M.sals.forEach(x=>{const k=t('salary');cats[k]=(cats[k]||0)+(+x.paid||0)});const tt=sum(Object.values(cats),v=>v);
     h+=`<section class="panel"><div class="label">${t('expByCat')}</div>${barRows(Object.entries(cats).sort((x,y)=>y[1]-x[1]).map(([k,v])=>[esc(k),v,'var(--warn)']),tt)}</section>`}
   h+=moneyLog(M,'exp');
   return h;
@@ -1737,6 +1749,7 @@ const joinDate=s=>s.joinDate||null;
 const ptype=s=>s.payType==='day'?'day':s.payType==='week'?'week':'month';
 const payAmount=s=>ptype(s)==='day'?+s.rate||0:+s.salary||0;
 const wdOf=d=>new Date(d+'T12:00:00').getDay();
+const perDayRate=(s,d)=>rateOn(s,d||today());
 function cycleOf(s,ref){
   const k=ptype(s);
   if(k==='week'){const st=shift(ref,-((wdOf(ref)-(+s.payWd||0)+7)%7));return {start:st,end:shift(st,6)}}
@@ -1744,39 +1757,44 @@ function cycleOf(s,ref){
   return {start:st,end:shift(payDateFor(mShift(st.slice(0,7),1),s.payDay),-1)};
 }
 const lastPaidTo=s=>(S.salaries||[]).filter(x=>x.staffId===s.id&&x.periodTo).map(x=>x.periodTo).sort().pop()||null;
-/* the dates the next payment should cover */
-const firstMark=s=>S.attMonth.filter(a=>a.marks&&a.marks[s.id]!=null).map(a=>a.date).sort()[0]||null;
+const cycleLen=c=>daysBetween(c.start,c.end)+1;
+/* pay for one full day on date d: daily wage, weekly ÷ 7, monthly ÷ days in that salary cycle (so full attendance = exactly the salary) */
+function rateOn(s,d){const k=ptype(s),amt=payAmount(s);return k==='day'?amt:k==='week'?amt/7:amt/cycleLen(cycleOf(s,d))}
+const marksFor=s=>{const m={};S.attMonth.forEach(a=>{const v=a.marks&&a.marks[s.id];if(v!=null)m[a.date]=v});return m};
+/* the dates the next payment covers.
+   daily  : unpaid days up to today (just today when they are paid every day)
+   monthly/weekly: the current cycle; an earlier unpaid cycle only when it was mostly marked (it really was worked in the app) */
 function nextRange(s){
   const k=ptype(s),j=joinDate(s),last=lastPaidTo(s),td=today();
-  if(last){const from=shift(last,1);return {from,to:cycleOf(s,from).end}}
-  /* never paid in the app: use the last finished cycle only if they joined before it ended and attendance was marked in it */
-  const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1)),fm=firstMark(s);
-  const usePrev=!(j&&j>prev.end)&&fm&&fm<=prev.end;
-  const c=usePrev?prev:cur;return {from:j&&j>c.start?j:c.start,to:c.end};
-}
-function perDayRate(s,from){const k=ptype(s),amt=payAmount(s);return k==='day'?amt:k==='week'?amt/7:(s.divisor==='actual'?amt/daysInMonth((from||today()).slice(0,7)):amt/30)}
-function calcRange(s,from,to){
-  const k=ptype(s),F=shiftOf(s),rate=perDayRate(s,from),hourly=rate/F,amt=payAmount(s);
-  const byDate={};S.attMonth.forEach(a=>byDate[a.date]=a.marks||{});
-  let full=0,part=0,abs=0,unmarked=0,future=0,shortH=0,otH=0;
-  for(let d=from;d<=to;d=shift(d,1)){
-    if(d>today()){future++;continue}
-    const h=markHours((byDate[d]||{})[s.id],F);
-    if(h==null){unmarked++;continue}
-    if(h<=0)abs++;else if(h<F){part++;shortH+=F-h}else{full++;if(h>F)otH+=h-F}
+  if(k==='day'){
+    if(last&&last>=td)return {from:td,to:td,paidUp:true};
+    let from=last?shift(last,1):td;if(j&&j>from)from=j;if(from>td)from=td;return {from,to:td};
   }
-  const nDays=Math.max(0,daysBetween(from,to)+1),cyc=cycleOf(s,from);
-  const fullCycle=k!=='day'&&from===cyc.start&&to===cyc.end;
-  /* a running period pays only the days so far; a finished full cycle pays the full salary */
-  const past=nDays-future,base=fullCycle&&!future?amt:Math.round(rate*past);
-  const absDed=Math.round(abs*rate),shortDed=Math.round(shortH*hourly),unmDed=Math.round(unmarked*rate),futDed=0,ot=Math.round(otH*hourly);
-  const ded=Math.min(base,absDed+shortDed+unmDed+futDed);
-  return {k,F,rate,hourly,from,to,nDays,past,fullCycle:fullCycle&&!future,base,amt,full,part,abs,unmarked,future,shortH,otH,absDed,shortDed,unmDed,futDed,ot,ded,earned:Math.max(0,base-ded+ot)};
+  if(last){const from=shift(last,1);return {from,to:cycleOf(s,from).end}}
+  const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1)),mk=marksFor(s);
+  let n=0;for(let d=prev.start;d<=prev.end;d=shift(d,1))if(d in mk)n++;
+  const c=n*2>=cycleLen(prev)&&!(j&&j>prev.end)?prev:cur;
+  return {from:j&&j>c.start?j:c.start,to:c.end};
+}
+/* add up pay day by day from saved attendance: P = one day, hours = that share of a day (extra hours paid the same way), A / not marked = nothing */
+function calcRange(s,from,to){
+  const k=ptype(s),F=shiftOf(s),mk=marksFor(s),td=today();
+  let full=0,part=0,abs=0,unmarked=0,future=0,partH=0,otH=0,fullAmt=0,partAmt=0,otAmt=0,days=[];
+  for(let d=from;d<=to;d=shift(d,1)){
+    if(d>td){future++;days.push('F');continue}
+    const r=rateOn(s,d),h=markHours(mk[d],F);
+    if(h==null){unmarked++;days.push('U');continue}
+    if(h<=0){abs++;days.push('A');continue}
+    if(h>=F){full++;fullAmt+=r;days.push('P')}else{part++;partH+=h;partAmt+=r*h/F;days.push('H')}
+    if(h>F){otH+=h-F;otAmt+=r*(h-F)/F}
+  }
+  const nDays=Math.max(0,daysBetween(from,to)+1),earned=Math.round(fullAmt+partAmt+otAmt);
+  return {k,F,from,to,nDays,full,part,abs,unmarked,future,partH,otH,fullAmt:Math.round(fullAmt),partAmt:Math.round(partAmt),otAmt:Math.round(otAmt),earned,days,rate:rateOn(s,from)};
 }
 const advFor=sid=>S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===sid);
 const paidFor=(sid,mo)=>S.salaries.filter(x=>x.staffId===sid&&x.month===mo);
 function salaryDueCount(){
-  return S.staff.filter(s=>ptype(s)!=='day'&&payAmount(s)>0&&nextRange(s).to<today()).length;
+  return S.staff.filter(s=>payAmount(s)>0&&(ptype(s)==='day'?false:nextRange(s).to<today())).length;
 }
 function vStaff(){
   return segTabs('staffSub',S.staffSub,[['att',t('subAtt')],['salary',t('subSalary')],...(S.canEdit?[['team',t('subTeam')]]:[])])+(S.staffSub==='salary'?vSalary():S.staffSub==='team'&&S.canEdit?vTeam():vAttendance());
@@ -1814,7 +1832,8 @@ function vAttDay(){
   h+=`<div class="row" style="font-size:13.5px"><span class="pill cash">${t('present',{n:full})}</span><span class="pill open">${t('partN',{n:part})}</span><span class="pill warn">${t('absent',{n:ab})}</span><span class="muted">${t('notMarked',{n:none})}</span></div>
    ${none&&!lockedDay()?`<div class="row"><button class="btn sm" data-act="attAllP">✓ ${t('allPresent',{n:none})}</button></div>`:''}
    <div class="list">`+S.staff.map(s=>{const mk=m[s.id],hh=markHours(mk,shiftOf(s)),isH=mk&&typeof mk==='object'||mk==='H';
-     return `<div class="li ${s.id in D?'pendrow':''}"><div class="grow"><div class="name">${esc(s.name)}</div><div class="meta">${esc(s.role||'')}${s.role?' · ':''}${t('shiftOfS',{h:shiftOf(s)})}${isH&&mk.from?` · ${esc(mk.from)}–${esc(mk.to)}`:''}</div></div><div class="seg" role="group" aria-label="${esc(s.name)}">
+     const earn=hh==null||!payAmount(s)?'':`<b style="color:${hh>0?'var(--cash)':'var(--warn)'}"> · ${inr(Math.round(rateOn(s,S.day)*hh/shiftOf(s)))}</b>`;
+     return `<div class="li ${s.id in D?'pendrow':''}"><div class="grow"><div class="name">${esc(s.name)}</div><div class="meta">${esc(s.role||'')}${s.role?' · ':''}${t('shiftOfS',{h:shiftOf(s)})}${earn}${isH&&mk.from?` · ${esc(mk.from)}–${esc(mk.to)}`:''}</div></div><div class="seg" role="group" aria-label="${esc(s.name)}">
        <button class="P ${mk==='P'?'on':''}" data-act="mark" data-id="${s.id}" data-k="P" aria-pressed="${mk==='P'}">${t('bP')}</button>
        <button class="H ${isH?'on':''}" data-act="hoursOpen" data-id="${s.id}">${isH?hrsTxt(hh)+(hh>shiftOf(s)?' +'+(Math.round((hh-shiftOf(s))*100)/100):''):t('hoursBtn')}</button>
        <button class="A ${mk==='A'?'on':''}" data-act="mark" data-id="${s.id}" data-k="A" aria-pressed="${mk==='A'}">${t('bA')}</button></div></div>`}).join('')+`</div>${nD?`<div class="attbar"><span>${t('attUnsaved',{n:nD})}</span><button class="btn ghost sm" data-act="attUndo">${t('undo')}</button><button class="btn primary" data-act="attSave">💾 ${t('attSaveBtn')}</button></div>`:''}<div class="note">${t('attLegend')}</div>`;
@@ -1823,38 +1842,45 @@ function vAttDay(){
 const diffTxt=(d,due)=>t(d>0?'payMore':'payLess',{a:inr(Math.abs(d)),b:inr(due)});
 const typeLbl=s=>t({month:'monthly',week:'weeklyT',day:'perDayT'}[ptype(s)]);
 /* the lines of a salary breakdown, shared by the list and the pay screen */
+/* the breakdown, written as money earned (easy to follow): P days, part days, extra hours, absent, not marked */
 function salLines(c){
-  const L=[[c.fullCycle?t(c.k==='week'?'fullSalW':'fullSalM'):t('daysXrate',{n:c.past,r:inr(c.rate)}),inr(c.base),'']];
-  L.push([t('absentLn',{n:c.abs}),c.absDed?'− '+inr(c.absDed):'—','']);
-  L.push([t('shortLn',{h:Math.round(c.shortH*100)/100,n:c.part}),c.shortDed?'− '+inr(c.shortDed):'—','']);
-  if(c.unmarked)L.push([t('unmLn',{n:c.unmarked}),'− '+inr(c.unmDed),'color:var(--accent)']);
-  if(c.future)L.push([t('notYetLn',{n:c.future}),'—','color:var(--muted)']);
-  if(c.ot)L.push([t('otLn',{h:Math.round(c.otH*100)/100}),'+ '+inr(c.ot),'color:var(--cash)']);
+  const L=[[t('slFull',{n:c.full}),inr(c.fullAmt),'']];
+  if(c.part)L.push([t('slPart',{n:c.part,h:Math.round(c.partH*100)/100}),inr(c.partAmt),'']);
+  if(c.otH)L.push([t('slOt',{h:Math.round(c.otH*100)/100}),inr(c.otAmt),'color:var(--cash)']);
+  L.push([t('slAbs',{n:c.abs}),inr(0),c.abs?'color:var(--warn)':'color:var(--muted)']);
+  if(c.unmarked)L.push([t('slUnm',{n:c.unmarked}),inr(0),'color:var(--accent)']);
   return L;
 }
+/* one small box per day: green P, orange hours, red A, grey not marked, outline = still to come */
+const dayStrip=c=>c.days.length>1?`<div class="dstrip">${c.days.map(x=>`<i class="${x}"></i>`).join('')}</div>`:'';
+function salCard(s){
+  const r=nextRange(s),c=calcRange(s,r.from,r.to),k=c.k,advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),td=today();
+  const running=r.to>=td,payOn=k==='day'?null:shift(r.to,1),dl=payOn?daysBetween(td,payOn):0;
+  const period=k==='day'?(r.from===r.to?fmtDate(r.from):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('nDaysS',{n:c.nDays})}`):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('salOnS',{d:fmtDate(payOn)})}`;
+  const pill=r.paidUp?`<span class="pill cash">✓ ${t('paidToday')}</span>`:k==='day'?'':running?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill warn">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
+  const btn=r.paidUp||!payAmount(s)?'':`<button class="btn ${running&&k!=='day'?'':'primary'} sm" data-act="payOpen" data-id="${s.id}">${k==='day'?t('payAmt',{a:inr(toPay)}):running?t('payEarly'):t('markSalaryPaid')}</button>`;
+  return `<div class="sal"><div style="min-width:0"><div class="name" style="font-weight:700">${esc(s.name)}</div><div class="meta">${typeLbl(s)} · ${inr(payAmount(s))}${k==='day'?'':' · '+t('perDayS',{a:inr(c.rate)})}</div><div class="meta">${period}</div></div>
+    <div style="display:grid;gap:6px;justify-items:end;align-content:start">${pill}${btn}</div>
+    ${!payAmount(s)?`<div class="ln"><span style="color:var(--warn)">${t('noSalary')}</span></div>`:r.paidUp?'':`${dayStrip(c)}
+    <div class="ln" style="font-size:13.5px"><span>${t('countsLn2',{p:c.full,h:c.part,a:c.abs,u:c.unmarked})}</span><span></span></div>
+    ${advT?`<div class="ln"><span>${t('advances')}</span><span>− ${inr(advT)}</span></div>`:''}
+    <div class="ln tot"><span>${running&&k!=='day'?t('earnedSoFar'):t('toPay')}</span><span>${inr(toPay)}</span></div>
+    ${c.unmarked?`<div class="ln" style="color:var(--accent);align-items:center"><span>${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}`}</div>`;
+}
 function vSalary(){
-  let h='';
   const people=S.staffAll.filter(s=>s.active!==false);
-  if(!people.length)return h+`<div class="empty"><b>${t('noStaffT')}</b>${t('noStaffB')}</div>`;
-  const rows=people.map(s=>{const r=nextRange(s);return {s,r,c:calcRange(s,r.from,r.to)}}).sort((a,b)=>a.r.to<b.r.to?-1:1);
-  h+=`<div class="list">`+rows.map(({s,r,c})=>{
-    const advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),k=c.k,payOn=shift(r.to,1),dl=payOn?daysBetween(today(),payOn):null;
-    const pill=r.to>=today()?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill ${dl<0?'warn':'open'}">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
-    return `<div class="sal"><div style="min-width:0"><div class="name" style="font-weight:700">${esc(s.name)}</div><div class="meta">${typeLbl(s)} · ${inr(payAmount(s))}</div><div class="meta">${fmtDate(r.from)} – ${fmtDate(r.to)}${payOn?' · '+t('payOnS',{d:fmtDate(payOn)}):''}</div></div>
-     <div style="display:grid;gap:6px;justify-items:end">${pill}${payAmount(s)?`<button class="btn primary sm" data-act="payOpen" data-id="${s.id}">${t('markSalaryPaid')}</button>`:''}</div>
-     ${payAmount(s)?`<div class="ln" style="font-size:13.5px"><span>${t('countsLn',{p:c.full,s:c.part,a:c.abs,u:c.unmarked})}</span><span></span></div>
-     ${advT?`<div class="ln"><span>${t('advances')}</span><span>− ${inr(advT)}</span></div>`:''}
-     <div class="ln tot"><span>${r.to>=today()?t('earnedSoFar'):t('toPay')}</span><span>${inr(toPay)}</span></div>
-     ${c.unmarked?`<div class="ln" style="color:var(--accent);align-items:center"><span>${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}`
-     :`<div class="ln"><span style="color:var(--warn)">${t('noSalary')}</span></div>`}</div>`}).join('')+`</div>`;
+  if(!people.length)return `<div class="empty"><b>${t('noStaffT')}</b>${t('noStaffB')}</div>`;
+  const grp=k=>people.filter(s=>ptype(s)===k);
+  let h=`<div class="dkey"><span><i class="P"></i>P</span><span><i class="H"></i>${t('hoursBtn')}</span><span><i class="A"></i>A</span><span><i class="U"></i>${t('notMarkedS')}</span><span><i class="F"></i>${t('toComeS')}</span></div>`;
+  [['day','grpDaily'],['week','grpWeekly'],['month','grpMonthly']].forEach(([k,l])=>{const g=grp(k);if(g.length)h+=`<div class="label">${t(l)}</div><div class="list">${g.map(salCard).join('')}</div>`});
   const recent=(S.salaries||[]).slice().sort((a,b)=>(b.at||0)-(a.at||0)).slice(0,20);
-  if(recent.length)h+=`<div class="label" style="margin-top:6px">${t('paidRecent')}</div><div class="list">`+recent.map(x=>`<button class="li" data-act="editOpen" data-type="sal" data-id="${x.id}"><div class="grow"><div class="name">${esc(x.name)}</div><div class="meta">${x.periodFrom?fmtDate(x.periodFrom)+' – '+fmtDate(x.periodTo)+' · ':''}${t('paidOnS',{d:fmtDate(x.date)})}${x.note?' · '+esc(x.note):''}</div></div><span class="amt">${inr(x.paid)}</span></button>`).join('')+`</div>`;
-  return h+`<div class="note">${t('salaryNote2')}</div>`;
+  if(recent.length)h+=`<div class="label" style="margin-top:6px">${t('paidRecent')}</div><div class="list">`+recent.map(x=>`<button class="li" data-act="editOpen" data-type="sal" data-id="${x.id}"><div class="grow"><div class="name">${esc(x.name)}</div><div class="meta">${x.periodFrom?(x.periodFrom===x.periodTo?fmtDate(x.periodFrom):fmtDate(x.periodFrom)+' – '+fmtDate(x.periodTo))+' · ':''}${t('paidOnS',{d:fmtDate(x.date)})}${x.note?' · '+esc(x.note):''}</div></div><span class="amt">${inr(x.paid)}</span></button>`).join('')+`</div>`;
+  return h+`<div class="note">${t('salaryNote3')}</div>`;
 }
 const ordN=n=>LANG==='en'?n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th'):String(n);
 function salPeriodTxt(d){return d===1?t('salPeriod1'):t('salPeriodTxt',{a:ordN(d),b:ordN(d-1)})}
 const wdName=i=>new Date(2026,0,4+i,12).toLocaleDateString(LOC[LANG],{weekday:'long'});
-function cycleHint(s){const c=cycleOf(s,today());return t('cycleHint',{a:fmtDate(c.start),b:fmtDate(c.end),c:fmtDate(shift(c.end,1))})}
+function cycleHint(s){if(ptype(s)==='day')return t('cycleHintD2');const c=cycleOf(s,today());return t('cycleHint',{a:fmtDate(c.start),b:fmtDate(c.end),c:fmtDate(shift(c.end,1))})}
 function vTeam(){
   const typeSel=(id,cur,attrs='')=>`<select id="${id}" ${attrs}>${[['month','monthly'],['week','weeklyT'],['day','perDayT']].map(([v,l])=>`<option value="${v}" ${(cur==='day'||cur==='week'?cur:'month')===v?'selected':''}>${t(l)}</option>`).join('')}</select>`;
   const wdSel=(id,cur,attrs='')=>`<select id="${id}" ${attrs}>${[0,1,2,3,4,5,6].map(i=>`<option value="${i}" ${+cur===i?'selected':''}>${wdName(i)}</option>`).join('')}</select>`;
@@ -1875,11 +1901,11 @@ function vTeam(){
      <label for="se_t_${s.id}">${t('payTypeLbl')}</label>${typeSel('se_t_'+s.id,s.payType,`data-live data-sedit="payType" data-sid="${s.id}"`)}
      ${day?`<label for="se_rt_${s.id}">${t('dailyRate')}</label><input type="number" id="se_rt_${s.id}" data-live data-sedit="rate" data-sid="${s.id}" min="0" value="${+s.rate||''}" placeholder="0">`
        :`<label for="se_s_${s.id}">${t(ptype(s)==='week'?'salaryInpW':'salaryInp')}</label><input type="number" id="se_s_${s.id}" data-live data-sedit="salary" data-sid="${s.id}" min="0" value="${+s.salary||''}" placeholder="0">
-         ${ptype(s)==='week'?'':`<label for="se_v_${s.id}" class="full">${t('divisorLbl')}</label><select id="se_v_${s.id}" class="full" data-live data-sedit="divisor" data-sid="${s.id}"><option value="30" ${s.divisor!=='actual'?'selected':''}>${t('div30')}</option><option value="actual" ${s.divisor==='actual'?'selected':''}>${t('divActual')}</option></select>`}`}
+`}
      <label for="se_f_${s.id}">${t('shiftFromLbl')}</label><input type="time" id="se_f_${s.id}" data-live data-sedit="shiftFrom" data-sid="${s.id}" value="${esc(startOf(s))}">
      <label for="se_e_${s.id}">${t('shiftToLbl')}</label><input type="time" id="se_e_${s.id}" data-live data-sedit="shiftTo" data-sid="${s.id}" value="${esc(endOf(s))}">
      <div class="full note" style="text-align:right;font-weight:700;color:var(--ink)">${t('shiftTotal',{h:shiftOf(s)})}</div>
-     ${ptype(s)!=='week'?`<label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">`
+     ${ptype(s)==='month'?`<label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">`
        :ptype(s)==='week'?`<label for="se_w_${s.id}">${t('payWdLbl')}</label>${wdSel('se_w_'+s.id,s.payWd||0,`data-live data-sedit="payWd" data-sid="${s.id}"`)}`:''}
      <div class="full note">${cycleHint(s)}</div>
      <label for="se_j_${s.id}">${t('joinLbl')}</label><input type="date" id="se_j_${s.id}" data-live data-sedit="joinDate" data-sid="${s.id}" value="${esc(s.joinDate||'')}" max="${today()}">
@@ -2160,12 +2186,13 @@ function renderModal(){
     const s=S.staffAll.find(x=>x.id===m.sid);if(!s){S.modal=null;el.hidden=true;return}
     const c=calcRange(s,m.from,m.to),advT=sum(advFor(s.id),a=>a.amount),due=Math.max(0,c.earned-advT);m.due=due;
     const amt=m.amt!=null?m.amt:due,chg=+amt!==due,minD=mShift(today().slice(0,7),-2)+'-01',nr=nextRange(s);
-    h=`<h3>${esc(t('paySalaryTitle',{n:s.name}))}</h3><div class="muted">${typeLbl(s)} · ${inr(payAmount(s))} · ${t('perDay',{d:inr(c.rate),h:inr(c.hourly)})}</div>
-     <div class="label">${t('workPeriodLbl')}</div>
+    h=`<h3>${esc(t('paySalaryTitle',{n:s.name}))}</h3><div class="muted">${typeLbl(s)} · ${inr(payAmount(s))} · ${t('perDayS',{a:inr(c.rate)})}</div>
      <div class="form"><label for="spFrom">${t('fromT')}</label><input type="date" id="spFrom" data-spd="from" min="${minD}" value="${m.from}"><label for="spTo">${t('toT')}</label><input type="date" id="spTo" data-spd="to" min="${minD}" value="${m.to}"></div>
-     <div class="chips"><span class="muted" style="align-self:center">${t('periodDays',{n:c.nDays})}</span><span style="flex:1"></span>${m.from!==nr.from||m.to!==nr.to?`<button class="chip" data-act="spReset">${t('thisCycle')}</button>`:''}${m.to!==today()&&m.from<=today()?`<button class="chip" data-act="spToday">${t('tillToday')}</button>`:''}</div>
-     <div class="ledger">${salLines(c).map(([a,b,st])=>`<span style="${st}">${a}</span><span style="${st}">${b}</span>`).join('')}${advT?`<span>${t('advances')}</span><span>− ${inr(advT)}</span>`:''}<span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span></div>
+     <div class="chips"><span class="muted" style="align-self:center">${t('nDaysS',{n:c.nDays})}${c.future?' · '+t('daysLeft',{n:c.future}):''}</span><span style="flex:1"></span>${m.from!==nr.from||m.to!==nr.to?`<button class="chip" data-act="spReset">${t('thisCycle')}</button>`:''}${m.to!==today()&&m.from<=today()?`<button class="chip" data-act="spToday">${t('tillToday')}</button>`:''}</div>
+     ${dayStrip(c)}
+     <div class="ledger">${salLines(c).map(([a,b,st])=>`<span style="${st}">${a}</span><span style="${st}">${b}</span>`).join('')}<span class="tot">${t('earned')}</span><span class="tot">${inr(c.earned)}</span>${advT?`<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span>`:''}</div>
      ${c.unmarked?`<div class="row" style="color:var(--accent);font-size:13.5px"><span style="flex:1">${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}
+     <div class="note">${t('salToExp')}</div>
      <label class="label" for="spAmt">${t('finalPay')}</label><input type="number" id="spAmt" min="0" inputmode="decimal" value="${amt}">
      <div id="spChg" ${chg?'':'hidden'} style="display:grid;gap:6px"><div class="note" id="spDiff" style="color:var(--accent);font-weight:700">${chg?diffTxt(+amt-due,due):''}</div><input type="text" id="spWhy" placeholder="${esc(t('changeWhy'))}" value="${esc(m.why||'')}"></div>
      ${advT?`<div class="note">${t('advCut',{a:inr(advT)})}</div>`:''}
@@ -2387,9 +2414,9 @@ const A={
     const why=val('spWhy').trim();if(amt!==m.due&&!why){toast(t('needWhy'));const w=$('#spWhy');if(w)w.focus();return}const pp=amt>0?mPayOf(amt):{pay:m.pay};if(!pp)return;b.disabled=true;
     const adv=S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===s.id);
     const ok=await save(async()=>{
-      const c=calcRange(s,m.from,m.to);await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.to.slice(0,7),salary:c.base,payType:ptype(s),rate:Math.round(c.rate*100)/100,deduction:c.ded,overtime:c.ot,overtimeHours:c.otH,present:c.full,shortDays:c.part,shortHours:c.shortH,absent:c.abs,unmarked:c.unmarked,periodFrom:m.from,periodTo:m.to,advances:sum(adv,a=>a.amount),advIds:adv.map(a=>a.id),calculated:m.due,...(amt!==m.due?{adjust:amt-m.due,note:why}:{}),paid:amt,...pp,date:today(),at:Date.now()});
+      const c=calcRange(s,m.from,m.to);await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.to.slice(0,7),salary:c.earned,payType:ptype(s),rate:Math.round(c.rate*100)/100,deduction:0,overtime:c.otAmt,overtimeHours:c.otH,present:c.full,partDays:c.part,partHours:c.partH,absent:c.abs,unmarked:c.unmarked,periodFrom:m.from,periodTo:m.to,advances:sum(adv,a=>a.amount),advIds:adv.map(a=>a.id),calculated:m.due,...(amt!==m.due?{adjust:amt-m.due,note:why}:{}),paid:amt,...pp,date:today(),at:Date.now()});
       for(const a of adv)await db.doc('credits/'+a.id).update({status:'deducted',salaryMonth:m.to.slice(0,7)});
-    },t('salaryPaidT'));
+    },t('salaryPaidExp',{a:inr(amt)}));
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
   /* menu */
   saveCfg(){const name=val('cfName'),tables=Math.max(1,Math.min(80,Math.round(+val('cfTables')||15)));save(()=>db.doc('config/main').update({name,tables,billAddr:val('cfAddr'),billPhone:val('cfPhone'),billGst:val('cfGst'),billFooter:val('cfFooter'),paper:val('cfPaper')||'80',autoPrint:!!($('#cfAuto')&&$('#cfAuto').checked)}),t('saved'))},
@@ -2562,7 +2589,7 @@ function applyEdit(x){const d=x.dataset;
     if((d.sedit==='shiftFrom'||d.sedit==='shiftTo')&&!v){x.value=d.sedit==='shiftFrom'?startOf(st):endOf(st);return}
     const upd={[d.sedit]:v};
     if(d.sedit==='shiftFrom'||d.sedit==='shiftTo'){const f=d.sedit==='shiftFrom'?v:startOf(st),e=d.sedit==='shiftTo'?v:endOf(st),hh=spanHours(f,e);if(!(hh>0)){toast(t('needHours'));x.value=d.sedit==='shiftFrom'?startOf(st):endOf(st);return}upd.shiftFrom=f;upd.shiftTo=e;upd.shiftH=hh}
-    if(d.sedit==='payType'){const was=ptype(st),per=perDayRate(st);
+    if(d.sedit==='payType'){const was=ptype(st),amt0=payAmount(st),per=was==='day'?amt0:was==='week'?amt0/7:amt0/30;
       if(v==='day'&&!(+st.rate>0))upd.rate=Math.round(per);
       if(v==='week'&&was!=='week')upd.salary=Math.round(per*7);
       if(v==='month'&&was!=='month')upd.salary=Math.round(per*30);
