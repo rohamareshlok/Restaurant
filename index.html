@@ -272,6 +272,7 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+body.busy #shFoot button,body.busy #shBill button{opacity:.6;pointer-events:none}
 .qpay .paylater{min-height:40px;border:1.5px dashed var(--warn);color:var(--warn);background:var(--surface);font-weight:800}
 .pill.credit{background:var(--warn-soft);color:var(--warn)}
 body{font-size:16px}.note{font-size:13.5px}.li .meta,.meta{font-size:13.5px}.label{font-size:12px}.chip{font-size:14px}.pill{font-size:12px}.form label{font-size:14px}nav.tabs button{font-size:12px}.btn{font-size:15px}
@@ -729,7 +730,7 @@ const T={
  countsLn:['P {p} · Short {s} · A {a} · Not marked {u}','हजर {p} · कमी तास {s} · गैरहजर {a} · नोंद नाही {u}','हाज़िर {p} · कम घंटे {s} · गैरहाज़िर {a} · दर्ज नहीं {u}'],
  soFar:['So far','आतापर्यंत','अब तक'],earnedSoFar:['Earned so far','आतापर्यंत कमावले','अब तक कमाया'],payOnS:['pay on {d}','पगार {d}','वेतन {d}'],paidOnS:['paid {d}','{d} ला दिला','{d} को दिया'],
  paidRecent:['Paid recently','अलीकडे दिलेले पगार','हाल में दिया वेतन'],thisCycle:['Normal period','नेहमीचा काळ','सामान्य अवधि'],tillToday:['Till today','आजपर्यंत','आज तक'],
- salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], joinLbl:['Joined on (optional)','कामावर रुजू तारीख (ऐच्छिक)','काम शुरू की तारीख (वैकल्पिक)'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ salaryNote2:['Pay = per-day rate × days worked. Absent and unmarked days are not paid, short hours are cut by the hour, extra hours are paid by the hour. Monthly per-day = salary ÷ 30, weekly = salary ÷ 7. Daily staff follow the same salary-day cycle as monthly staff.','पगार = प्रतिदिन दर × काम केलेले दिवस. गैरहजर व नोंद नसलेले दिवस धरले जात नाहीत, कमी तास तासाने कापले जातात, जादा तास तासाने दिले जातात. मासिक प्रतिदिन = पगार ÷ 30, साप्ताहिक = पगार ÷ 7.','वेतन = प्रतिदिन दर × काम के दिन. गैरहाज़िर और बिना दर्ज दिन नहीं गिने जाते, कम घंटे घंटे से कटते हैं, अतिरिक्त घंटे घंटे से मिलते हैं. मासिक प्रतिदिन = वेतन ÷ 30, साप्ताहिक = वेतन ÷ 7.'], joinLbl:['Joined on (optional)','कामावर रुजू तारीख (ऐच्छिक)','काम शुरू की तारीख (वैकल्पिक)'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -739,7 +740,7 @@ let LANG='en';try{const l=localStorage.getItem('rd_lang');if(l&&LI[l]!=null)LANG
 function t(k,v){const r=T[k];let s=r?(r[LI[LANG]]??r[0]):k;if(v)for(const x in v)s=s.split('{'+x+'}').join(v[x]);return s}
 
 /* ---------- helpers ---------- */
-const $=s=>document.querySelector(s);
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const inr=n=>(n<0?'−':'')+'₹'+Math.abs(Math.round(n||0)).toLocaleString('en-IN');
 const today=()=>new Date().toLocaleDateString('en-CA');
@@ -1738,7 +1739,6 @@ const payAmount=s=>ptype(s)==='day'?+s.rate||0:+s.salary||0;
 const wdOf=d=>new Date(d+'T12:00:00').getDay();
 function cycleOf(s,ref){
   const k=ptype(s);
-  if(k==='day')return {start:ref,end:ref};
   if(k==='week'){const st=shift(ref,-((wdOf(ref)-(+s.payWd||0)+7)%7));return {start:st,end:shift(st,6)}}
   const mo=ref.slice(0,7);let st=payDateFor(mo,s.payDay);if(st>ref)st=payDateFor(mShift(mo,-1),s.payDay);
   return {start:st,end:shift(payDateFor(mShift(st.slice(0,7),1),s.payDay),-1)};
@@ -1748,7 +1748,6 @@ const lastPaidTo=s=>(S.salaries||[]).filter(x=>x.staffId===s.id&&x.periodTo).map
 const firstMark=s=>S.attMonth.filter(a=>a.marks&&a.marks[s.id]!=null).map(a=>a.date).sort()[0]||null;
 function nextRange(s){
   const k=ptype(s),j=joinDate(s),last=lastPaidTo(s),td=today();
-  if(k==='day'){let from=last?shift(last,1):(j||firstMark(s)||td);if(from>td)from=td;return {from,to:td}}
   if(last){const from=shift(last,1);return {from,to:cycleOf(s,from).end}}
   /* never paid in the app: use the last finished cycle only if they joined before it ended and attendance was marked in it */
   const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1)),fm=firstMark(s);
@@ -1839,8 +1838,8 @@ function vSalary(){
   if(!people.length)return h+`<div class="empty"><b>${t('noStaffT')}</b>${t('noStaffB')}</div>`;
   const rows=people.map(s=>{const r=nextRange(s);return {s,r,c:calcRange(s,r.from,r.to)}}).sort((a,b)=>a.r.to<b.r.to?-1:1);
   h+=`<div class="list">`+rows.map(({s,r,c})=>{
-    const advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),k=c.k,payOn=k==='day'?null:shift(r.to,1),dl=payOn?daysBetween(today(),payOn):null;
-    const pill=k==='day'?`<span class="pill open">${t('soFar')}</span>`:r.to>=today()?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill ${dl<0?'warn':'open'}">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
+    const advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),k=c.k,payOn=shift(r.to,1),dl=payOn?daysBetween(today(),payOn):null;
+    const pill=r.to>=today()?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill ${dl<0?'warn':'open'}">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
     return `<div class="sal"><div style="min-width:0"><div class="name" style="font-weight:700">${esc(s.name)}</div><div class="meta">${typeLbl(s)} · ${inr(payAmount(s))}</div><div class="meta">${fmtDate(r.from)} – ${fmtDate(r.to)}${payOn?' · '+t('payOnS',{d:fmtDate(payOn)}):''}</div></div>
      <div style="display:grid;gap:6px;justify-items:end">${pill}${payAmount(s)?`<button class="btn primary sm" data-act="payOpen" data-id="${s.id}">${t('markSalaryPaid')}</button>`:''}</div>
      ${payAmount(s)?`<div class="ln" style="font-size:13.5px"><span>${t('countsLn',{p:c.full,s:c.part,a:c.abs,u:c.unmarked})}</span><span></span></div>
@@ -1855,7 +1854,7 @@ function vSalary(){
 const ordN=n=>LANG==='en'?n+(n%100>=11&&n%100<=13?'th':['th','st','nd','rd'][n%10]||'th'):String(n);
 function salPeriodTxt(d){return d===1?t('salPeriod1'):t('salPeriodTxt',{a:ordN(d),b:ordN(d-1)})}
 const wdName=i=>new Date(2026,0,4+i,12).toLocaleDateString(LOC[LANG],{weekday:'long'});
-function cycleHint(s){const k=ptype(s);if(k==='day')return t('cycleHintD');const c=cycleOf(s,today());return t('cycleHint',{a:fmtDate(c.start),b:fmtDate(c.end),c:fmtDate(shift(c.end,1))})}
+function cycleHint(s){const c=cycleOf(s,today());return t('cycleHint',{a:fmtDate(c.start),b:fmtDate(c.end),c:fmtDate(shift(c.end,1))})}
 function vTeam(){
   const typeSel=(id,cur,attrs='')=>`<select id="${id}" ${attrs}>${[['month','monthly'],['week','weeklyT'],['day','perDayT']].map(([v,l])=>`<option value="${v}" ${(cur==='day'||cur==='week'?cur:'month')===v?'selected':''}>${t(l)}</option>`).join('')}</select>`;
   const wdSel=(id,cur,attrs='')=>`<select id="${id}" ${attrs}>${[0,1,2,3,4,5,6].map(i=>`<option value="${i}" ${+cur===i?'selected':''}>${wdName(i)}</option>`).join('')}</select>`;
@@ -1880,7 +1879,7 @@ function vTeam(){
      <label for="se_f_${s.id}">${t('shiftFromLbl')}</label><input type="time" id="se_f_${s.id}" data-live data-sedit="shiftFrom" data-sid="${s.id}" value="${esc(startOf(s))}">
      <label for="se_e_${s.id}">${t('shiftToLbl')}</label><input type="time" id="se_e_${s.id}" data-live data-sedit="shiftTo" data-sid="${s.id}" value="${esc(endOf(s))}">
      <div class="full note" style="text-align:right;font-weight:700;color:var(--ink)">${t('shiftTotal',{h:shiftOf(s)})}</div>
-     ${ptype(s)==='month'?`<label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">`
+     ${ptype(s)!=='week'?`<label for="se_d_${s.id}">${t('payDayLbl')}</label><input type="number" id="se_d_${s.id}" data-live data-sedit="payDay" data-sid="${s.id}" min="1" max="31" value="${+s.payDay||1}">`
        :ptype(s)==='week'?`<label for="se_w_${s.id}">${t('payWdLbl')}</label>${wdSel('se_w_'+s.id,s.payWd||0,`data-live data-sedit="payWd" data-sid="${s.id}"`)}`:''}
      <div class="full note">${cycleHint(s)}</div>
      <label for="se_j_${s.id}">${t('joinLbl')}</label><input type="date" id="se_j_${s.id}" data-live data-sedit="joinDate" data-sid="${s.id}" value="${esc(s.joinDate||'')}" max="${today()}">
@@ -2051,11 +2050,17 @@ async function persistDraft(){
     const ok=await save(()=>db.doc('orders/'+d.id).update({status:'void',voidedAt:Date.now(),date:today(),items:saved?saved.items:[],total:saved?orderTotal(saved):0,updatedAt:Date.now()}),t('tableFree'));
     if(ok)d.dirty=false;return ok;
   }
-  const data={table:d.table,label:d.label||null,items:d.items,disc:d.disc&&+d.disc.v>0?d.disc:null,total:billTotal(d),status:'open',updatedAt:Date.now()};
-  let ref;
-  const ok=await save(async()=>{if(d.id){await db.doc('orders/'+d.id).update(data)}else{ref=db.collection('orders').doc();await ref.set({...data,createdAt:d.createdAt,date:today()})}});
-  if(ok){if(ref)d.id=ref.id;d.dirty=false}
-  return ok;
+  /* if a save is already running for this order, wait for it instead of starting a second one */
+  if(d._saving)return d._saving;
+  d._saving=(async()=>{
+    const data={table:d.table,label:d.label||null,items:d.items,disc:d.disc&&+d.disc.v>0?d.disc:null,total:billTotal(d),status:'open',updatedAt:Date.now()};
+    /* a new order gets its record id before the first write, so a retry updates the same record instead of making a copy */
+    if(!d.id&&!d._ref)d._ref=db.collection('orders').doc();
+    const ok=await save(async()=>{if(d.id){await db.doc('orders/'+d.id).update(data)}else{await d._ref.set({...data,createdAt:d.createdAt,date:today()})}});
+    if(ok){if(!d.id)d.id=d._ref.id;d.dirty=false}
+    return ok;
+  })();
+  try{return await d._saving}finally{d._saving=null}
 }
 
 /* ---------- editing a bill that was already paid ---------- */
@@ -2254,14 +2259,14 @@ const A={
   day(b){const nd=clampDay(shift(S.day,+b.dataset.k));if(nd===S.day&&+b.dataset.k<0){toast(t('mgrWeekOnly'));return}S.day=nd;if(db)subAtt();render()},
   month(b){S.month=mShift(S.month,+b.dataset.k);if(db)subMonth();render()},
   modalNo(){S.modal=null;renderModal()},
-  modalYes(){const f=S.modal&&S.modal.fn;S.modal=null;renderModal();f&&f()},
+  modalYes(){const f=S.modal&&S.modal.fn;S.modal=null;renderModal();return f&&f()},
   mpay(b){const keep={};['sppAmt','rvAmt','spAmt','rsQty','rsCost'].forEach(k=>{const e=$('#'+k);if(e)keep[k]=e.value});S.modal.pay=b.dataset.k;renderModal();for(const k in keep){const e=$('#'+k);if(e)e.value=keep[k]}},
   openTable(b){const tb=b.dataset.t,o=S.open.find(x=>x.table===tb);if(!S.menu.length&&!S.products.length&&!o){toast(t('addMenuFirst'));return}openDraft(o,tb)},
   openOrder(b){const o=S.open.find(x=>x.id===b.dataset.id);if(o)openDraft(o)},
   newTA(){if(!S.menu.length&&!S.products.length){toast(t('addMenuFirst'));return}const n=S.orders.filter(o=>o.table==='TA'&&o.date===today()).length+S.open.filter(o=>o.table==='TA'&&o.date!==today()).length+1;openDraft(null,'TA',t('takeaway')+' #'+n)},
   async closeSheet(){const d=S.draft;if(d&&d.paidEdit){if(d.dirty){confirmBox(t('discardQ'),t('discard'),()=>{S.draft=null;render()});return}S.draft=null;render();return}
-    if(d&&d.dirty&&(d.items.length||d.id)){if(!(await persistDraft()))return;if(d.items.length)toast(t('orderSaved'))}S.draft=null;render()},
-  clearTable(){const d=S.draft;confirmBox(t('clearTableQ',{t:orderName(d)}),t('clearTable'),async()=>{if(await persistDraft()){S.draft=null;render()}})},
+    if(d&&d.dirty&&(d.items.length||d.id)){if(!(await persistDraft()))return;if(d.items.length)toast(t('orderSaved'))}if(S.draft===d)S.draft=null;render()},
+  clearTable(){const d=S.draft;confirmBox(t('clearTableQ',{t:orderName(d)}),t('clearTable'),async()=>{if(await persistDraft()){if(S.draft===d)S.draft=null;render()}})},
   logMore(){S.logN=(S.logN||150)+300;render()},
   addItem(b){const x=catalog().find(c=>c.key===b.dataset.key);if(!x)return;const d=S.draft,ex=d.items.find(i=>ikey(i)===x.key);
     if(ex)ex.qty++;else d.items.push(x.pid?{pid:x.pid,name:x.name,price:x.price,qty:1,vk:x.vk,cost:r2(pcCost(x.pid))}:{mid:x.mid,name:x.name,price:x.price,qty:1,k:x.k});d.dirty=true;
@@ -2271,33 +2276,36 @@ const A={
   clearQ(){const d=S.draft;d.q='';const i=$('#mq');if(i){i.value='';i.focus()}renderSheet()},
   cat(b){S.draft.cat=b.dataset.k;renderSheet();const m=$('#shMenu');if(m)m.scrollIntoView({block:'nearest'})},
   kf(b){S.draft.kf=b.dataset.k;S.draft.cat='*';renderSheet()},
-  async saveOrder(){const had=S.draft.items.length;if(await persistDraft()){if(had)toast(t('orderSaved'));S.draft=null;render()}},
+  async saveOrder(){const d=S.draft;if(!d)return;const had=d.items.length;if(await persistDraft()){if(had)toast(t('orderSaved'));if(S.draft===d)S.draft=null;render()}},
   toBill(){S.draft.mode='bill';renderSheet()},
   backEdit(){S.draft.mode='edit';renderSheet()},
   payLaterOpen(){S.modal={kind:'paylater'};renderModal();setTimeout(()=>{const e=$('#plName');e&&e.focus()},50)},
   payLaterDo(b){const name=val('plName');if(!name){toast(t('needName'));return}const days=Math.max(1,Math.round(S.config.creditLocked&&!S.canEdit?(+S.config.creditDays||7):(+val('plDays')||+S.config.creditDays||7)));
-    S.draft.credit={name,phone:val('plPhone'),days};S.draft.pay='credit';S.modal=null;renderModal();A.settle(b)},
-  quickPay(b){S.draft.pay=b.dataset.k;A.settle(b)},
+    S.draft.credit={name,phone:val('plPhone'),days};S.draft.pay='credit';S.modal=null;renderModal();return A.settle(b)},
+  quickPay(b){if(!S.draft||S.draft._paying)return;S.draft.pay=b.dataset.k;return A.settle(b)},
   pay(b){const d=S.draft;d.pay=b.dataset.k;if(d.pay==='split'&&!d.split)d.split={cash:'',paytm:'',phonepe:''};renderSheet()},
   discType(b){const d=S.draft;d.disc={type:b.dataset.k,v:(d.disc&&d.disc.v)||''};d.dirty=true;renderSheet()},
   spRest(b){const d=S.draft,k=b.dataset.k;const others=PAYS.filter(x=>x!==k).reduce((a,x)=>a+(+d.split[x]||0),0);d.split[k]=String(Math.max(0,billTotal(d)-others));renderSheet()},
   async settle(b){
     if(S.draft&&S.draft.paidEdit)return savePaidEdit(b);
-    const d=S.draft;if(!d.items.length)return;b.disabled=true;
+    const d=S.draft;if(!d||!d.items.length||d._paying)return;
+    if(d._saving)await d._saving;
+    d._paying=true;b.disabled=true;$$('#shFoot button,#shBill button').forEach(x=>x.disabled=true);
     if(d.pay==='split'&&splitDiff(d)!==0){toast(t('splitMismatch'));b.disabled=false;return}
     const da=discAmt(d);
     const data={table:d.table,label:d.label||null,items:d.items,subtotal:orderTotal(d),discount:da,disc:da?d.disc:null,total:billTotal(d),status:'paid',pay:d.pay,paidAt:Date.now(),date:today(),updatedAt:Date.now()};
     if(d.pay==='split')data.split={cash:+d.split.cash||0,paytm:+d.split.paytm||0,phonepe:+d.split.phonepe||0};
     const ok=await save(async()=>{
       data.billNo=await nextBillNo();
-      if(d.id)await db.doc('orders/'+d.id).update(data);else{const ref=db.collection('orders').doc();await ref.set({...data,createdAt:d.createdAt});data._id=ref.id}
+      if(d.id)await db.doc('orders/'+d.id).update(data);else{if(!d._ref)d._ref=db.collection('orders').doc();await d._ref.set({...data,createdAt:d.createdAt});data._id=d._ref.id}
       for(const i of d.items)if(i.pid)await adjustStock(i.pid,-i.qty);
       if(d.pay==='credit'&&d.credit)await db.collection('credits').add({kind:'person',source:'bill',name:d.credit.name,phone:d.credit.phone||'',amount:data.total,received:0,pay:'credit',orderId:d.id||data._id||null,billNo:data.billNo,note:t('billNoteCr',{b:fmtBill(data.billNo),t:orderName(d)}),date:today(),at:Date.now(),due:shift(today(),d.credit.days),status:'open'});
     },null);
     if(ok)popAdd(d.items);
     if(ok)toast(fmtBill(data.billNo)+' · '+(d.pay==='credit'?t('payLaterDone',{a:inr(data.total),n:d.credit.name}):t('paidT',{a:inr(data.total),m:d.pay==='split'?splitText(data):payLbl(d.pay)})));
     if(!ok&&d.pay==='credit'){d.pay='cash';delete d.credit}
-    if(ok){S.draft=null;render();if(S.config.autoPrint){const id=d.id||data._id;delete data._id;setTimeout(()=>{S.modal={kind:'print',src:{kind:'order',id,snap:{...data,id}}};renderModal()},250)}}else b.disabled=false;
+    d._paying=false;if(!ok)$$('#shFoot button,#shBill button').forEach(x=>x.disabled=false);
+    if(ok){if(S.draft===d)S.draft=null;render();if(S.config.autoPrint){const id=d.id||data._id;delete data._id;setTimeout(()=>{S.modal={kind:'print',src:{kind:'order',id,snap:{...data,id}}};renderModal()},250)}}else b.disabled=false;
   },
   voidOrder(){const d=S.draft;confirmBox(t('confirmCancel',{t:orderName(d)}),t('cancelOrder'),async()=>{
     if(d.id){if(!(await save(async()=>{await db.doc('orders/'+d.id).update({status:'void',voidedAt:Date.now(),date:today(),total:orderTotal(d),items:d.items});audit('cancel','order',d.id,today(),orderName(d),{amount:orderTotal(d)},null)},t('orderCancelled'))))return}
@@ -2469,7 +2477,17 @@ document.addEventListener('click',e=>{const b=e.target.closest('[data-act]');if(
   if(lockedDay()&&MGR_DAY_ACTS.has(a)&&(S.tab==='today'||S.tab==='stock'||S.tab==='staff')){toast(t('mgrPastLocked'));return}
   if(isStaffRole()&&['purchaseOpen','puSave','prodOpen','prodSave','prodDel','restockOpen','restockDo','delRestock','delSale','rowSave','pendSave','editOpen','paidBillOpen','edItems','edCancelBill','edDelete','edSave'].includes(a)){toast(t('ownerOnly'));return}
   if(!S.canEdit&&['exportXlsx','salesMode','addMenu','delMenu','saveCfg','resetBills','archive','arSave','checkStorage','rebuild'].includes(a)){toast(t('ownerOnly'));return}
-  const f=A[a];if(f)f(b,e)});
+  if(S.busy&&BUSY_GUARD.has(a))return;
+  /* a second tap on the same button within a moment is ignored, so nothing is saved twice */
+  const now=Date.now();if(!FAST_ACTS.has(a)&&lastTap.a===a&&lastTap.el===b&&now-lastTap.at<700)return;lastTap={a,el:b,at:now};
+  const f=A[a];if(!f)return;const r=f(b,e);
+  if(r&&typeof r.then==='function'&&BUSY_GUARD.has(a)){S.busy=(S.busy||0)+1;document.body.classList.add('busy');let fin=false;
+    const done=()=>{if(fin)return;fin=true;S.busy=Math.max(0,S.busy-1);if(!S.busy)document.body.classList.remove('busy')};r.then(done,done);setTimeout(done,15000)}});
+/* actions that write orders or money: only one runs at a time */
+const BUSY_GUARD=new Set(['saveOrder','closeSheet','clearTable','settle','quickPay','payLaterDo','voidOrder','modalYes','payDo','openTable','openOrder','newTA','paidEditCancel']);
+/* quick taps that must stay quick (quantity buttons, typing helpers) */
+const FAST_ACTS=new Set(['addItem','decItem','cat','kf','clearQ','mark','hrQuick','tab','theme','lang','mpay','pay','spRest','puAdd','qtyUp','qtyDown']);
+let lastTap={a:'',el:null,at:0};
 document.addEventListener('input',e=>{if(e.target.id==='spAmt'&&S.modal&&S.modal.kind==='pay'){const m=S.modal,v=e.target.value,ch=v!==''&&+v!==m.due,box=$('#spChg'),df=$('#spDiff');if(box)box.hidden=!ch;if(df)df.textContent=ch?diffTxt(+v-m.due,m.due):''}
   if(e.target.id==='spWhy'&&S.modal&&S.modal.kind==='pay')S.modal.why=e.target.value;
   const pl=e.target.dataset&&e.target.dataset.pl;if(pl&&S.modal&&S.modal.kind==='purchase'){const [i,f]=pl.split(':');const l=S.modal.lines[+i];if(l){l[f]=e.target.value;if(f==='amount')l.amtTouched=e.target.value!=='';puRefresh()}}
