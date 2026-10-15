@@ -739,10 +739,10 @@ const T={
  perDayS:['{a}/day','{a}/दिवस','{a}/दिन'],nDaysS:['{n} day(s)','{n} दिवस','{n} दिन'],daysLeft:['{n} still to come','{n} दिवस बाकी','{n} दिन बाकी'],salOnS:['salary on {d}','पगार {d} ला','वेतन {d} को'],
  paidToday:['Paid for today','आजचा पगार दिला','आज का वेतन दिया'],payAmt:['Pay {a}','{a} द्या','{a} दें'],payEarly:['Pay now','आता द्या','अभी दें'],
  grpDaily:['Daily wage','रोजंदारी','दिहाड़ी'],grpWeekly:['Weekly salary','साप्ताहिक पगार','साप्ताहिक वेतन'],grpMonthly:['Monthly salary','मासिक पगार','मासिक वेतन'],
- cycleHintD2:['Paid for each day worked — from the Salary tab, any day','काम केलेल्या प्रत्येक दिवसाचा पगार — पगार टॅबमधून कधीही','काम के हर दिन का वेतन — वेतन टैब से कभी भी'],
+ cycleHintD2:['Earns for each day worked; the total adds up until you pay from the Salary tab','काम केलेल्या प्रत्येक दिवसाचा पगार — पगार टॅबमधून कधीही','काम के हर दिन का वेतन — वेतन टैब से कभी भी'],
  salToExp:['Paying adds this amount to today\'s expenses as Salary.','पगार दिल्यावर ही रक्कम आजच्या खर्चात "पगार" म्हणून जाते.','वेतन देने पर यह रकम आज के खर्च में "वेतन" के रूप में जुड़ती है.'],
  salaryPaidExp:['Salary {a} paid · added to today\'s expenses','पगार {a} दिला · आजच्या खर्चात जोडला','वेतन {a} दिया · आज के खर्च में जोड़ा'],
- salaryNote3:['How pay is worked out: P = one day\'s pay · Hours = that share of a day · A or not marked = ₹0. Monthly day pay = salary ÷ days in that cycle, so full attendance gives exactly the salary. Weekly = salary ÷ 7.','पगार कसा मोजतो: हजर = एका दिवसाचा पगार · तास = दिवसाचा तेवढा भाग · गैरहजर/नोंद नाही = ₹0. मासिक दिवसाचा पगार = पगार ÷ त्या काळातील दिवस, त्यामुळे पूर्ण हजेरीला पूर्ण पगार. साप्ताहिक = पगार ÷ 7.','वेतन कैसे: हाज़िर = एक दिन का वेतन · घंटे = दिन का उतना हिस्सा · गैरहाज़िर/दर्ज नहीं = ₹0. मासिक दिन का वेतन = वेतन ÷ उस अवधि के दिन, पूरी हाज़िरी पर पूरा वेतन. साप्ताहिक = वेतन ÷ 7.'], notMarkedS:['Not marked','नोंद नाही','दर्ज नहीं'],toComeS:['To come','पुढे','आगे'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ salaryNote3:['How pay is worked out: P = one day\'s pay · Hours = that share of a day · A or not marked = ₹0. Monthly day pay = salary ÷ days in that cycle, so full attendance gives exactly the salary. Weekly = salary ÷ 7.','पगार कसा मोजतो: हजर = एका दिवसाचा पगार · तास = दिवसाचा तेवढा भाग · गैरहजर/नोंद नाही = ₹0. मासिक दिवसाचा पगार = पगार ÷ त्या काळातील दिवस, त्यामुळे पूर्ण हजेरीला पूर्ण पगार. साप्ताहिक = पगार ÷ 7.','वेतन कैसे: हाज़िर = एक दिन का वेतन · घंटे = दिन का उतना हिस्सा · गैरहाज़िर/दर्ज नहीं = ₹0. मासिक दिन का वेतन = वेतन ÷ उस अवधि के दिन, पूरी हाज़िरी पर पूरा वेतन. साप्ताहिक = वेतन ÷ 7.'], notMarkedS:['Not marked','नोंद नाही','दर्ज नहीं'],toComeS:['To come','पुढे','आगे'], unpaidDays:['{n} day(s) unpaid','{n} दिवस बाकी','{n} दिन बाकी'],unpaidSince:['Not paid since {d}','{d} पासून पगार दिला नाही','{d} से वेतन नहीं दिया'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1768,7 +1768,8 @@ function nextRange(s){
   const k=ptype(s),j=joinDate(s),last=lastPaidTo(s),td=today();
   if(k==='day'){
     if(last&&last>=td)return {from:td,to:td,paidUp:true};
-    let from=last?shift(last,1):td;if(j&&j>from)from=j;if(from>td)from=td;return {from,to:td};
+    /* daily wages add up until they are paid: from the day after the last payment, or the salary day of this month if never paid */
+    let from=last?shift(last,1):cycleOf({...s,payType:'month'},td).start;if(j&&j>from)from=j;if(from>td)from=td;return {from,to:td};
   }
   if(last){const from=shift(last,1);return {from,to:cycleOf(s,from).end}}
   const cur=cycleOf(s,td),prev=cycleOf(s,shift(cur.start,-1)),mk=marksFor(s);
@@ -1856,8 +1857,8 @@ const dayStrip=c=>c.days.length>1?`<div class="dstrip">${c.days.map(x=>`<i class
 function salCard(s){
   const r=nextRange(s),c=calcRange(s,r.from,r.to),k=c.k,advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),td=today();
   const running=r.to>=td,payOn=k==='day'?null:shift(r.to,1),dl=payOn?daysBetween(td,payOn):0;
-  const period=k==='day'?(r.from===r.to?fmtDate(r.from):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('nDaysS',{n:c.nDays})}`):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('salOnS',{d:fmtDate(payOn)})}`;
-  const pill=r.paidUp?`<span class="pill cash">✓ ${t('paidToday')}</span>`:k==='day'?'':running?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill warn">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
+  const period=k==='day'?(r.from===r.to?fmtDate(r.from):`${t('unpaidSince',{d:fmtDate(r.from)})}`):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('salOnS',{d:fmtDate(payOn)})}`;
+  const pill=r.paidUp?`<span class="pill cash">✓ ${t('paidToday')}</span>`:k==='day'?`<span class="pill open">${t('unpaidDays',{n:c.full+c.part})}</span>`:running?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill warn">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
   const btn=r.paidUp||!payAmount(s)?'':`<button class="btn ${running&&k!=='day'?'':'primary'} sm" data-act="payOpen" data-id="${s.id}">${k==='day'?t('payAmt',{a:inr(toPay)}):running?t('payEarly'):t('markSalaryPaid')}</button>`;
   return `<div class="sal"><div style="min-width:0"><div class="name" style="font-weight:700">${esc(s.name)}</div><div class="meta">${typeLbl(s)} · ${inr(payAmount(s))}${k==='day'?'':' · '+t('perDayS',{a:inr(c.rate)})}</div><div class="meta">${period}</div></div>
     <div style="display:grid;gap:6px;justify-items:end;align-content:start">${pill}${btn}</div>
