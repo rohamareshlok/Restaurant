@@ -42,8 +42,8 @@ const gate=document.createElement('div');gate.id='gate';
 gate.innerHTML=`<style>#gate{position:fixed;inset:0;z-index:100;background:var(--bg,#eef2ef);display:grid;place-items:center;padding:24px;font-family:Figtree,system-ui,sans-serif}
 #gate .card{background:var(--surface,#fff);border-radius:18px;padding:26px 22px;max-width:360px;width:100%;display:grid;gap:14px;text-align:center;box-shadow:0 8px 30px rgb(0 0 0/.08)}
 #gate h1{font-family:'Bricolage Grotesque',sans-serif;font-size:22px;margin:0}#gate p{margin:0;color:var(--muted,#5a6a62);font-size:14px;line-height:1.45}
-#gate button{min-height:48px;border-radius:12px;border:1px solid var(--line,#d6ded9);background:#fff;font:600 16px Figtree,sans-serif;cursor:pointer;display:flex;gap:10px;align-items:center;justify-content:center}
-#gate button.go{background:#17201c;color:#fff;border:0}</style><div class="card" id="gateCard"></div>`;
+#gate button{min-height:48px;border-radius:12px;border:1px solid var(--line,#d6ded9);background:#fff;color:#17201c;font:600 16px Figtree,sans-serif;cursor:pointer;display:flex;gap:10px;align-items:center;justify-content:center}
+#gate button.go{background:#14532d;color:#fff;border:0}</style><div class="card" id="gateCard"></div>`;
 const show=html=>{if(!gate.isConnected)document.body.appendChild(gate);gate.querySelector('#gateCard').innerHTML=html};
 const hide=()=>gate.remove();
 const name=()=>(document.title||'Restaurant').replace(/</g,'&lt;');
@@ -52,7 +52,7 @@ async function doSignIn(){
   const p=new GoogleAuthProvider();p.setCustomParameters({prompt:'select_account'});
   try{await signInWithPopup(auth,p)}
   catch(e){if(e&&(e.code==='auth/popup-blocked'||e.code==='auth/operation-not-supported-in-this-environment'))await signInWithRedirect(auth,p);
-    else if(e&&e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')show(`<h1>${name()}</h1><p>Sign-in did not work (${e.code||'error'}). Check the internet and try again.</p><button class="go" id="gIn">${G} Try again</button>`),bind()}
+    else if(e&&e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')show(`<h1>${name()}</h1><p>${e&&e.code==='auth/unauthorized-domain'?'This website address is not allowed to sign in yet. In Firebase → Authentication → Settings → Authorized domains, add '+location.hostname+'.':'Sign-in did not work ('+(e.code||'error')+'). Check the internet and try again.'}</p><button class="go" id="gIn">${G} Try again</button>`),bind()}
 }
 function bind(){const b=document.getElementById('gIn');if(b)b.onclick=doSignIn;const o=document.getElementById('gOut');if(o)o.onclick=()=>signOut(auth)}
 getRedirectResult(auth).catch(()=>{});
