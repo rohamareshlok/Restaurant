@@ -742,7 +742,7 @@ const T={
  cycleHintD2:['Earns for each day worked; the total adds up until you pay from the Salary tab','काम केलेल्या प्रत्येक दिवसाचा पगार — पगार टॅबमधून कधीही','काम के हर दिन का वेतन — वेतन टैब से कभी भी'],
  salToExp:['Paying adds this amount to today\'s expenses as Salary.','पगार दिल्यावर ही रक्कम आजच्या खर्चात "पगार" म्हणून जाते.','वेतन देने पर यह रकम आज के खर्च में "वेतन" के रूप में जुड़ती है.'],
  salaryPaidExp:['Salary {a} paid · added to today\'s expenses','पगार {a} दिला · आजच्या खर्चात जोडला','वेतन {a} दिया · आज के खर्च में जोड़ा'],
- salaryNote3:['How pay is worked out: P = one day\'s pay · Hours = that share of a day · A or not marked = ₹0. Monthly day pay = salary ÷ days in that cycle, so full attendance gives exactly the salary. Weekly = salary ÷ 7.','पगार कसा मोजतो: हजर = एका दिवसाचा पगार · तास = दिवसाचा तेवढा भाग · गैरहजर/नोंद नाही = ₹0. मासिक दिवसाचा पगार = पगार ÷ त्या काळातील दिवस, त्यामुळे पूर्ण हजेरीला पूर्ण पगार. साप्ताहिक = पगार ÷ 7.','वेतन कैसे: हाज़िर = एक दिन का वेतन · घंटे = दिन का उतना हिस्सा · गैरहाज़िर/दर्ज नहीं = ₹0. मासिक दिन का वेतन = वेतन ÷ उस अवधि के दिन, पूरी हाज़िरी पर पूरा वेतन. साप्ताहिक = वेतन ÷ 7.'], notMarkedS:['Not marked','नोंद नाही','दर्ज नहीं'],toComeS:['To come','पुढे','आगे'], unpaidDays:['{n} day(s) unpaid','{n} दिवस बाकी','{n} दिन बाकी'],unpaidSince:['Not paid since {d}','{d} पासून पगार दिला नाही','{d} से वेतन नहीं दिया'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ salaryNote3:['How pay is worked out: P = one day\'s pay · Hours = that share of a day · A or not marked = ₹0. Monthly day pay = salary ÷ days in that cycle, so full attendance gives exactly the salary. Weekly = salary ÷ 7.','पगार कसा मोजतो: हजर = एका दिवसाचा पगार · तास = दिवसाचा तेवढा भाग · गैरहजर/नोंद नाही = ₹0. मासिक दिवसाचा पगार = पगार ÷ त्या काळातील दिवस, त्यामुळे पूर्ण हजेरीला पूर्ण पगार. साप्ताहिक = पगार ÷ 7.','वेतन कैसे: हाज़िर = एक दिन का वेतन · घंटे = दिन का उतना हिस्सा · गैरहाज़िर/दर्ज नहीं = ₹0. मासिक दिन का वेतन = वेतन ÷ उस अवधि के दिन, पूरी हाज़िरी पर पूरा वेतन. साप्ताहिक = वेतन ÷ 7.'], notMarkedS:['Not marked','नोंद नाही','दर्ज नहीं'],toComeS:['To come','पुढे','आगे'], unpaidDays:['{n} day(s) unpaid','{n} दिवस बाकी','{n} दिन बाकी'],unpaidSince:['Not paid since {d}','{d} पासून पगार दिला नाही','{d} से वेतन नहीं दिया'], advRecover:['Advance recovered','उचल वसूल','एडवांस वसूली'],advStill:['{a} advance still to recover from later salary','अजून {a} उचल पुढच्या पगारातून वसूल करायची','अभी {a} एडवांस अगले वेतन से वसूलना है'],ofAmt:['of {a}','{a} पैकी','{a} में से'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1708,10 +1708,10 @@ function vPeople(){
   return h;
 }
 function vAdvances(){
-  const adv=S.creditsOpen.filter(c=>c.kind==='staff');
+  const adv=S.creditsOpen.filter(c=>c.kind==='staff'&&advLeft(c)>0);
   const by={};adv.forEach(a=>{(by[a.staffId]=by[a.staffId]||[]).push(a)});
-  let h=`<section class="stat"><span class="label">${t('pendingAdv')}</span><span class="v">${inr(sum(adv,c=>c.amount))}</span></section>`;
-  if(adv.length)h+=`<div class="list">`+Object.keys(by).map(sid=>{const st=S.staffAll.find(s=>s.id===sid),list=by[sid];return list.map(a=>`<div class="li"><div class="grow"><div class="name">${esc(st?st.name:a.name)}</div><div class="meta">${fmtDate(a.date)}${a.at?', '+hm(a.at):''}${a.note?' · '+esc(a.note):''}</div></div><span class="pill ${a.pay}">${payLbl(a.pay)}</span><span class="amt">${inr(a.amount)}</span><button class="icon-btn" data-act="delCredit" data-id="${a.id}" aria-label="${t('del')}">×</button></div>`).join('')}).join('')+`</div>`;
+  let h=`<section class="stat"><span class="label">${t('pendingAdv')}</span><span class="v">${inr(sum(adv,advLeft))}</span></section>`;
+  if(adv.length)h+=`<div class="list">`+Object.keys(by).map(sid=>{const st=S.staffAll.find(s=>s.id===sid),list=by[sid];return list.map(a=>`<div class="li"><div class="grow"><div class="name">${esc(st?st.name:a.name)}</div><div class="meta">${fmtDate(a.date)}${a.at?', '+hm(a.at):''}${a.note?' · '+esc(a.note):''}</div></div><span class="pill ${a.pay}">${payLbl(a.pay)}</span><span class="amt">${inr(advLeft(a))}${a.recovered?`<span class="muted" style="display:block;font-size:11px;font-weight:600">${t('ofAmt',{a:inr(a.amount)})}</span>`:''}</span><button class="icon-btn" data-act="delCredit" data-id="${a.id}" aria-label="${t('del')}">×</button></div>`).join('')}).join('')+`</div>`;
   else h+=`<div class="empty">${t('noAdv')}</div>`;
   if(!S.staff.length)return h+`<div class="note">${t('addStaffFirst')}</div>`;
   h+=`<section style="display:grid;gap:8px"><div class="label">${t('giveAdvance')}</div><div class="form">
@@ -1792,7 +1792,9 @@ function calcRange(s,from,to){
   const nDays=Math.max(0,daysBetween(from,to)+1),earned=Math.round(fullAmt+partAmt+otAmt);
   return {k,F,from,to,nDays,full,part,abs,unmarked,future,partH,otH,fullAmt:Math.round(fullAmt),partAmt:Math.round(partAmt),otAmt:Math.round(otAmt),earned,days,rate:rateOn(s,from)};
 }
-const advFor=sid=>S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===sid);
+/* an advance can be recovered over several salaries: what is still to recover = amount − recovered so far */
+const advLeft=a=>Math.max(0,(+a.amount||0)-(+a.recovered||0));
+const advFor=sid=>S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===sid&&advLeft(a)>0);
 const paidFor=(sid,mo)=>S.salaries.filter(x=>x.staffId===sid&&x.month===mo);
 function salaryDueCount(){
   return S.staff.filter(s=>payAmount(s)>0&&(ptype(s)==='day'?false:nextRange(s).to<today())).length;
@@ -1855,7 +1857,7 @@ function salLines(c){
 /* one small box per day: green P, orange hours, red A, grey not marked, outline = still to come */
 const dayStrip=c=>c.days.length>1?`<div class="dstrip">${c.days.map(x=>`<i class="${x}"></i>`).join('')}</div>`:'';
 function salCard(s){
-  const r=nextRange(s),c=calcRange(s,r.from,r.to),k=c.k,advT=sum(advFor(s.id),a=>a.amount),toPay=Math.max(0,c.earned-advT),td=today();
+  const r=nextRange(s),c=calcRange(s,r.from,r.to),k=c.k,advT=sum(advFor(s.id),advLeft),toPay=Math.max(0,c.earned-advT),td=today();
   const running=r.to>=td,payOn=k==='day'?null:shift(r.to,1),dl=payOn?daysBetween(td,payOn):0;
   const period=k==='day'?(r.from===r.to?fmtDate(r.from):`${t('unpaidSince',{d:fmtDate(r.from)})}`):`${fmtDate(r.from)} – ${fmtDate(r.to)} · ${t('salOnS',{d:fmtDate(payOn)})}`;
   const pill=r.paidUp?`<span class="pill cash">✓ ${t('paidToday')}</span>`:k==='day'?`<span class="pill open">${t('unpaidDays',{n:c.full+c.part})}</span>`:running?`<span class="pill open">${t('dueInS',{n:dl})}</span>`:`<span class="pill warn">${dl<0?t('overdueS',{n:-dl}):t('dueTodayS')}</span>`;
@@ -2185,13 +2187,13 @@ function renderModal(){
      <div class="row" style="justify-content:flex-end"><button class="btn ghost" data-act="modalNo">${t('cancel')}</button><button class="btn primary" data-act="recvDo">${t('save')}</button></div>`;
   }else if(m.kind==='pay'){
     const s=S.staffAll.find(x=>x.id===m.sid);if(!s){S.modal=null;el.hidden=true;return}
-    const c=calcRange(s,m.from,m.to),advT=sum(advFor(s.id),a=>a.amount),due=Math.max(0,c.earned-advT);m.due=due;
+    const c=calcRange(s,m.from,m.to),advAll=sum(advFor(s.id),advLeft),advT=Math.min(c.earned,advAll),due=Math.max(0,c.earned-advT);m.due=due;
     const amt=m.amt!=null?m.amt:due,chg=+amt!==due,minD=mShift(today().slice(0,7),-2)+'-01',nr=nextRange(s);
     h=`<h3>${esc(t('paySalaryTitle',{n:s.name}))}</h3><div class="muted">${typeLbl(s)} · ${inr(payAmount(s))} · ${t('perDayS',{a:inr(c.rate)})}</div>
      <div class="form"><label for="spFrom">${t('fromT')}</label><input type="date" id="spFrom" data-spd="from" min="${minD}" value="${m.from}"><label for="spTo">${t('toT')}</label><input type="date" id="spTo" data-spd="to" min="${minD}" value="${m.to}"></div>
      <div class="chips"><span class="muted" style="align-self:center">${t('nDaysS',{n:c.nDays})}${c.future?' · '+t('daysLeft',{n:c.future}):''}</span><span style="flex:1"></span>${m.from!==nr.from||m.to!==nr.to?`<button class="chip" data-act="spReset">${t('thisCycle')}</button>`:''}${m.to!==today()&&m.from<=today()?`<button class="chip" data-act="spToday">${t('tillToday')}</button>`:''}</div>
      ${dayStrip(c)}
-     <div class="ledger">${salLines(c).map(([a,b,st])=>`<span style="${st}">${a}</span><span style="${st}">${b}</span>`).join('')}<span class="tot">${t('earned')}</span><span class="tot">${inr(c.earned)}</span>${advT?`<span>${t('advances')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span>`:''}</div>
+     <div class="ledger">${salLines(c).map(([a,b,st])=>`<span style="${st}">${a}</span><span style="${st}">${b}</span>`).join('')}<span class="tot">${t('earned')}</span><span class="tot">${inr(c.earned)}</span>${advT?`<span>${t('advRecover')}</span><span>− ${inr(advT)}</span><span class="tot">${t('toPay')}</span><span class="tot">${inr(due)}</span>`:''}</div>${advAll>advT?`<div class="note" style="color:var(--accent)">${t('advStill',{a:inr(advAll-advT)})}</div>`:''}
      ${c.unmarked?`<div class="row" style="color:var(--accent);font-size:13.5px"><span style="flex:1">${t('unmarkedNote',{n:c.unmarked})}</span><button class="btn sm" data-act="markNow">${t('markNow')}</button></div>`:''}
      <div class="note">${t('salToExp')}</div>
      <label class="label" for="spAmt">${t('finalPay')}</label><input type="number" id="spAmt" min="0" inputmode="decimal" value="${amt}">
@@ -2257,7 +2259,7 @@ const A={
     confirmBox(t('delEntryQ'),t('del'),()=>save(async()=>{
       await db.doc(EDIT_SRC[m.type]+'/'+x.id).delete();
       if(m.type==='sale')await adjustStock(x.pid,x.qty);
-      if(m.type==='sal')for(const a of (x.advIds||[])){try{await db.doc('credits/'+a).update({status:'open',salaryMonth:null})}catch(e){}}
+      if(m.type==='sal'){if(x.advCut)for(const y of x.advCut){try{const r=await db.doc('credits/'+y.id).get();const cur=r.exists?(+r.data().recovered||0):0;await db.doc('credits/'+y.id).update({status:'open',recovered:Math.max(0,cur-y.amt),salaryMonth:null})}catch(e){}}else for(const a of (x.advIds||[])){try{await db.doc('credits/'+a).update({status:'open',recovered:0,salaryMonth:null})}catch(e){}}}
       if(m.type==='back'&&x.cid){const r=await bump('credits/'+x.cid,'received',-x.amount);if(r)await db.doc('credits/'+x.cid).update({status:'open'})}
       audit('delete',m.type,x.id,x.date,editLabel(m.type,x),editFields(m.type,x),null);
     },t('removed'),[x.date]))},
@@ -2413,10 +2415,11 @@ const A={
   async payDo(b){const m=S.modal,s=S.staffAll.find(x=>x.id===m.sid),amt=+val('spAmt');if(!s)return;if(!(amt>=0)||val('spAmt')===''){toast(t('needCredit'));return}
     if(!m.from||!m.to||m.from>m.to){toast(t('badPeriod'));return}
     const why=val('spWhy').trim();if(amt!==m.due&&!why){toast(t('needWhy'));const w=$('#spWhy');if(w)w.focus();return}const pp=amt>0?mPayOf(amt):{pay:m.pay};if(!pp)return;b.disabled=true;
-    const adv=S.creditsOpen.filter(a=>a.kind==='staff'&&a.staffId===s.id);
+    const adv=advFor(s.id).slice().sort((a,b)=>(a.at||0)-(b.at||0));
     const ok=await save(async()=>{
-      const c=calcRange(s,m.from,m.to);await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.to.slice(0,7),salary:c.earned,payType:ptype(s),rate:Math.round(c.rate*100)/100,deduction:0,overtime:c.otAmt,overtimeHours:c.otH,present:c.full,partDays:c.part,partHours:c.partH,absent:c.abs,unmarked:c.unmarked,periodFrom:m.from,periodTo:m.to,advances:sum(adv,a=>a.amount),advIds:adv.map(a=>a.id),calculated:m.due,...(amt!==m.due?{adjust:amt-m.due,note:why}:{}),paid:amt,...pp,date:today(),at:Date.now()});
-      for(const a of adv)await db.doc('credits/'+a.id).update({status:'deducted',salaryMonth:m.to.slice(0,7)});
+      const c=calcRange(s,m.from,m.to);let need=Math.min(c.earned,sum(adv,advLeft));const cut=[];
+      for(const a of adv){if(need<=0)break;const take=Math.min(need,advLeft(a));need-=take;cut.push({id:a.id,amt:take,left:advLeft(a)})}await db.collection('salaries').add({staffId:s.id,name:s.name,month:m.to.slice(0,7),salary:c.earned,payType:ptype(s),rate:Math.round(c.rate*100)/100,deduction:0,overtime:c.otAmt,overtimeHours:c.otH,present:c.full,partDays:c.part,partHours:c.partH,absent:c.abs,unmarked:c.unmarked,periodFrom:m.from,periodTo:m.to,advances:sum(cut,x=>x.amt),advIds:cut.map(x=>x.id),advCut:cut.map(x=>({id:x.id,amt:x.amt})),calculated:m.due,...(amt!==m.due?{adjust:amt-m.due,note:why}:{}),paid:amt,...pp,date:today(),at:Date.now()});
+      for(const x of cut){const a=adv.find(y=>y.id===x.id);await db.doc('credits/'+x.id).update({recovered:(+a.recovered||0)+x.amt,status:x.amt>=x.left?'deducted':'open',salaryMonth:m.to.slice(0,7)})}
     },t('salaryPaidExp',{a:inr(amt)}));
     if(ok){S.modal=null;renderModal()}else b.disabled=false},
   /* menu */
