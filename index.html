@@ -1618,7 +1618,9 @@ function escposTextBill(b,cols){
   const wrap=(str,w)=>{const words=asc(str).split(' ');const L=[];let cur='';for(const wd of words){if((cur+' '+wd).trim().length<=w)cur=(cur+' '+wd).trim();else{if(cur)L.push(cur);cur=wd.slice(0,w)}}if(cur)L.push(cur);return L.length?L:['']};
   const dash=()=>line('-'.repeat(cols));
   cmd(E,0x40);                       /* reset */
-  cmd(E,0x61,1);cmd(E,0x45,1);wrap(c.name||'Restaurant',cols).forEach(l=>line(l));cmd(E,0x45,0);
+  /* darker print: heat the paper longer (ESC 7) and print everything bold + double-struck */
+  cmd(E,0x37,11,200,20);cmd(E,0x47,1);cmd(E,0x45,1);
+  cmd(E,0x61,1);cmd(E,0x45,1);wrap(c.name||'Restaurant',cols).forEach(l=>line(l));
   if(c.billAddr)wrap(c.billAddr,cols).forEach(l=>line(l));
   if(c.billPhone)line(asc('Ph: '+c.billPhone));
   if(c.billGst)line(asc('GSTIN: '+c.billGst));
@@ -1629,11 +1631,11 @@ function escposTextBill(b,cols){
   dash();
   const qw=4,aw=cols>=40?11:9,nw=cols-qw-aw;
   const row=(n,q,a)=>{n=asc(n);q=asc(q);a=asc(a);return n.padEnd(nw).slice(0,nw)+q.padStart(qw)+a.padStart(aw)};
-  cmd(E,0x45,1);line(row('Item','Qty','Amt'));cmd(E,0x45,0);
+  cmd(E,0x45,1);line(row('Item','Qty','Amt'));
   (b.items||[]).forEach(i=>{const L=wrap(i.name,nw-1);line(row(L[0],String(i.qty),money(i.price*i.qty)));L.slice(1).forEach(x=>line(' '+x));if(i.qty>1)line('   @ '+money(i.price))});
   dash();
   if(b.disc){line(pad('Subtotal',money(b.sub)));line(pad('Discount','-'+money(b.disc)))}
-  cmd(E,0x45,1);cmd(GS,0x21,0x01);line(pad('TOTAL','Rs.'+money(b.total)));cmd(GS,0x21,0);cmd(E,0x45,0);
+  cmd(E,0x45,1);cmd(GS,0x21,0x01);line(pad('TOTAL','Rs.'+money(b.total)));cmd(GS,0x21,0);
   const ref=sum(b.refunds||[],r=>r.amount);if(ref)line(pad('Refunded','-'+money(ref)));
   dash();
   cmd(E,0x61,1);wrap(asc(c.billFooter)||'Thank you! Visit again.',cols).forEach(l=>line(l));cmd(E,0x61,0);
