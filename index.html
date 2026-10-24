@@ -4,7 +4,7 @@
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <title>Chaturthi and Chulanghan Restaurant</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=Mukta:wght@400;600;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=Mukta:wght@400;600;800&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Figtree:wght@400;500;600;700&family=Mukta:wght@400;600;800&display=swap"></noscript>
 <style>
 /* Layout: phone-first app shell — sticky header with language switch, one scrolling view, fixed bottom tab bar, slide-up order sheet */
 :root{
@@ -272,6 +272,7 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.updbar{position:fixed;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 10px);z-index:60;border:0;border-radius:999px;padding:10px 18px;background:var(--accent);color:var(--accent-ink,#1f1300);font:700 15px var(--f-body);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .rawbt{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.rawbt ol li{margin:2px 0}
 .dstrip{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:3px;margin:4px 0 2px}.dstrip i{width:9px;height:16px;border-radius:3px;background:var(--line)}
 .dstrip i.P{background:var(--cash)}.dstrip i.H{background:var(--accent)}.dstrip i.A{background:var(--warn)}.dkey{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted)}.dkey span{display:flex;align-items:center;gap:4px}.dkey i{width:9px;height:14px;border-radius:3px;background:var(--line);display:inline-block}.dkey i.P{background:var(--cash)}.dkey i.H{background:var(--accent)}.dkey i.A{background:var(--warn)}.dkey i.F{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
@@ -751,7 +752,7 @@ const T={
  lossWhy:['Reason','कारण','कारण'],lossFrom:['Missing from','कुठून कमी','कहाँ से कम'],lossSave:['Record loss','तोटा नोंदवा','नुकसान दर्ज करें'],lossDone:['Loss of {a} recorded','{a} तोटा नोंदवला','{a} नुकसान दर्ज'],
  lossR_short:['Cash short','रोख कमी','नकद कमी'],lossR_theft:['Theft','चोरी','चोरी'],lossR_count:['Counting mistake','मोजण्यात चूक','गिनती की गलती'],lossR_other:['Other','इतर','अन्य'], rawbtPrint:['Print with RawBT','RawBT ने छापा','RawBT से छापें'],rawbtH:['Bluetooth receipt printer (EZO and similar)','ब्लूटूथ बिल प्रिंटर (EZO व इतर)','ब्लूटूथ बिल प्रिंटर (EZO और अन्य)'],
  rawbtSteps:['<li>Pair the printer in the phone\'s Bluetooth settings (PIN usually 0000 or 1234).</li><li>Install the free app <b>RawBT</b> from Play Store and open it once.</li><li>In RawBT: Settings → Connection → Bluetooth → choose your printer. Set paper to 58 mm.</li><li>Back here, press <b>Test print</b>. Bills then print with <b>Print with RawBT</b>.</li>','<li>फोनच्या ब्लूटूथ सेटिंगमध्ये प्रिंटर जोडा (PIN साधारण 0000 किंवा 1234).</li><li>Play Store मधून मोफत <b>RawBT</b> अ‍ॅप घ्या आणि एकदा उघडा.</li><li>RawBT मध्ये: Settings → Connection → Bluetooth → तुमचा प्रिंटर निवडा. कागद 58 mm ठेवा.</li><li>इथे <b>टेस्ट प्रिंट</b> दाबा. नंतर बिल <b>RawBT ने छापा</b> ने छापा.</li>','<li>फ़ोन की ब्लूटूथ सेटिंग में प्रिंटर जोड़ें (PIN आमतौर पर 0000 या 1234).</li><li>Play Store से मुफ़्त <b>RawBT</b> ऐप लें और एक बार खोलें.</li><li>RawBT में: Settings → Connection → Bluetooth → अपना प्रिंटर चुनें. काग़ज़ 58 mm रखें.</li><li>यहाँ <b>टेस्ट प्रिंट</b> दबाएँ. फिर बिल <b>RawBT से छापें</b> से छपेंगे.</li>'],
- rawbtTest:['Test print','टेस्ट प्रिंट','टेस्ट प्रिंट'],rawbtGet:['Get RawBT','RawBT मिळवा','RawBT पाएँ'], orderGoneT:['That order was already paid or cleared on another phone','ती ऑर्डर दुसऱ्या फोनवर आधीच भरली / बंद केली','वह ऑर्डर दूसरे फ़ोन पर पहले ही भरी / बंद की गई'], backExit:['Press back again to exit','बाहेर जाण्यासाठी पुन्हा मागे दाबा','बाहर जाने के लिए फिर से पीछे दबाएँ'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ rawbtTest:['Test print','टेस्ट प्रिंट','टेस्ट प्रिंट'],rawbtGet:['Get RawBT','RawBT मिळवा','RawBT पाएँ'], orderGoneT:['That order was already paid or cleared on another phone','ती ऑर्डर दुसऱ्या फोनवर आधीच भरली / बंद केली','वह ऑर्डर दूसरे फ़ोन पर पहले ही भरी / बंद की गई'], backExit:['Press back again to exit','बाहेर जाण्यासाठी पुन्हा मागे दाबा','बाहर जाने के लिए फिर से पीछे दबाएँ'], updReady:['New version ready · tap to refresh','नवीन आवृत्ती तयार · रिफ्रेश करा','नया संस्करण तैयार · रिफ्रेश करें'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -885,6 +886,9 @@ window.addEventListener('popstate',async()=>{
   if(now-lastBack<2000){try{history.back()}catch(e){}return}   /* second press: leave the app */
   lastBack=now;keep();toast(t('backExit'));
 });
+/* a newer version was downloaded in the background: offer a one-tap refresh */
+try{navigator.serviceWorker&&navigator.serviceWorker.addEventListener('message',e=>{if(e.data!=='updated'||document.getElementById('updBar'))return;
+  const b=document.createElement('button');b.id='updBar';b.className='updbar';b.textContent='⟳ '+t('updReady');b.onclick=()=>{saveUI();location.reload()};document.body.appendChild(b)})}catch(e){}
 function render(){saveUISoon();document.body.classList.toggle('locked-day',lockedDay());if(rq)return;rq=requestAnimationFrame(()=>{rq=0;draw()})}
 function copyText(txt,okMsg){try{navigator.clipboard.writeText(txt).then(()=>toast(okMsg),()=>toast(t('copyBlocked')))}catch(e){toast(t('copyBlocked'))}}
 const ICON={tables:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',

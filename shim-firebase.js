@@ -59,19 +59,35 @@ getRedirectResult(auth).catch(()=>{});
 window.__fbSignOut=()=>signOut(auth);
 
 let started=false;
-onAuthStateChanged(auth,async u=>{
-  if(!u){if(started){location.reload();return}
-    show(`<h1>${name()}</h1><p>Sign in with the Google account the owner has given access to.</p><button class="go" id="gIn">${G} Sign in with Google</button>`);bind();return}
-  const email=String(u.email||'').toLowerCase();
-  let acc={};try{const a=await getDoc(doc(fs,'access','main'));acc=a.exists()?a.data():{}}catch(e){}
-  const low=k=>(acc[k]||[]).map(x=>String(x).toLowerCase());
-  let baseOwner=false,offline=false;try{await getDoc(doc(fs,'ownercheck','me'));baseOwner=true}catch(e){if(!e||e.code!=='permission-denied')offline=true}
-  const role=baseOwner||BASE.includes(email)||low('owners').includes(email)?'owner':low('managers').includes(email)?'manager':low('staff').includes(email)?'staff':null;
-  let r2=role;const key='role:'+email;try{if(r2)localStorage.setItem(key,r2);else if(offline)r2=localStorage.getItem(key)}catch(e){}
-  if(!r2){show(`<h1>${name()}</h1><p><b>${email.replace(/</g,'&lt;')}</b> does not have access yet.<br>Ask an owner to add this email in Menu → App access.</p><button id="gOut">Use another account</button>`);bind();return}
-  const isOwner=r2==='owner';
-  window.__fbUser={email,isOwner,role:r2,uid:u.uid,name:u.displayName||'',baseOwners:baseOwner?[...BASE,email]:BASE};
+/* the role check needs the internet; to open fast, use the role remembered on this phone and re-check quietly */
+async function checkRole(email){
+  const [acc,base]=await Promise.all([
+    getDoc(doc(fs,'access','main')).then(a=>({ok:true,d:a.exists()?a.data():{}}),e=>({ok:false,d:{}})),
+    getDoc(doc(fs,'ownercheck','me')).then(()=>({owner:true}),e=>({owner:false,offline:!e||e.code!=='permission-denied'}))]);
+  const low=k=>(acc.d[k]||[]).map(x=>String(x).toLowerCase());
+  const role=base.owner||BASE.includes(email)||low('owners').includes(email)?'owner':low('managers').includes(email)?'manager':low('staff').includes(email)?'staff':null;
+  return {role,owner:base.owner,offline:!!base.offline||!acc.ok};
+}
+function start(u,email,role,baseOwner){
+  const isOwner=role==='owner';
+  window.__fbUser={email,isOwner,role,uid:u.uid,name:u.displayName||'',baseOwners:baseOwner?[...BASE,email]:BASE};
   const user={isOwner:async()=>isOwner,canEdit:async()=>isOwner,can:async c=>c==='data.write'?true:null,id:async()=>u.uid,me:async()=>({id:u.uid,name:u.displayName||'',email})};
   hide();
   if(!started){started=true;window.__fbReady(db,user)}
+}
+onAuthStateChanged(auth,async u=>{
+  if(!u){if(started){location.reload();return}
+    show(`<h1>${name()}</h1><p>Sign in with the Google account the owner has given access to.</p><button class="go" id="gIn">${G} Sign in with Google</button>`);bind();return}
+  const email=String(u.email||'').toLowerCase(),key='role:'+email;
+  let cached=null;try{cached=localStorage.getItem(key)}catch(e){}
+  if(cached&&!started){
+    start(u,email,cached,cached==='owner');
+    checkRole(email).then(r=>{if(r.offline)return;try{if(r.role)localStorage.setItem(key,r.role);else localStorage.removeItem(key)}catch(e){}
+      if(r.role!==cached)location.reload()}).catch(()=>{});
+    return;
+  }
+  const r=await checkRole(email);
+  let role=r.role;try{if(role)localStorage.setItem(key,role);else if(r.offline)role=localStorage.getItem(key)}catch(e){}
+  if(!role){show(`<h1>${name()}</h1><p><b>${email.replace(/</g,'&lt;')}</b> does not have access yet.<br>Ask an owner to add this email in Menu → App access.</p><button id="gOut">Use another account</button>`);bind();return}
+  start(u,email,role,r.owner);
 });
