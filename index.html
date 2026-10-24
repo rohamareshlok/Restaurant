@@ -751,7 +751,7 @@ const T={
  lossWhy:['Reason','कारण','कारण'],lossFrom:['Missing from','कुठून कमी','कहाँ से कम'],lossSave:['Record loss','तोटा नोंदवा','नुकसान दर्ज करें'],lossDone:['Loss of {a} recorded','{a} तोटा नोंदवला','{a} नुकसान दर्ज'],
  lossR_short:['Cash short','रोख कमी','नकद कमी'],lossR_theft:['Theft','चोरी','चोरी'],lossR_count:['Counting mistake','मोजण्यात चूक','गिनती की गलती'],lossR_other:['Other','इतर','अन्य'], rawbtPrint:['Print with RawBT','RawBT ने छापा','RawBT से छापें'],rawbtH:['Bluetooth receipt printer (EZO and similar)','ब्लूटूथ बिल प्रिंटर (EZO व इतर)','ब्लूटूथ बिल प्रिंटर (EZO और अन्य)'],
  rawbtSteps:['<li>Pair the printer in the phone\'s Bluetooth settings (PIN usually 0000 or 1234).</li><li>Install the free app <b>RawBT</b> from Play Store and open it once.</li><li>In RawBT: Settings → Connection → Bluetooth → choose your printer. Set paper to 58 mm.</li><li>Back here, press <b>Test print</b>. Bills then print with <b>Print with RawBT</b>.</li>','<li>फोनच्या ब्लूटूथ सेटिंगमध्ये प्रिंटर जोडा (PIN साधारण 0000 किंवा 1234).</li><li>Play Store मधून मोफत <b>RawBT</b> अ‍ॅप घ्या आणि एकदा उघडा.</li><li>RawBT मध्ये: Settings → Connection → Bluetooth → तुमचा प्रिंटर निवडा. कागद 58 mm ठेवा.</li><li>इथे <b>टेस्ट प्रिंट</b> दाबा. नंतर बिल <b>RawBT ने छापा</b> ने छापा.</li>','<li>फ़ोन की ब्लूटूथ सेटिंग में प्रिंटर जोड़ें (PIN आमतौर पर 0000 या 1234).</li><li>Play Store से मुफ़्त <b>RawBT</b> ऐप लें और एक बार खोलें.</li><li>RawBT में: Settings → Connection → Bluetooth → अपना प्रिंटर चुनें. काग़ज़ 58 mm रखें.</li><li>यहाँ <b>टेस्ट प्रिंट</b> दबाएँ. फिर बिल <b>RawBT से छापें</b> से छपेंगे.</li>'],
- rawbtTest:['Test print','टेस्ट प्रिंट','टेस्ट प्रिंट'],rawbtGet:['Get RawBT','RawBT मिळवा','RawBT पाएँ'], orderGoneT:['That order was already paid or cleared on another phone','ती ऑर्डर दुसऱ्या फोनवर आधीच भरली / बंद केली','वह ऑर्डर दूसरे फ़ोन पर पहले ही भरी / बंद की गई'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ rawbtTest:['Test print','टेस्ट प्रिंट','टेस्ट प्रिंट'],rawbtGet:['Get RawBT','RawBT मिळवा','RawBT पाएँ'], orderGoneT:['That order was already paid or cleared on another phone','ती ऑर्डर दुसऱ्या फोनवर आधीच भरली / बंद केली','वह ऑर्डर दूसरे फ़ोन पर पहले ही भरी / बंद की गई'], backExit:['Press back again to exit','बाहेर जाण्यासाठी पुन्हा मागे दाबा','बाहर जाने के लिए फिर से पीछे दबाएँ'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -872,6 +872,19 @@ function restoreUI(){let u=null;try{u=JSON.parse(localStorage.getItem('rd_ui')||
     let n=0;const chk=()=>{const d=S.draft;if(!d||d!==u.draft)return;if(!S.openLoaded){if(++n<40)setTimeout(chk,500);return}
       if(d.id&&!d.paidEdit&&!S.open.find(o=>o.id===d.id)){S.draft=null;renderSheet();render();toast(t('orderGoneT'))}};chk()},900)}
 }
+/* ---- phone back button / gesture: step back inside the app instead of closing it ---- */
+let lastBack=0,backBusy=false;
+function backGuard(){try{if(!history.state||!history.state.rdGuard){history.replaceState({rdBase:1},'');history.pushState({rdGuard:1},'')}}catch(e){}}
+window.addEventListener('popstate',async()=>{
+  if(backBusy){try{history.pushState({rdGuard:1},'')}catch(e){}return}
+  const keep=()=>{try{history.pushState({rdGuard:1},'')}catch(e){}};
+  if(S.modal){keep();A.modalNo();return}
+  if(S.draft){keep();backBusy=true;try{const d=S.draft;if(d.mode==='bill'&&!d.billNo&&!d.paidEdit)A.backEdit();else await A.closeSheet()}finally{backBusy=false}return}
+  if(S.tab!=='tables'){keep();S.tab='tables';try{localStorage.setItem('rd_tab','tables')}catch(e){}window.scrollTo(0,0);render();return}
+  const now=Date.now();
+  if(now-lastBack<2000){try{history.back()}catch(e){}return}   /* second press: leave the app */
+  lastBack=now;keep();toast(t('backExit'));
+});
 function render(){saveUISoon();document.body.classList.toggle('locked-day',lockedDay());if(rq)return;rq=requestAnimationFrame(()=>{rq=0;draw()})}
 function copyText(txt,okMsg){try{navigator.clipboard.writeText(txt).then(()=>toast(okMsg),()=>toast(t('copyBlocked')))}catch(e){toast(t('copyBlocked'))}}
 const ICON={tables:'<rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/>',
@@ -2730,7 +2743,7 @@ render();
   if(!db){S.connected=false;render();return}
   S.connected=true;
   try{const u=await window.claude.use('user');if(u){const c=u.can?await u.can('data.write'):null;S.readOnly=c===false;try{S.uid=u.id?await u.id():null}catch(e){}S.canEdit=!!(u.isOwner&&await u.isOwner());S.owner=S.canEdit;if(!S.canEdit){S.salesMode='day';S.day=clampDay(S.day)}}}catch(e){}
-  restoreUI();subscribe();render();
+  restoreUI();subscribe();render();backGuard();
   setTimeout(()=>{if(S.canEdit)sched(Array.from({length:14},(_,i)=>shift(today(),-i)))},4000);
 })();
 </script>
