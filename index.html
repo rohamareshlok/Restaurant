@@ -1606,8 +1606,42 @@ async function rawbtPrintEl(el,pp){
   const canvas=await html2canvas(el,{scale:1,backgroundColor:'#ffffff',width:dots,windowWidth:dots});
   rawbtSend(escposRaster(canvas));
 }
-async function rawbtPrintBill(b){const pp=getPaper()==='80'?'80':'58';const el=stageBill(b,pp);$('#printArea').classList.add('stage');
-  try{await rawbtPrintEl(el,pp)}catch(e){toast(t('btFail'))}finally{$('#printArea').classList.remove('stage')}}
+/* plain-text receipt in printer commands (ESC/POS): works on every receipt printer, no pictures needed */
+function escposTextBill(b,cols){
+  const c=S.config,out=[],E=0x1b,GS=0x1d;
+  const asc=x=>String(x==null?'':x).replace(/₹/g,'Rs.').replace(/[–—]/g,'-').replace(/[^\x20-\x7e]/g,'').replace(/\s+/g,' ').trim();
+  const put=str=>{for(const ch of str)out.push(ch.charCodeAt(0)&255)};
+  const line=(str='')=>{put(str);out.push(0x0a)};
+  const cmd=(...a)=>out.push(...a);
+  const money=n=>{const v=Math.round(n*100)/100;return (v<0?'-':'')+Math.abs(v).toLocaleString('en-IN',{maximumFractionDigits:2})};
+  const pad=(a,b2)=>{a=asc(a);b2=asc(b2);const sp=Math.max(1,cols-a.length-b2.length);return (a+' '.repeat(sp)+b2).slice(0,Math.max(cols,a.length+1+b2.length))};
+  const wrap=(str,w)=>{const words=asc(str).split(' ');const L=[];let cur='';for(const wd of words){if((cur+' '+wd).trim().length<=w)cur=(cur+' '+wd).trim();else{if(cur)L.push(cur);cur=wd.slice(0,w)}}if(cur)L.push(cur);return L.length?L:['']};
+  const dash=()=>line('-'.repeat(cols));
+  cmd(E,0x40);                       /* reset */
+  cmd(E,0x61,1);cmd(E,0x45,1);wrap(c.name||'Restaurant',cols).forEach(l=>line(l));cmd(E,0x45,0);
+  if(c.billAddr)wrap(c.billAddr,cols).forEach(l=>line(l));
+  if(c.billPhone)line(asc('Ph: '+c.billPhone));
+  if(c.billGst)line(asc('GSTIN: '+c.billGst));
+  cmd(E,0x61,0);dash();
+  const dt=new Date(b.at||Date.now());
+  line(pad(b.billNo?'Bill '+fmtBill(b.billNo):'',b.name||''));
+  line(asc(dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'})));
+  dash();
+  const qw=4,aw=cols>=40?11:9,nw=cols-qw-aw;
+  const row=(n,q,a)=>{n=asc(n);q=asc(q);a=asc(a);return n.padEnd(nw).slice(0,nw)+q.padStart(qw)+a.padStart(aw)};
+  cmd(E,0x45,1);line(row('Item','Qty','Amt'));cmd(E,0x45,0);
+  (b.items||[]).forEach(i=>{const L=wrap(i.name,nw-1);line(row(L[0],String(i.qty),money(i.price*i.qty)));L.slice(1).forEach(x=>line(' '+x));if(i.qty>1)line('   @ '+money(i.price))});
+  dash();
+  if(b.disc){line(pad('Subtotal',money(b.sub)));line(pad('Discount','-'+money(b.disc)))}
+  cmd(E,0x45,1);cmd(GS,0x21,0x01);line(pad('TOTAL','Rs.'+money(b.total)));cmd(GS,0x21,0);cmd(E,0x45,0);
+  const ref=sum(b.refunds||[],r=>r.amount);if(ref)line(pad('Refunded','-'+money(ref)));
+  dash();
+  cmd(E,0x61,1);wrap(asc(c.billFooter)||'Thank you! Visit again.',cols).forEach(l=>line(l));cmd(E,0x61,0);
+  cmd(E,0x64,4);cmd(GS,0x56,0x42,0); /* feed and cut (printers without a cutter ignore it) */
+  return new Uint8Array(out);
+}
+async function rawbtPrintBill(b){const pp=getPaper()==='80'?'80':'58';
+  try{rawbtSend(escposTextBill(b,pp==='80'?48:32))}catch(e){toast(t('btFail'))}}
 async function btPrintBill(b){
   if(BT.busy)return;BT.busy=true;
   try{if(!(await btReconnect())){toast(t('btNotConn'));return}
