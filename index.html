@@ -272,6 +272,7 @@ nav.tabs .nb{position:absolute;top:2px;left:calc(50% + 6px);background:var(--war
 .upisplit .paytm{color:var(--paytm)} .upisplit .phonepe{color:var(--phonepe)}
 
 [hidden]{display:none!important}
+.rawbt{border:1px solid var(--line);border-radius:12px;padding:10px 12px;background:var(--bg)}.rawbt ol li{margin:2px 0}
 .dstrip{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:3px;margin:4px 0 2px}.dstrip i{width:9px;height:16px;border-radius:3px;background:var(--line)}
 .dstrip i.P{background:var(--cash)}.dstrip i.H{background:var(--accent)}.dstrip i.A{background:var(--warn)}.dkey{display:flex;flex-wrap:wrap;gap:12px;font-size:12.5px;color:var(--muted)}.dkey span{display:flex;align-items:center;gap:4px}.dkey i{width:9px;height:14px;border-radius:3px;background:var(--line);display:inline-block}.dkey i.P{background:var(--cash)}.dkey i.H{background:var(--accent)}.dkey i.A{background:var(--warn)}.dkey i.F{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
 .dstrip i.F{background:transparent;box-shadow:inset 0 0 0 1px var(--line)}
@@ -748,7 +749,9 @@ const T={
  rowLoss:['Loss / shortage','तोटा / कमी रोख','नुकसान / कम नकद'],lossBtn:['Record cash shortage or loss','रोख कमी / तोटा नोंदवा','नकद कमी / नुकसान दर्ज करें'],lossFromCount:['Record {a} short as loss','{a} कमी तोटा म्हणून नोंदवा','{a} कमी नुकसान के रूप में दर्ज करें'],
  lossTitle:['Cash shortage or loss','रोख कमी किंवा तोटा','नकद कमी या नुकसान'],lossNote:['Use this when money is missing (theft, short cash, counting mistake). It lowers profit and the cash expected in the drawer.','पैसे कमी आढळल्यास (चोरी, रोख कमी, मोजण्यात चूक) हे वापरा. यामुळे नफा व गल्ल्यात अपेक्षित रोख कमी होते.','पैसे कम मिलने पर (चोरी, नकद कमी, गिनती की गलती) इसका उपयोग करें. इससे मुनाफ़ा और गल्ले में अपेक्षित नकद घटता है.'],
  lossWhy:['Reason','कारण','कारण'],lossFrom:['Missing from','कुठून कमी','कहाँ से कम'],lossSave:['Record loss','तोटा नोंदवा','नुकसान दर्ज करें'],lossDone:['Loss of {a} recorded','{a} तोटा नोंदवला','{a} नुकसान दर्ज'],
- lossR_short:['Cash short','रोख कमी','नकद कमी'],lossR_theft:['Theft','चोरी','चोरी'],lossR_count:['Counting mistake','मोजण्यात चूक','गिनती की गलती'],lossR_other:['Other','इतर','अन्य'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
+ lossR_short:['Cash short','रोख कमी','नकद कमी'],lossR_theft:['Theft','चोरी','चोरी'],lossR_count:['Counting mistake','मोजण्यात चूक','गिनती की गलती'],lossR_other:['Other','इतर','अन्य'], rawbtPrint:['Print with RawBT','RawBT ने छापा','RawBT से छापें'],rawbtH:['Bluetooth receipt printer (EZO and similar)','ब्लूटूथ बिल प्रिंटर (EZO व इतर)','ब्लूटूथ बिल प्रिंटर (EZO और अन्य)'],
+ rawbtSteps:['<li>Pair the printer in the phone\'s Bluetooth settings (PIN usually 0000 or 1234).</li><li>Install the free app <b>RawBT</b> from Play Store and open it once.</li><li>In RawBT: Settings → Connection → Bluetooth → choose your printer. Set paper to 58 mm.</li><li>Back here, press <b>Test print</b>. Bills then print with <b>Print with RawBT</b>.</li>','<li>फोनच्या ब्लूटूथ सेटिंगमध्ये प्रिंटर जोडा (PIN साधारण 0000 किंवा 1234).</li><li>Play Store मधून मोफत <b>RawBT</b> अ‍ॅप घ्या आणि एकदा उघडा.</li><li>RawBT मध्ये: Settings → Connection → Bluetooth → तुमचा प्रिंटर निवडा. कागद 58 mm ठेवा.</li><li>इथे <b>टेस्ट प्रिंट</b> दाबा. नंतर बिल <b>RawBT ने छापा</b> ने छापा.</li>','<li>फ़ोन की ब्लूटूथ सेटिंग में प्रिंटर जोड़ें (PIN आमतौर पर 0000 या 1234).</li><li>Play Store से मुफ़्त <b>RawBT</b> ऐप लें और एक बार खोलें.</li><li>RawBT में: Settings → Connection → Bluetooth → अपना प्रिंटर चुनें. काग़ज़ 58 mm रखें.</li><li>यहाँ <b>टेस्ट प्रिंट</b> दबाएँ. फिर बिल <b>RawBT से छापें</b> से छपेंगे.</li>'],
+ rawbtTest:['Test print','टेस्ट प्रिंट','टेस्ट प्रिंट'],rawbtGet:['Get RawBT','RawBT मिळवा','RawBT पाएँ'], savedName:['Saved {n}','{n} सेव्ह झाले','{n} सेव हुआ'],unsavedN:['{n} unsaved changes','{n} बदल सेव्ह झाले नाहीत','{n} बदलाव सेव नहीं हुए'],undoChanges:['Undo','रद्द करा','रद्द करें'],
  add:['Add','जोडा','जोड़ें'],orderH:['Current order','चालू ऑर्डर','मौजूदा ऑर्डर'],clearSearch:['Clear search','शोध पुसा','खोज साफ़ करें'],
  pickStaff:['Choose staff','कर्मचारी निवडा','स्टाफ चुनें'],
  overdueBanner:['{n} credit(s) overdue · {a}','{n} उधारी मुदत संपली · {a}','{n} उधार समय पार · {a}']
@@ -1514,6 +1517,7 @@ function printModalHTML(m){
    <div><div class="label" style="margin-bottom:6px">${t('paperSize')}</div><div class="seg" role="group" aria-label="${esc(t('paperSize'))}">${Object.entries(PAPERS).map(([k,v])=>`<button class="${k===pp?'on dk':''}" data-act="paper" data-k="${k}" aria-pressed="${k===pp}">${v.lbl}</button>`).join('')}</div>
    <div class="note" style="margin-top:6px">${t('paperHint')}</div></div>
    <div class="pprev"><div class="pscale" style="--w:${PAPERS[pp].mm}">${billHTML(b,pp)}</div></div>
+   ${isAndroid&&(pp==='58'||pp==='80')?`<button class="btn primary" data-act="rawbtPrint" style="min-height:50px;font-size:16px">🖨 ${t('rawbtPrint')}</button>`:''}
    ${btReady()&&(pp==='58'||pp==='80')?`<button class="btn primary" data-act="btPrint" style="min-height:50px;font-size:16px">🖨 ${t('btPrintNow',{n:esc(BT.dev.name||'Printer')})}</button>`:btSupported()?`<button class="btn" data-act="btOn">ᛒ ${btName()?t('btReconnect'):t('btConnectBtn')}</button>`:''}
    <div class="row"><button class="btn" data-act="printNow">${t('printBtn')}</button><button class="btn primary" data-act="billPdf">${t('savePdf')}</button><span style="flex:1"></span><button class="btn ghost" data-act="modalNo">${t('close')}</button></div>
    <div class="note">${t('printHow')}</div>`;
@@ -1590,6 +1594,20 @@ async function btPrintEl(el,pp){
   const canvas=await html2canvas(el,{scale:1,backgroundColor:'#ffffff',width:dots,windowWidth:dots});
   await btSend(escposRaster(canvas));
 }
+/* RawBT: free Android app that prints to "classic" Bluetooth / USB receipt printers (most cheap 58 mm printers, e.g. EZO KP206B).
+   The bill is drawn as an image, turned into printer commands and handed to RawBT, which sends it to the printer. */
+const isAndroid=/Android/i.test(navigator.userAgent||'');
+const RAWBT_PLAY='https://play.google.com/store/apps/details?id=ru.a402d.rawbtprinter';
+function rawbtSend(bytes){let bin='';for(let i=0;i<bytes.length;i+=8192)bin+=String.fromCharCode.apply(null,bytes.subarray(i,i+8192));
+  location.href='intent:base64,'+btoa(bin)+'#Intent;scheme=rawbt;package=ru.a402d.rawbtprinter;S.browser_fallback_url='+encodeURIComponent(RAWBT_PLAY)+';end;'}
+async function rawbtPrintEl(el,pp){
+  await loadScript('https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',()=>window.html2canvas);
+  const dots=pp==='58'?384:576;el.style.width=dots+'px';el.style.padding='4px 6px 10px';
+  const canvas=await html2canvas(el,{scale:1,backgroundColor:'#ffffff',width:dots,windowWidth:dots});
+  rawbtSend(escposRaster(canvas));
+}
+async function rawbtPrintBill(b){const pp=getPaper()==='80'?'80':'58';const el=stageBill(b,pp);$('#printArea').classList.add('stage');
+  try{await rawbtPrintEl(el,pp)}catch(e){toast(t('btFail'))}finally{$('#printArea').classList.remove('stage')}}
 async function btPrintBill(b){
   if(BT.busy)return;BT.busy=true;
   try{if(!(await btReconnect())){toast(t('btNotConn'));return}
@@ -1604,6 +1622,7 @@ function printerPanel(){
    <div class="prstat ${ok?'on':''}"><span class="dot"></span><div class="grow"><b>${ok?t('btIsConn',{n:esc(BT.dev.name||nm||'Printer')}):nm?t('btLast',{n:esc(nm)}):t('btNone')}</b><div class="note">${sup?(ok?t('btReadyNote'):t('btConnNote')):t('btNoSupportNote')}</div></div></div>
    ${sup?`<div class="row">${ok?`<button class="btn" data-act="btTest">${t('btTest')}</button><button class="btn ghost danger" data-act="btOff">${t('btDisc')}</button>`:`<button class="btn primary" data-act="btOn" style="flex:1">ᛒ ${nm?t('btReconnect'):t('btConnectBtn')}</button>`}</div>`:''}
    <div><div class="label" style="margin-bottom:6px">${t('paperSize')}</div><div class="seg" role="group">${Object.entries(PAPERS).map(([k,v])=>`<button class="${k===pp?'on dk':''}" data-act="paperSet" data-k="${k}" aria-pressed="${k===pp}">${v.lbl}</button>`).join('')}</div></div>
+   ${isAndroid?`<div class="rawbt"><b>${t('rawbtH')}</b><ol class="note" style="margin:6px 0 8px;padding-left:18px">${t('rawbtSteps')}</ol><div class="row"><button class="btn primary" data-act="rawbtTest">🖨 ${t('rawbtTest')}</button><a class="btn ghost" href="${RAWBT_PLAY}" target="_blank" rel="noopener">${t('rawbtGet')}</a></div></div>`:''}
    <button class="btn" data-act="printTestSys">${t('btTestSys')}</button>
    <div class="note">${t('printerHelp')}</div></section>`;
 }
@@ -2496,6 +2515,8 @@ const A={
   btOn(b){b.disabled=true;btConnect().finally(()=>{b.disabled=false})},
   btOff(){btDisconnect()},
   btTest(b){b.disabled=true;btPrintBill({name:t('btTestT'),items:[{name:t('btTestLine'),qty:1,price:0}],sub:0,disc:0,total:0,pay:'cash',billNo:null,at:Date.now(),unpaid:false,refunds:[]}).finally(()=>{b.disabled=false})},
+  rawbtPrint(b){const d=billData(S.modal.src);if(!d)return;b.disabled=true;rawbtPrintBill(d).finally(()=>{setTimeout(()=>{b.disabled=false},1500)})},
+  rawbtTest(){rawbtPrintBill({name:'Test',items:[{name:t('btTestLine'),qty:1,price:0}],sub:0,disc:0,total:0,billNo:null,at:Date.now(),refunds:[]})},
   btPrint(b){const d=billData(S.modal.src);if(!d)return;b.disabled=true;btPrintBill(d).finally(()=>{b.disabled=false})},
   paperSet(b){setPaper(b.dataset.k);render()},
   printTestSys(){S.modal={kind:'print',src:{kind:'order',id:'__test',snap:{table:'TA',label:t('btTestT'),items:[{name:t('btTestLine'),qty:1,price:0}],subtotal:0,total:0,pay:'cash',status:'paid',paidAt:Date.now(),date:today()}}};renderModal()},
