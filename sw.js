@@ -1,6 +1,6 @@
 /* Opens the app instantly from the copy on the phone, then quietly fetches the newest version for next time.
    The Firebase code and fonts are kept on the phone too, so nothing waits for slow internet. */
-const C='rest-v5';
+const C='rest-v6';
 const SHELL=['./','index.html','config.js','shim-classic.js','shim-firebase.js','manifest.json','icon-192-v2.png','icon-512-v2.png','favicon-32-v2.png','apple-touch-icon-v2.png'];
 const KEEP_HOSTS=['www.gstatic.com','fonts.googleapis.com','fonts.gstatic.com','cdnjs.cloudflare.com'];
 self.addEventListener('install',e=>{e.waitUntil(caches.open(C).then(c=>c.addAll(SHELL.map(u=>new Request(u,{cache:'reload'})))).catch(()=>{}));self.skipWaiting()});
@@ -14,6 +14,7 @@ async function refresh(req,key){
 self.addEventListener('fetch',e=>{
   const req=e.request;if(req.method!=='GET')return;const u=new URL(req.url);
   if(u.origin===location.origin){
+    if(u.pathname.endsWith('/version.json')||u.searchParams.has('fresh'))return;   /* version checks always go to the internet */
     const isPage=req.mode==='navigate'||u.pathname.endsWith('/')||u.pathname.endsWith('/index.html');
     const key=isPage?'index.html':req;
     e.respondWith(caches.open(C).then(c=>c.match(key,{ignoreSearch:isPage})).then(hit=>{
