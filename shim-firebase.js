@@ -91,3 +91,22 @@ onAuthStateChanged(auth,async u=>{
   if(!role){show(`<h1>${name()}</h1><p><b>${email.replace(/</g,'&lt;')}</b> does not have access yet.<br>Ask an owner to add this email in Menu → App access.</p><button id="gOut">Use another account</button>`);bind();return}
   start(u,email,role,r.owner);
 });
+
+/* ---- reading supplier bills with Gemini through Firebase AI Logic (loaded only when first used) ---- */
+window.__aiReadBill=async(images,prompt)=>{
+  const V='12.19.0',B='https://www.gstatic.com/firebasejs/'+V+'/';
+  if(!window.__aiApp){
+    const [{initializeApp},ai]=await Promise.all([import(B+'firebase-app.js'),import(B+'firebase-ai.js')]);
+    const a=initializeApp(C.firebase,'bill-reader');
+    if(C.recaptchaKey){const {initializeAppCheck,ReCaptchaV3Provider}=await import(B+'firebase-app-check.js');initializeAppCheck(a,{provider:new ReCaptchaV3Provider(C.recaptchaKey),isTokenAutoRefreshEnabled:true})}
+    window.__aiApp={ai,inst:ai.getAI(a,{backend:new ai.GoogleAIBackend()})};
+  }
+  const {ai,inst}=window.__aiApp,parts=[prompt,...images.map(d=>({inlineData:{mimeType:'image/jpeg',data:d.split(',')[1]}}))];
+  let last;
+  for(const name of [C.aiModel,'gemini-3.8-flash','gemini-3.5-flash','gemini-2.5-flash'].filter(Boolean)){
+    try{const m=ai.getGenerativeModel(inst,{model:name,generationConfig:{responseMimeType:'application/json',temperature:0.1}});
+      const r=await m.generateContent(parts);return r.response.text()}
+    catch(e){last=e;if(!/not found|404|not supported|unsupported model|is not available/i.test(String(e&&e.message)))throw e}
+  }
+  throw last;
+};
