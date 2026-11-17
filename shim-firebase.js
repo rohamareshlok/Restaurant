@@ -56,7 +56,7 @@ async function doSignIn(){
 }
 function bind(){const b=document.getElementById('gIn');if(b)b.onclick=doSignIn;const o=document.getElementById('gOut');if(o)o.onclick=()=>signOut(auth)}
 getRedirectResult(auth).catch(()=>{});
-window.__fbSignOut=()=>signOut(auth);
+window.__fbSignOut=()=>{try{localStorage.removeItem('snap1');localStorage.removeItem('rd_ui')}catch(e){}return signOut(auth)};
 
 let started=false;
 /* the role check needs the internet; to open fast, use the role remembered on this phone and re-check quietly */
@@ -76,7 +76,7 @@ function start(u,email,role,baseOwner){
   if(!started){started=true;window.__fbReady(db,user)}
 }
 onAuthStateChanged(auth,async u=>{
-  if(!u){if(started){location.reload();return}
+  if(!u){try{localStorage.removeItem('snap1')}catch(e){}if(started){location.reload();return}
     show(`<h1>${name()}</h1><p>Sign in with the Google account the owner has given access to.</p><button class="go" id="gIn">${G} Sign in with Google</button>`);bind();return}
   const email=String(u.email||'').toLowerCase(),key='role:'+email;
   let cached=null;try{cached=localStorage.getItem(key)}catch(e){}
@@ -88,7 +88,7 @@ onAuthStateChanged(auth,async u=>{
   }
   const r=await checkRole(email);
   let role=r.role;try{if(role)localStorage.setItem(key,role);else if(r.offline)role=localStorage.getItem(key)}catch(e){}
-  if(!role){show(`<h1>${name()}</h1><p><b>${email.replace(/</g,'&lt;')}</b> does not have access yet.<br>Ask an owner to add this email in Menu → App access.</p><button id="gOut">Use another account</button>`);bind();return}
+  if(!role){try{localStorage.removeItem('snap1')}catch(e){}show(`<h1>${name()}</h1><p><b>${email.replace(/</g,'&lt;')}</b> does not have access yet.<br>Ask an owner to add this email in Menu → App access.</p><button id="gOut">Use another account</button>`);bind();return}
   start(u,email,role,r.owner);
 });
 
